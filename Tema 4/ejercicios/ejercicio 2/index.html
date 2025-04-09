@@ -1,0 +1,53 @@
+<!-- Ejercicio 2: Definir áreas con grid-template-areas
+Enunciado:
+
+Crea un layout para una pantalla de detalle de actividad con 3 secciones:
+
+Cabecera (nombre de la actividad)
+
+Información principal (horario y descripción)
+
+Botón de reserva
+
+Distribúyelos en áreas con CSS Grid para que en pantallas grandes estén en filas separadas, y en móviles se apilen.
+
+Solución: -->
+
+<div class="actividad-detalle">
+    <header class="cabecera">Spinning</header>
+    <section class="info">Lunes y Miércoles - 19:00 a 20:00</section>
+    <footer class="reserva"><button>Reservar</button></footer>
+  </div>
+  
+  <style>
+    .actividad-detalle {
+      display: grid;
+      grid-template-areas:
+        "cabecera"
+        "info"
+        "reserva";
+      gap: 1rem;
+      padding: 1rem;
+      background-color: #f5f5f5;
+    }
+  
+    .cabecera { grid-area: cabecera; font-weight: bold; font-size: 1.5rem; }
+    .info { grid-area: info; }
+    .reserva { grid-area: reserva; }
+  
+    @media (min-width: 768px) {
+      .actividad-detalle {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "cabecera cabecera"
+          "info reserva";
+      }
+  
+      .reserva {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+  </style>
+  

@@ -1,0 +1,13 @@
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: #444;
+    text-align: center;
+  }
+  
+  .menu a {
+    color: white;
+    padding: 1rem;
+    text-decoration: none;
+  }
+  

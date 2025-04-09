@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserva de Actividades - Responsive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .actividad {
+      background: #fff;
+      border: 1px solid #ccc;
+      margin: 10px auto;
+      padding: 20px;
+      max-width: 800px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    /* Layout en escritorio: varias columnas */
+    @media (min-width: 769px) {
+      .actividades {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .actividad {
+        flex: 1 1 calc(33.33% - 20px);
+      }
+    }
+    /* Ajuste en dispositivos móviles: una columna */
+    @media (max-width: 768px) {
+      .actividad {
+        margin: 10px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Reserva de Actividades</h1>
+  <div class="actividades">
+    <div class="actividad">
+      <h2>Clase de Spinning</h2>
+      <p>Horarios disponibles: 8:00, 12:00, 18:00</p>
+    </div>
+    <div class="actividad">
+      <h2>Clase de Natación</h2>
+      <p>Horarios disponibles: 9:00, 15:00, 20:00</p>
+    </div>
+    <!-- Más actividades -->
+  </div>
+</body>
+</html>
+

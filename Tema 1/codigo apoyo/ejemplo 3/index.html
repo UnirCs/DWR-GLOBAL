@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reserva de Actividades - Adaptive</title>
+  <script>
+    function loadCSSForDevice() {
+      var width = window.innerWidth;
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      if (width < 600) {
+        // Móvil
+        link.href = 'mobile.css';
+      } else if (width < 1024) {
+        // Tablet
+        link.href = 'tablet.css';
+      } else {
+
+     // Escritorio
+        link.href = 'desktop.css';
+      }
+      document.head.appendChild(link);
+    }
+    window.onload = loadCSSForDevice;
+  </script>
+</head>
+<body>
+  <h1>Reserva de Actividades - Diseño Adaptive</h1>
+  <div class="actividad">
+    <h2>Clase de Crossfit</h2>
+    <p>Horarios disponibles: 7:00, 13:00, 19:00</p>
+  </div>
+  <!-- Más actividades -->
+</body>
+</html>
+

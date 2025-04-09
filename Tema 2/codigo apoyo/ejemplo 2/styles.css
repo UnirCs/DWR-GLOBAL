@@ -1,0 +1,62 @@
+/* Estilos base (Mobile First) */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 1rem;
+    background-color: #f4f4f4;
+  }
+  
+  .actividades {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .actividad {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .actividad h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .actividad button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  /* Tablets */
+  @media (min-width: 768px) {
+    .actividades {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .actividad h2 {
+      font-size: 1.4rem;
+    }
+  }
+  
+  /* Escritorio */
+  @media (min-width: 1024px) {
+    .actividades {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .actividad {
+      padding: 2rem;
+    }
+    .actividad button {
+      font-size: 1.1rem;
+      padding: 0.75rem 1.5rem;
+    }
+  }
+

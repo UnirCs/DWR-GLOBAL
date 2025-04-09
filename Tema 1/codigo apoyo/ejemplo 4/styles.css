@@ -1,0 +1,26 @@
+/* Estilos base para dispositivos móviles */
+body {
+    font-size: 16px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  /* Estilos adicionales para pantallas de escritorio */
+  @media (min-width: 1024px) {
+    .card {
+      width: 30%;
+      margin: 1%;
+      padding: 20px;
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
+  
+  

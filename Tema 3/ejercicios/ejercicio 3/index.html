@@ -1,0 +1,40 @@
+<!-- Ejercicio 3: Combinación de flex-grow, flex-shrink y flex-basis
+Enunciado:
+
+Crea tres tarjetas que compartan espacio dentro de un contenedor. Queremos que:
+
+La primera tarjeta sea fija (200px de ancho)
+
+Las otras dos se ajusten al tamaño restante -->
+
+<!-- SOLUCIÓN -->
+
+<div class="fila">
+    <div class="card fija">Yoga</div>
+    <div class="card flexible">Pilates</div>
+    <div class="card flexible">HIIT</div>
+  </div>
+  
+  <style>
+    .fila {
+      display: flex;
+      gap: 1rem;
+    }
+  
+    .fija {
+      flex: 0 0 200px;
+      background-color: #c8e6c9;
+    }
+  
+    .flexible {
+      flex: 1 1 0;
+      background-color: #ffecb3;
+    }
+  
+    .card {
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+  

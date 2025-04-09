@@ -1,0 +1,21 @@
+.calendario {
+    display: grid;
+    grid-template-columns: 100px repeat(5, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1rem;
+    background: #fdfdfd;
+  }
+  
+  .calendario > div {
+    padding: 0.8rem;
+    background-color: #f0f4f8;
+    border: 1px solid #dce1e6;
+    border-radius: 4px;
+  }
+  
+  .hora {
+    background-color: #d0dce8;
+    font-weight: bold;
+  }
+  

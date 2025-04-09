@@ -1,0 +1,22 @@
+<!-- Ejercicio 2: Ocultar/mostrar contenido adicional según el tamaño de pantalla
+Enunciado:
+
+Añade una descripción adicional a la tarjeta de actividad que solo se muestre en pantallas grandes (mínimo 1024px). En móviles, esa descripción debe estar oculta para simplificar la vista. -->
+
+<p class="descripcion">Clase de alta intensidad sobre bicicleta estática, ideal para mejorar tu resistencia cardiovascular.</p>
+
+<style>
+  .descripcion {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .descripcion {
+      display: block;
+      margin-top: 0.5rem;
+      color: #555;
+    }
+  }
+</style>
+
+<!-- Esto se puede incluir dentro de la tarjeta anterior. -->

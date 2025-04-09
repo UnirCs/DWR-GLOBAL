@@ -1,0 +1,12 @@
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .cabecera, .cuerpo, .pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  

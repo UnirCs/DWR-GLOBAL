@@ -1,0 +1,38 @@
+<!-- Ejercicio 4: Formulario de reserva alineado con Flexbox
+Enunciado:
+
+Crea un formulario horizontal que incluya:
+
+Un campo de texto para nombre
+
+Un selector de actividad
+
+Un botón de reserva
+
+Los tres elementos deben estar alineados en fila, con separación entre ellos y centrados verticalmente. -->
+
+<!-- SOLUCIÓN -->
+
+<form class="formulario-reserva">
+    <input type="text" placeholder="Tu nombre" />
+    <select>
+      <option>CrossFit</option>
+      <option>Natación</option>
+    </select>
+    <button type="submit">Reservar</button>
+  </form>
+  
+  <style>
+    .formulario-reserva {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin: 1rem;
+    }
+  
+    input, select, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+  </style>
+  

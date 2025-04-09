@@ -1,0 +1,30 @@
+/* Estilos base para escritorio */
+body {
+  font-size: 18px;
+  padding: 20px;
+  background-color: #fff;
+}
+.card {
+  width: 30%;
+  margin: 1%;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Adaptación para dispositivos móviles */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    padding: 10px;
+  }
+  .card {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 15px;
+    display: block;
+  }
+}
+

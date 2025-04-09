@@ -1,0 +1,15 @@
+
+.grid-actividades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+  
+.actividad {
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+  

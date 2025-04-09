@@ -1,0 +1,14 @@
+
+.layout-contenido {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .filtros-laterales {
+    flex: 0 0 250px;
+  }
+  
+  .panel-principal {
+    flex: 1;
+  }
+  

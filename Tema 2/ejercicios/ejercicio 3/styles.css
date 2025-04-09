@@ -1,0 +1,28 @@
+/* <!-- Enunciado: Ejercicio 3: Adaptar la tipografía y el espaciado
+
+Ajusta el tamaño del texto del nombre de la actividad (h2) y el espaciado interior de la tarjeta (padding) según el tamaño de pantalla:
+
+En móviles: texto pequeño (1.2rem) y padding de 1rem
+
+En tablets y mayores: texto más grande (1.6rem) y padding de 2rem -->
+
+<!-- Solución: --> */
+
+.card-actividad {
+    padding: 1rem;
+  }
+  
+  .card-actividad h2 {
+    font-size: 1.2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .card-actividad {
+      padding: 2rem;
+    }
+  
+    .card-actividad h2 {
+      font-size: 1.6rem;
+    }
+  }
+  

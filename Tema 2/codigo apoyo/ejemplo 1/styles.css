@@ -1,0 +1,39 @@
+
+/* Operador “and”*/
+   
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .actividad {
+    padding: 1rem;
+    background-color: #e0e0e0;
+    }
+}
+
+/* Operador “not”*/  
+
+@media not screen and (min-width: 1024px) {
+    .filtros {
+      display: none;
+    }
+  }
+
+/* Operador “only”*/
+@media only screen and (max-width: 600px) {
+    .menu-principal {
+      display: none;
+    }
+  }
+
+  /* Operador “,” */
+
+  @media (max-width: 600px), (orientation: portrait) {
+    .contenedor-principal {
+      padding: 1rem;
+    }
+  }
+
+  
+  
+
+
+
+  

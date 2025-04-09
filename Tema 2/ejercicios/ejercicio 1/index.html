@@ -1,0 +1,56 @@
+
+<!-- Ejercicio 1: Cambiar el diseño de una tarjeta de actividad según el tamaño de pantalla
+Enunciado:
+
+Crea una tarjeta de actividad para una clase del gimnasio (por ejemplo, Spinning), que muestre el nombre de la actividad y su horario. El diseño debe adaptarse a diferentes tamaños de pantalla usando media queries:
+
+En pantallas grandes (mínimo 768px), muestra la tarjeta como un bloque horizontal con los elementos alineados en fila.
+
+En pantallas pequeñas, muestra los elementos apilados en columna. -->
+
+<!-- Solución: -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjeta Actividad Responsive</title>
+  <style>
+    .card-actividad {
+      display: flex;
+      flex-direction: column;
+      border: 2px solid #ccc;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+
+    .card-actividad h2 {
+      margin: 0 0 0.5rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .card-actividad {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-actividad h2 {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-actividad">
+    <h2>Spinning</h2>
+    <p>Lunes y miércoles - 19:00 a 20:00</p>
+  </div>
+
+</body>
+</html>

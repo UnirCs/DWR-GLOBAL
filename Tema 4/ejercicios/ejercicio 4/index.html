@@ -1,0 +1,40 @@
+<!-- Ejercicio 4: Comparación visual entre Grid y Flexbox
+Enunciado:
+
+Crea dos layouts idénticos: uno con Flexbox y otro con CSS Grid, que muestren 4 bloques horizontales distribuidos con espacio entre ellos. Acompaña ambos con comentarios para que los alumnos comparen diferencias en sintaxis y control.
+
+Solución (resumen en HTML): -->
+
+<!-- Layout con Flexbox -->
+<div class="flex-layout">
+    <div>1</div><div>2</div><div>3</div><div>4</div>
+  </div>
+  
+  <!-- Layout con Grid -->
+  <div class="grid-layout">
+    <div>1</div><div>2</div><div>3</div><div>4</div>
+  </div>
+  
+  <style>
+    .flex-layout {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+  
+    .grid-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+  
+    .flex-layout div,
+    .grid-layout div {
+      background: #ffe082;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 6px;
+    }
+  </style>
+  

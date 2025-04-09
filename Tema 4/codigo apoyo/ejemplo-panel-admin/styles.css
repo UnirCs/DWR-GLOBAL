@@ -1,0 +1,25 @@
+.admin-reservas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .encabezado {
+    background: #3e4e5e;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  .admin-reservas > div {
+    padding: 0.5rem;
+    background: #f7f9fb;
+    border-radius: 4px;
+    border: 1px solid #e1e4e8;
+  }
+  

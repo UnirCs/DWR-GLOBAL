@@ -1,0 +1,30 @@
+<!-- Ejercicio 3: Autoajuste de columnas con auto-fit y minmax
+Enunciado:
+
+Crea un layout de tarjetas de actividades que se adapte automáticamente al ancho de la pantalla, utilizando auto-fit y minmax. Cada tarjeta debe tener un ancho mínimo de 250px.
+
+Solución: -->
+
+<div class="actividades-autoajuste">
+    <div class="actividad">Boxeo</div>
+    <div class="actividad">Pilates</div>
+    <div class="actividad">Zumba</div>
+    <div class="actividad">Estiramientos</div>
+  </div>
+  
+  <style>
+    .actividades-autoajuste {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+  
+    .actividad {
+      background-color: #dcedc8;
+      padding: 1rem;
+      border-radius: 6px;
+      text-align: center;
+    }
+  </style>
+  

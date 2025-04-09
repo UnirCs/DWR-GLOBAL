@@ -1,0 +1,12 @@
+.formulario-reserva {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .fila-formulario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  

@@ -1,0 +1,12 @@
+.grid-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .tarjeta {
+    flex: 1 1 200px;
+    background: #eee;
+    padding: 1rem;
+  }
+  

@@ -1,0 +1,16 @@
+
+.panel-reservas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .reserva {
+    background-color: #e9f5ff;
+    padding: 1rem;
+    border-left: 5px solid #3498db;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  

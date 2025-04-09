@@ -1,0 +1,35 @@
+<!-- Ejercicio 1: Layout horizontal para tarjetas de actividades
+Enunciado:
+
+Crea un contenedor que muestre tres tarjetas de actividades (por ejemplo, Spinning, CrossFit y Natación) una al lado de otra, con espacio entre ellas. Usa Flexbox para:
+
+Distribuirlas horizontalmente
+
+Dejar espacio uniforme entre las tarjetas
+
+Hacer que se vayan apilando verticalmente si no caben (responsivo) -->
+
+<!-- SOLUCIÓN -->
+
+<div class="contenedor-actividades">
+    <div class="card">Spinning</div>
+    <div class="card">CrossFit</div>
+    <div class="card">Natación</div>
+  </div>
+  
+  <style>
+    .contenedor-actividades {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  
+    .card {
+      flex: 1 1 200px;
+      background-color: #e0e0e0;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+  

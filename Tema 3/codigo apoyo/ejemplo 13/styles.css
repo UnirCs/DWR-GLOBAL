@@ -1,0 +1,9 @@
+.card-actividad {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: var(--color-fondo);
+  }
+  

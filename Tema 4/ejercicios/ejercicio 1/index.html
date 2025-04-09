@@ -1,0 +1,38 @@
+<!-- Ejercicio 1: Crear una cuadrícula de actividades
+Enunciado:
+
+Crea un contenedor con 6 actividades que se distribuyan en una cuadrícula con 3 columnas. En pantallas pequeñas (menos de 768px), la rejilla debe adaptarse a 1 columna.
+
+Solución: -->
+
+<div class="grid-actividades">
+    <div class="actividad">Spinning</div>
+    <div class="actividad">CrossFit</div>
+    <div class="actividad">Natación</div>
+    <div class="actividad">Body Pump</div>
+    <div class="actividad">Yoga</div>
+    <div class="actividad">HIIT</div>
+  </div>
+  
+  <style>
+    .grid-actividades {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding: 1rem;
+    }
+  
+    .actividad {
+      background-color: #e0f7fa;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+  
+    @media (max-width: 768px) {
+      .grid-actividades {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  

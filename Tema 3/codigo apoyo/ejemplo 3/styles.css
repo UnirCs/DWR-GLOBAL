@@ -1,0 +1,8 @@
+.tarjeta {
+    flex: 1;
+    min-width: 200px;
+    background: #f4f4f4;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  

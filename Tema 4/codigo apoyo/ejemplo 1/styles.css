@@ -1,0 +1,40 @@
+.layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 80px 1fr 60px;
+    grid-template-areas:
+      "header header"
+      "nav main"
+      "footer footer";
+    height: 100vh;
+  }
+  
+  header {
+    grid-area: header;
+    background: #3e4e5e;
+    color: white;
+    padding: 1rem;
+  }
+  
+  nav {
+    grid-area: nav;
+    background: #dfe6ec;
+    padding: 1rem;
+  }
+  
+  main {
+    grid-area: main;
+    padding: 1rem;
+    background: #ffffff;
+  }
+  
+  footer {
+    grid-area: footer;
+    background: #3e4e5e;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+  }
+  
+
+  
