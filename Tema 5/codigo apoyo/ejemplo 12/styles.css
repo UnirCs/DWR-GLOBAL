@@ -1,0 +1,16 @@
+.layout-admin {
+    display: grid;
+    grid-template-areas:
+      "cabecera cabecera"
+      "menu contenido"
+      "pie pie";
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+  
+  .cabecera { grid-area: cabecera; background: #333; color: white; padding: 1rem; }
+  .menu     { grid-area: menu; background: #eee; padding: 1rem; }
+  .contenido{ grid-area: contenido; padding: 2rem; }
+  .pie      { grid-area: pie; background: #333; color: white; padding: 0.5rem; text-align: center; }
+  

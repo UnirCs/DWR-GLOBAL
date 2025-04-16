@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+    .layout-admin {
+      grid-template-areas:
+        "cabecera"
+        "contenido"
+        "menu"
+        "pie";
+      grid-template-columns: 1fr;
+    }
+  }
+  

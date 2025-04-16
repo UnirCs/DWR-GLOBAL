@@ -1,0 +1,7 @@
+.card-actividad {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 1rem;
+  }
+  

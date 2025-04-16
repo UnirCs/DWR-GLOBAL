@@ -1,0 +1,23 @@
+.detalle-actividad {
+    display: grid;
+    grid-template-areas: 
+      "imagen info"
+      "imagen boton";
+    grid-template-columns: 2fr 3fr;
+    gap: 2rem;
+  }
+  
+  .imagen { grid-area: imagen; }
+  .info   { grid-area: info; }
+  .boton  { grid-area: boton; }
+  
+  @media (max-width: 768px) {
+    .detalle-actividad {
+      grid-template-areas: 
+        "imagen"
+        "info"
+        "boton";
+      grid-template-columns: 1fr;
+    }
+  }
+  

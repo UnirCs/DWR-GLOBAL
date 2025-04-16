@@ -1,0 +1,47 @@
+<!-- Ejercicio 1: Rejilla de horarios semanales (actividades × franjas horarias)
+Enunciado:
+
+Crea un layout de cuadrícula que represente una tabla de reservas. Las columnas serán los días de la semana (L a V) y las filas las franjas horarias (por ejemplo: 08:00, 10:00, 12:00). Cada celda puede contener una actividad o estar vacía.
+
+Solución: -->
+
+<div class="horario">
+    <div class="hora">08:00</div>
+    <div class="actividad">Spinning</div>
+    <div class="actividad"></div>
+    <div class="actividad">CrossFit</div>
+    <div class="actividad"></div>
+    <div class="actividad"></div>
+  
+    <div class="hora">10:00</div>
+    <div class="actividad">Yoga</div>
+    <div class="actividad">Natación</div>
+    <div class="actividad"></div>
+    <div class="actividad">HIIT</div>
+    <div class="actividad"></div>
+  </div>
+  
+  <style>
+    .horario {
+      display: grid;
+      grid-template-columns: 100px repeat(5, 1fr); /* hora + 5 días */
+      gap: 0.5rem;
+      padding: 1rem;
+      align-items: center;
+    }
+  
+    .hora {
+      font-weight: bold;
+      text-align: right;
+      padding-right: 0.5rem;
+    }
+  
+    .actividad {
+      background: #e1f5fe;
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 6px;
+      min-height: 50px;
+    }
+  </style>
+  

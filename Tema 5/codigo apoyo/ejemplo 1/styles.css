@@ -1,0 +1,15 @@
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .tarjeta-actividad {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: #f2f2f2;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  

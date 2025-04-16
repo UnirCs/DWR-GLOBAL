@@ -1,0 +1,68 @@
+.grid-editar-actividad {
+    display: grid;
+    grid-template-areas:
+      "imagen titulo"
+      "imagen descripcion"
+      "imagen datos"
+      "imagen boton";
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+}
+
+/* Áreas específicas */
+.imagen      { grid-area: imagen; }
+.titulo      { grid-area: titulo; }
+.descripcion { grid-area: descripcion; }
+.datos       { grid-area: datos; }
+.boton       { grid-area: boton; }
+
+/* Estilos para los inputs y textarea */
+input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Ajustes para la imagen */
+.imagen img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+}
+
+/* Versión móvil */
+@media (max-width: 768px) {
+    .grid-editar-actividad {
+        grid-template-areas:
+          "imagen"
+          "titulo"
+          "descripcion"
+          "datos"
+          "boton";
+        grid-template-columns: 1fr;
+    }
+}

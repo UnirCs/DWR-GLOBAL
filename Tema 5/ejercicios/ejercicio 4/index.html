@@ -1,0 +1,42 @@
+<!-- Ejercicio 4: Layout complejo con cabecera, barra lateral y contenido
+Enunciado:
+
+Diseña el layout de una página de administración del gimnasio con:
+
+Cabecera superior
+
+Barra lateral izquierda
+
+Contenido principal (tabla o tarjetas)
+
+Pie de página
+
+Distribuye las áreas usando grid-template-areas.
+
+Solución: -->
+
+<div class="admin-layout">
+    <header class="cabecera">Gimnasio Admin</header>
+    <nav class="sidebar">Menú</nav>
+    <main class="contenido">Contenido principal</main>
+    <footer class="pie">© 2025 Gimnasio</footer>
+  </div>
+  
+  <style>
+    .admin-layout {
+      display: grid;
+      grid-template-areas:
+        "cabecera cabecera"
+        "sidebar contenido"
+        "pie pie";
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+    }
+  
+    .cabecera { grid-area: cabecera; background: #c5cae9; padding: 1rem; }
+    .sidebar { grid-area: sidebar; background: #d7ccc8; padding: 1rem; }
+    .contenido { grid-area: contenido; padding: 1rem; }
+    .pie { grid-area: pie; background: #eeeeee; padding: 0.5rem; text-align: center; }
+  </style>
+  

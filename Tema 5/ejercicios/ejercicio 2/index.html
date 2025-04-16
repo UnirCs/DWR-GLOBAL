@@ -1,0 +1,64 @@
+<!-- Ejercicio 2: Adaptación de la cuadrícula con Media Queries
+Enunciado:
+
+Modifica la cuadrícula del ejercicio anterior para que:
+
+En pantallas menores a 768px, solo se muestren las columnas "Hora" y "Lunes".
+
+A partir de 768px, se muestren todas las columnas.
+
+Solución: -->
+
+<div class="horario">
+    <div class="hora">08:00</div>
+    <div class="actividad">Spinning</div>
+    <div class="actividad"></div>
+    <div class="actividad">CrossFit</div>
+    <div class="actividad"></div>
+    <div class="actividad"></div>
+  
+    <div class="hora">10:00</div>
+    <div class="actividad">Yoga</div>
+    <div class="actividad">Natación</div>
+    <div class="actividad"></div>
+    <div class="actividad">HIIT</div>
+    <div class="actividad"></div>
+  </div>
+
+  <style>
+    .horario {
+      display: grid;
+      grid-template-columns: 100px repeat(5, 1fr); /* hora + 5 días */
+      gap: 0.5rem;
+      padding: 1rem;
+      align-items: center;
+    }
+  
+    .hora {
+      font-weight: bold;
+      text-align: right;
+      padding-right: 0.5rem;
+    }
+  
+    .actividad {
+      background: #e1f5fe;
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 6px;
+      min-height: 50px;
+    }
+
+    @media (max-width: 768px) {
+  .horario {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .horario .actividad:nth-child(3n+3),
+  .horario .actividad:nth-child(3n+4),
+  .horario .actividad:nth-child(3n+5),
+  .horario .actividad:nth-child(3n+6) {
+    display: none;
+  }
+}
+
+  </style>
