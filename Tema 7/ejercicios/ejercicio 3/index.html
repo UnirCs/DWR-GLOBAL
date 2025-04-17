@@ -1,0 +1,29 @@
+<!-- Ejercicio 3: Formulario de reserva estilizado
+Enunciado:
+Crea un formulario de reserva con dos campos (nombre e email) y un botón de envío. Debe estar centrado, tener espacio entre los elementos y estilos visuales limpios.
+
+Solución: -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio 3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 py-10">
+  <form class="max-w-md mx-auto space-y-4 bg-white shadow-md p-6 rounded">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Nombre</label>
+      <input type="text" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Email</label>
+      <input type="email" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
+      Confirmar reserva
+    </button>
+  </form>
+</body>
+</html>

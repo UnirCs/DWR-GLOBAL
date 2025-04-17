@@ -1,0 +1,13 @@
+@layer components {
+    .card-actividad {
+      @apply bg-white rounded-xl shadow-md p-6;
+    }
+  
+    .card-actividad h3 {
+      @apply text-lg font-bold text-gray-800;
+    }
+  
+    .card-actividad p {
+      @apply text-sm text-gray-600 mt-2;
+    }
+  }
