@@ -1,0 +1,7 @@
+
+// _mixins.scss
+@mixin tarjeta {
+    border-radius: $radio;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }

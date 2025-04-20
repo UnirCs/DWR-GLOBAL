@@ -1,0 +1,10 @@
+$actividades: ("spinning", "crossfit", "body-pump", "natacion");
+
+@each $actividad in $actividades {
+  .tarjeta-#{$actividad} {
+    background-image: url("/img/#{$actividad}.jpg");
+    background-size: cover;
+    border-radius: 12px;
+    padding: espaciado(4);
+  }
+}

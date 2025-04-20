@@ -1,0 +1,22 @@
+// _tarjeta-actividad.scss
+.tarjeta-actividad {
+    background-color: $color-secundario;
+    border-radius: 8px;
+    padding: $tamano-padding;
+    font-family: $tipografia-base;
+  
+    h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+  
+    .descripcion {
+      color: darken($color-secundario, 20%);
+    }
+  
+    .boton-reservar {
+      @include boton-animado;
+      margin-top: 1rem;
+    }
+  }
+  

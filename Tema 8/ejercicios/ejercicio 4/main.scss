@@ -1,0 +1,22 @@
+// Ejercicio 4: Bucle para generar clases por tipo de actividad
+// Enunciado:
+
+// Usa un bucle @each para generar clases dinámicas con diferentes colores por tipo de actividad (spinning, yoga, hiit).
+// Como SASS se compila a CSS, los ejemplos están en formato .scss. Puedes usar SassMeister o compilar localmente con herramientas como sass o vite.
+
+// Solución:
+
+$actividades: (
+  spinning: #ffab91,
+  yoga: #aed581,
+  hiit: #81d4fa
+);
+
+@each $actividad, $color in $actividades {
+  .actividad-#{$actividad} {
+    background-color: $color;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,20 @@
+// Ejercicio 5: Modularizar código en varios archivos
+// Enunciado:
+
+// Divide el código SCSS en módulos y crea un archivo principal que importe todos. Por ejemplo:
+
+// _variables.scss → variables y colores
+
+// _mixins.scss → mixins
+
+// _tarjetas.scss → estilos de tarjetas
+
+// main.scss → archivo principal que los importe
+
+// Solución:
+
+@import 'variables';
+@import 'mixins';
+@import 'tarjetas';
+
+  

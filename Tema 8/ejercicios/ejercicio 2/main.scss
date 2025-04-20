@@ -1,0 +1,23 @@
+// Ejercicio 2: Crear un mixin para tarjetas reutilizables
+// Enunciado:
+
+// Define un mixin llamado tarjeta() que aplique estilo común a todas las tarjetas de actividades. Úsalo en dos componentes distintos: .tarjeta-actividad y .tarjeta-profesor.
+// Como SASS se compila a CSS, los ejemplos están en formato .scss. Puedes usar SassMeister o compilar localmente con herramientas como sass o vite.
+
+// Solución:
+@mixin tarjeta($bg-color) {
+    background-color: $bg-color;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+  }
+  
+  .tarjeta-actividad {
+    @include tarjeta(#fff3e0);
+  }
+  
+  .tarjeta-profesor {
+    @include tarjeta(#e0f7fa);
+  }
+  

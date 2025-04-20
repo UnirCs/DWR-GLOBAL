@@ -1,0 +1,13 @@
+// _tarjetaActividad.scss
+.tarjeta-actividad {
+    background-color: $color-crossfit;
+    font-family: $fuente-base;
+    padding: $padding-base;
+    border-radius: 8px;
+    @include sombra;
+  
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  }

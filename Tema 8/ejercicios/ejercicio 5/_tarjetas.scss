@@ -1,0 +1,6 @@
+// _tarjetas.scss
+.tarjeta {
+    @include tarjeta;
+    background-color: lighten($color-boton, 45%);
+  }
+  

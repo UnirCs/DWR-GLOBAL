@@ -1,0 +1,16 @@
+@import 'variables';
+// layout.scss
+.layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+  
+    .sidebar {
+      padding: $tamano-padding;
+      background-color: lighten($color-principal, 10%);
+    }
+  
+    .contenido {
+      padding: $tamano-padding;
+    }
+  }
