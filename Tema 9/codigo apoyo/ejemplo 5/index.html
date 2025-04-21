@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actividades destacadas</title>
+  <style>
+    .actividad {
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .actividad:focus {
+      outline: 2px solid #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div role="region" aria-labelledby="panel-actividades">
+    <h2 id="panel-actividades">Actividades destacadas</h2>
+    <ul>
+      <li>
+        <div class="actividad" role="button" tabindex="0" aria-label="Reservar clase de CrossFit">
+          CrossFit (10:00 - 11:00)
+        </div>
+      </li>
+      <li>
+        <div class="actividad" role="button" tabindex="0" aria-label="Reservar clase de Yoga">
+          Yoga (11:30 - 12:30)
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

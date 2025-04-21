@@ -1,0 +1,25 @@
+<!-- Ejercicio 2: Formulario accesible para realizar una reserva
+Enunciado:
+
+Crea un formulario accesible con campos etiquetados correctamente para que los lectores de pantalla puedan interpretarlos sin problemas.
+
+Solución:
+
+ -->
+
+ <form aria-label="Formulario de reserva de actividad">
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" name="nombre" type="text" />
+  
+    <label for="actividad">Actividad:</label>
+    <select id="actividad" name="actividad">
+      <option value="spinning">Spinning</option>
+      <option value="yoga">Yoga</option>
+    </select>
+  
+    <label for="hora">Hora:</label>
+    <input id="hora" name="hora" type="time" />
+  
+    <button type="submit">Enviar</button>
+  </form>
+  

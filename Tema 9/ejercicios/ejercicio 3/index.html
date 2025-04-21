@@ -1,0 +1,25 @@
+<!-- Ejercicio 3: Botón visual con icono + texto accesible
+Enunciado:
+
+Crea un botón de cancelación de reserva con un icono de papelera. Asegúrate de que sea accesible para usuarios de lectores de pantalla.
+
+Solución: -->
+
+<button aria-label="Cancelar reserva">
+    <span class="visually-hidden">Cancelar</span>
+    🗑️
+  </button>
+  
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+  

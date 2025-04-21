@@ -1,0 +1,8 @@
+.alerta-exito {
+    background-color: #d4f7dc; /* Verde claro */
+    border-left: 4px solid #38a169; /* Borde verde */
+    color: #276749; /* Texto verde oscuro */
+    padding: 1rem; /* Espaciado interno */
+    font-family: Arial, sans-serif; /* Fuente */
+    border-radius: 5px; /* Bordes redondeados */
+  }

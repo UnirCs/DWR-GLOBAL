@@ -1,0 +1,24 @@
+form {
+    max-width: 400px;
+    margin: 2rem auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  p {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
