@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navegación accesible</title>
+  <style>
+    nav ul { list-style: none; padding: 0; }
+    nav li { margin-bottom: 0.5rem; }
+    a { text-decoration: none; color: #0077cc; }
+  </style>
+</head>
+<body>
+
+  <header role="banner">
+    <h1>Gimnasio FitLife</h1>
+  </header>
+
+  <nav role="navigation" aria-label="Menú principal">
+    <ul>
+      <li><a href="/inicio">Inicio</a></li>
+      <li><a href="/actividades">Actividades</a></li>
+      <li><a href="/reservas">Reservas</a></li>
+      <li><a href="/contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main role="main">
+    <h2>Reserva tu próxima clase</h2>
+    <p>Selecciona una actividad y una hora para confirmar tu asistencia.</p>
+  </main>
+
+</body>
+</html>

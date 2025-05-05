@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alerta accesible</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    .alerta {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Formulario de contacto</h1>
+  <button onclick="mostrarAlerta()">Enviar</button>
+
+  <div id="alerta" class="alerta" aria-live="assertive"></div>
+
+  <script>
+    function mostrarAlerta() {
+      const div = document.getElementById('alerta');
+      div.textContent = "Tu mensaje se ha enviado correctamente.";
+    }
+  </script>
+
+</body>
+</html>

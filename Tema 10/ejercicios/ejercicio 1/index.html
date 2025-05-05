@@ -1,0 +1,47 @@
+<!-- Ejercicio 1: Detectar y corregir errores comunes de accesibilidad
+Enunciado:
+
+Corrige los siguientes errores de accesibilidad detectados en este fragmento: -->
+
+<form>
+    <input type="text" placeholder="Nombre completo">
+    <select>
+      <option>Yoga</option>
+      <option>Spinning</option>
+    </select>
+    <button>Enviar</button>
+  </form>
+  
+  <!-- Errores:
+
+- El input no tiene etiqueta <label>.
+
+- El select no está asociado a una etiqueta.
+
+- El botón no tiene definido su tipo (type="submit"). -->
+
+<!-- Solución: -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario Accesible</title>
+</head>
+<body>
+
+  <form aria-label="Formulario de reserva">
+    <label for="nombre">Nombre completo</label>
+    <input id="nombre" name="nombre" type="text" />
+
+    <label for="actividad">Selecciona una actividad</label>
+    <select id="actividad" name="actividad">
+      <option>Yoga</option>
+      <option>Spinning</option>
+    </select>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+</body>
+</html>

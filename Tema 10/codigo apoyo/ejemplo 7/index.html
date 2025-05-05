@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pestañas accesibles</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .tabs button[aria-selected="true"] {
+      background-color: #0077cc;
+      color: white;
+    }
+    .tabpanel { display: none; }
+    .tabpanel[aria-hidden="false"] { display: block; }
+  </style>
+</head>
+<body>
+
+  <h1>Información de actividades</h1>
+
+  <div role="tablist" aria-label="Actividades disponibles" class="tabs">
+    <button role="tab" id="tab1" aria-controls="panel1" aria-selected="true" tabindex="0">Spinning</button>
+    <button role="tab" id="tab2" aria-controls="panel2" aria-selected="false" tabindex="-1">CrossFit</button>
+    <button role="tab" id="tab3" aria-controls="panel3" aria-selected="false" tabindex="-1">Natación</button>
+  </div>
+
+  <div id="panel1" role="tabpanel" aria-labelledby="tab1" aria-hidden="false" class="tabpanel">
+    <p>Clases de ciclismo indoor con intensidad variable, al ritmo de la música.</p>
+  </div>
+  <div id="panel2" role="tabpanel" aria-labelledby="tab2" aria-hidden="true" class="tabpanel">
+    <p>Entrenamientos funcionales de alta intensidad que combinan fuerza y cardio.</p>
+  </div>
+  <div id="panel3" role="tabpanel" aria-labelledby="tab3" aria-hidden="true" class="tabpanel">
+    <p>Sesiones dirigidas de natación para todos los niveles, con monitores especializados.</p>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('[role="tab"]');
+    const panels = document.querySelectorAll('[role="tabpanel"]');
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => activarTab(i));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') activarTab((i + 1) % tabs.length);
+        if (e.key === 'ArrowLeft') activarTab((i - 1 + tabs.length) % tabs.length);
+      });
+    });
+
+    function activarTab(index) {
+      tabs.forEach((tab, i) => {
+        const selected = i === index;
+        tab.setAttribute('aria-selected', selected);
+        tab.setAttribute('tabindex', selected ? '0' : '-1');
+        panels[i].setAttribute('aria-hidden', !selected);
+      });
+      tabs[index].focus();
+    }
+  </script>
+
+</body>
+</html>

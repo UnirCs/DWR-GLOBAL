@@ -1,0 +1,57 @@
+<!-- Ejercicio 4: Modal accesible con ARIA
+Enunciado:
+
+Mejora el siguiente modal básico para que cumpla con las buenas prácticas de accesibilidad, usando ARIA: -->
+
+<div class="modal">
+    <div class="modal-content">
+      <p>Confirmar reserva</p>
+      <button>Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Solución: -->
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Modal accesible</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      .modal {
+        display: block;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 300px;
+        max-width: 90%;
+      }
+      button {
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div class="modal" id="miModal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+      <div class="modal-content">
+        <h2 id="modalTitulo">Confirmar reserva</h2>
+        <p>¿Quieres confirmar tu reserva para Spinning?</p>
+        <button type="button" aria-label="Cerrar modal">Cerrar</button>
+      </div>
+    </div>
+  
+  </body>
+  </html>
+  

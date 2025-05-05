@@ -1,0 +1,34 @@
+<!-- Ejercicio 3: Corregir evento no accesible
+Enunciado:
+
+Corrige el siguiente elemento que usa onclick sin permitir interacción por teclado: -->
+
+<div onclick="cancelarReserva()">Cancelar</div>
+
+<!-- Solución: -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Elemento interactivo accesible</title>
+  <script>
+    function cancelarReserva() {
+      alert("Reserva cancelada");
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Versión accesible mínima (mejor que usar un <div> a pelo) -->
+  <div role="button" tabindex="0" onclick="cancelarReserva()" onkeypress="if(event.key === 'Enter') cancelarReserva()">
+    Cancelar (accesible con div)
+  </div>
+
+  <br><br>
+
+  <!-- Versión recomendada: usar un <button> real -->
+  <button onclick="cancelarReserva()">Cancelar (botón recomendado)</button>
+
+</body>
+</html>

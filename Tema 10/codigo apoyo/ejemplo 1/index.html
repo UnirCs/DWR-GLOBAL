@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario accesible</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 1rem; }
+    label { display: block; margin-top: 1rem; }
+    input, select, button { margin-top: 0.5rem; width: 100%; padding: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <h1>Reserva tu clase</h1>
+  <form>
+    <label for="nombre">Nombre completo</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <label for="actividad">Actividad</label>
+    <select id="actividad" name="actividad">
+      <option value="spinning">Spinning</option>
+      <option value="crossfit">Crossfit</option>
+      <option value="natacion">Natación</option>
+    </select>
+
+    <button type="submit">Reservar plaza</button>
+  </form>
+
+</body>
+</html>
