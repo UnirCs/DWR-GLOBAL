@@ -1,0 +1,274 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+header {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  color: #667eea;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+section {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #764ba2;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 10px;
+}
+
+h3 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.intro p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Grid de unidades */
+.unidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 20px;
+}
+
+.unidad {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.unidad:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  border-color: #667eea;
+}
+
+.ejemplo {
+  background: #fff;
+  padding: 5px;
+  border-radius: 8px;
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  border: 2px dashed #ddd;
+}
+
+.caja {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Tamaños específicos para cada unidad */
+.caja-px {
+  width: 100px;
+  height: 100px;
+}
+
+.caja-cm {
+  width: 5cm;
+  height: 3cm;
+}
+
+.caja-mm {
+  width: 30mm;
+  height: 20mm;
+}
+
+.caja-q {
+  width: 100Q;
+  height: 80Q;
+}
+
+.caja-in {
+  width: 2in;
+  height: 1.5in;
+}
+
+.caja-pc {
+  width: 10pc;
+  height: 8pc;
+}
+
+.caja-pt {
+  width: 100pt;
+  height: 80pt;
+}
+
+.descripcion {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.8;
+}
+
+.descripcion strong {
+  color: #667eea;
+  font-size: 1.1rem;
+}
+
+/* Tabla de comparación */
+.comparacion {
+  background: linear-gradient(to right, #f8f9fa, #fff);
+}
+
+.tabla-comparacion {
+  display: grid;
+  grid-template-columns: 120px 150px 1fr;
+  gap: 15px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.fila-header {
+  display: contents;
+}
+
+.fila-header > span {
+  font-weight: bold;
+  color: #667eea;
+  padding: 10px;
+  background: #f0f4ff;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.fila {
+  display: contents;
+}
+
+.fila > span {
+  display: flex;
+  align-items: center;
+}
+
+.unidad-nombre {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #764ba2;
+  background: #faf0ff;
+  border-radius: 5px;
+}
+
+.equivalencia {
+  color: #666;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.barra {
+  height: 30px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.barra-1px { width: 1px; min-width: 1px; height: 1px; }
+.barra-1pt { width: 1pt; height: 1pt; }
+.barra-1pc { width: 1pc; height: 1pc; }
+.barra-1mm { width: 1mm; height: 1mm; }
+.barra-1cm { width: 1cm; height: 1cm; }
+.barra-1in { width: 1in; height: 1in; }
+
+/* Consejos */
+.consejos {
+  background: linear-gradient(135deg, #fff5e6, #fff);
+}
+
+.consejos ul {
+  list-style: none;
+  padding: 0;
+}
+
+.consejos li {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  border-left: 4px solid #667eea;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.consejos li:last-child {
+  border-left-color: #e74c3c;
+}
+
+footer {
+  text-align: center;
+  color: white;
+  padding: 20px;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .unidades {
+    grid-template-columns: 1fr;
+  }
+
+  .tabla-comparacion {
+    grid-template-columns: 80px 100px 1fr;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Unidades de Longitud Absolutas en CSS</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <h1>Unidades de Longitud Absolutas en CSS</h1>
+            <p class="subtitle">Las unidades absolutas tienen un tamaño fijo independiente del contexto</p>
+        </header>
+
+        <main>
+            <section class="intro">
+                <h2>¿Qué son las unidades absolutas?</h2>
+                <p>Las unidades absolutas representan medidas físicas reales. Son útiles cuando se conoce el medio de salida (como impresión), pero pueden causar problemas de accesibilidad en pantallas.</p>
+            </section>
+
+            <section class="unidades">
+                <div class="unidad">
+                    <h3>Píxeles (px)</h3>
+                    <div class="ejemplo px-ejemplo">
+                        <div class="caja caja-px">100px × 100px</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1px</strong> = 1/96 de pulgada<br>
+                        La unidad más común en diseño web. Representa un punto en la pantalla.
+                    </p>
+                </div>
+
+                <div class="unidad">
+                    <h3>Centímetros (cm)</h3>
+                    <div class="ejemplo cm-ejemplo">
+                        <div class="caja caja-cm">5cm × 3cm</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1cm</strong> = 96px/2.54 ≈ 37.8px<br>
+                        Útil para medios impresos. En pantalla, depende de la resolución.
+                    </p>
+                </div>
+
+                <div class="unidad">
+                    <h3>Milímetros (mm)</h3>
+                    <div class="ejemplo mm-ejemplo">
+                        <div class="caja caja-mm">30mm × 20mm</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1mm</strong> = 1/10 de 1cm ≈ 3.78px<br>
+                        Milímetros, útil para diseños de impresión precisos.
+                    </p>
+                </div>
+
+                <div class="unidad">
+                    <h3>Quarter-millimeters (Q)</h3>
+                    <div class="ejemplo q-ejemplo">
+                        <div class="caja caja-q">100Q × 80Q</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1Q</strong> = 1/40 de 1cm ≈ 0.945px<br>
+                        Un cuarto de milímetro. Unidad muy precisa para impresión.
+                    </p>
+                </div>
+
+                <div class="unidad">
+                    <h3>Pulgadas (in)</h3>
+                    <div class="ejemplo in-ejemplo">
+                        <div class="caja caja-in">2in × 1.5in</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1in</strong> = 96px = 2.54cm<br>
+                        Pulgadas, medida estándar en impresión (especialmente en EE.UU.).
+                    </p>
+                </div>
+
+                <div class="unidad">
+                    <h3>Picas (pc)</h3>
+                    <div class="ejemplo pc-ejemplo">
+                        <div class="caja caja-pc">10pc × 8pc</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1pc</strong> = 1/6 de 1in = 16px<br>
+                        Picas, unidad tipográfica tradicional usada en impresión.
+                    </p>
+                </div>
+
+                <div class="unidad">
+                    <h3>Puntos (pt)</h3>
+                    <div class="ejemplo pt-ejemplo">
+                        <div class="caja caja-pt">100pt × 80pt</div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1pt</strong> = 1/72 de 1in ≈ 1.33px<br>
+                        Puntos, la unidad estándar para tamaños de fuente en impresión.
+                    </p>
+                </div>
+            </section>
+
+            <section class="comparacion">
+                <h2>Comparación Visual</h2>
+                <div class="tabla-comparacion">
+                    <div class="fila-header">
+                        <span>Unidad</span>
+                        <span>Equivalencia</span>
+                        <span>Visualización</span>
+                    </div>
+                    <div class="fila">
+                        <span class="unidad-nombre">1 px</span>
+                        <span class="equivalencia">1 píxel</span>
+                        <span class="barra barra-1px"></span>
+                    </div>
+                    <div class="fila">
+                        <span class="unidad-nombre">1 pt</span>
+                        <span class="equivalencia">≈ 1.33 px</span>
+                        <span class="barra barra-1pt"></span>
+                    </div>
+                    <div class="fila">
+                        <span class="unidad-nombre">1 pc</span>
+                        <span class="equivalencia">16 px</span>
+                        <span class="barra barra-1pc"></span>
+                    </div>
+                    <div class="fila">
+                        <span class="unidad-nombre">1 mm</span>
+                        <span class="equivalencia">≈ 3.78 px</span>
+                        <span class="barra barra-1mm"></span>
+                    </div>
+                    <div class="fila">
+                        <span class="unidad-nombre">1 cm</span>
+                        <span class="equivalencia">≈ 37.8 px</span>
+                        <span class="barra barra-1cm"></span>
+                    </div>
+                    <div class="fila">
+                        <span class="unidad-nombre">1 in</span>
+                        <span class="equivalencia">96 px</span>
+                        <span class="barra barra-1in"></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="consejos">
+                <h2>💡 Consejos de Uso</h2>
+                <ul>
+                    <li><strong>Píxeles (px):</strong> La más usada en web. Buena para elementos que necesitan tamaño preciso.</li>
+                    <li><strong>Puntos (pt):</strong> Ideal para hojas de estilo de impresión (@media print).</li>
+                    <li><strong>cm, mm, in:</strong> Útiles para diseños que se imprimirán físicamente.</li>
+                    <li><strong>⚠️ Accesibilidad:</strong> Las unidades absolutas pueden dificultar el zoom y la accesibilidad. Considera usar unidades relativas para texto.</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>Ejemplo didáctico de unidades de longitud absolutas en CSS</p>
+        </footer>
+    </body>
+</html>
+

@@ -1,0 +1,40 @@
+/* Estilos para tablets (600px - 1024px) */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px 40px;
+  background-color: #e8f5e9;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #1b5e20;
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 3px solid #4caf50;
+  padding-bottom: 15px;
+}
+
+.actividad {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #4caf50;
+}
+
+.actividad h2 {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.actividad p {
+  font-size: 1rem;
+  color: #424242;
+  margin: 0;
+  line-height: 1.6;
+}
+

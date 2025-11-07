@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Unidades de Longitud Relativas en CSS</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <h1>Unidades de Longitud Relativas en CSS</h1>
+            <p class="subtitle">Las unidades relativas se adaptan al contexto y mejoran la accesibilidad</p>
+        </header>
+
+        <main>
+            <section class="intro">
+                <h2>¿Qué son las unidades relativas?</h2>
+                <p>Las unidades relativas se calculan en relación a otro valor (fuente, viewport, etc.). Son
+                    fundamentales para crear diseños responsive y accesibles que se adapten a diferentes tamaños de
+                    pantalla y preferencias de usuario.</p>
+            </section>
+
+            <!-- Unidades relativas a la fuente -->
+            <section class="categoria">
+                <h2>📝 Unidades Relativas a la Fuente</h2>
+
+                <div class="unidad-explicacion">
+                    <h3>em - Relativo al tamaño de fuente del elemento padre</h3>
+                    <div class="ejemplo-interactivo">
+                        <div class="padre-em">
+                            <p class="info">Padre con font-size: 20px</p>
+                            <div class="hijo-em">1em = 20px</div>
+                            <div class="hijo-em hijo-em-2">2em = 40px</div>
+                            <div class="hijo-em hijo-em-05">0.5em = 10px</div>
+                        </div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>em</strong> es relativo al tamaño de fuente del elemento padre.
+                        Si anidas elementos, los valores se multiplican (compounding effect).
+                    </p>
+                    <div class="ejemplo-codigo">
+                        <code>
+                            .padre { font-size: 20px; }<br>
+                            .hijo { font-size: 2em; } /* 40px */
+                        </code>
+                    </div>
+                </div>
+
+                <div class="unidad-explicacion">
+                    <h3>rem - Relativo al tamaño de fuente del elemento raíz (html)</h3>
+                    <div class="ejemplo-interactivo">
+                        <div class="padre-rem">
+                            <p class="info">Elemento raíz (html) con font-size: 16px (por defecto)</p>
+                            <div class="hijo-rem">1rem = 16px</div>
+                            <div class="hijo-rem hijo-rem-2">2rem = 32px</div>
+                            <div class="hijo-rem hijo-rem-15">1.5rem = 24px</div>
+                        </div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>rem</strong> (root em) siempre es relativo al elemento raíz &lt;html&gt;.
+                        No sufre el efecto compuesto, lo que lo hace más predecible.
+                    </p>
+                    <div class="ejemplo-codigo">
+                        <code>
+                            html { font-size: 16px; }<br>
+                            .texto { font-size: 1.5rem; } /* 24px */
+                        </code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unidades relativas al viewport -->
+            <section class="categoria">
+                <h2>🖥️ Unidades Relativas al Viewport</h2>
+
+                <div class="unidad-explicacion">
+                    <h3>vw - Viewport Width (1% del ancho del viewport)</h3>
+                    <div class="ejemplo-interactivo viewport-demo">
+                        <div class="caja-viewport caja-viewport-50vw">
+                            50vw = 50% del ancho
+                        </div>
+                        <div class="caja-viewport caja-viewport-75vw">
+                            75vw = 75% del ancho
+                        </div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1vw</strong> = 1% del ancho del viewport.
+                        Ideal para elementos que deben ocupar un porcentaje específico del ancho de la ventana.
+                    </p>
+                </div>
+
+                <div class="unidad-explicacion">
+                    <h3>vh - Viewport Height (1% del alto del viewport)</h3>
+                    <div class="ejemplo-interactivo viewport-demo-vertical">
+                        <div class="contenedor-vh">
+                            <div class="caja-vh caja-vh-10">10vh</div>
+                            <div class="caja-vh caja-vh-20">20vh</div>
+                            <div class="caja-vh caja-vh-15">15vh</div>
+                        </div>
+                    </div>
+                    <p class="descripcion">
+                        <strong>1vh</strong> = 1% del alto del viewport.
+                        Perfecto para secciones que ocupan toda la altura de la pantalla.
+                    </p>
+                    <div class="ejemplo-codigo">
+                        <code>
+                            .seccion-completa { min-height: 100vh; } /* Ocupa toda la pantalla */
+                        </code>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <p>Ejemplo didáctico de unidades de longitud relativas en CSS</p>
+                <p class="footer-nota">Redimensiona la ventana para ver cómo se adaptan las unidades del viewport</p>
+            </footer>
+        </main>
+    </body>
+</html>

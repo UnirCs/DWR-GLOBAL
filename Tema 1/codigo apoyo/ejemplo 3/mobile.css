@@ -1,0 +1,37 @@
+/* Estilos para móviles (< 600px) */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  background-color: #f0f8ff;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.actividad {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.actividad h2 {
+  font-size: 1.2rem;
+  color: #e74c3c;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.actividad p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
