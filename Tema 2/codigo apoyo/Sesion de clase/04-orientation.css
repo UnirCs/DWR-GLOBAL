@@ -1,0 +1,689 @@
+/* ===================================
+   ESTILOS BASE
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    font-size: 1rem;
+}
+
+header {
+    background: linear-gradient(135deg, #e17055 0%, #fdcb6e 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    opacity: 0.95;
+}
+
+main {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+}
+
+section {
+    background: white;
+    margin-bottom: 1.25rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+}
+
+h3 {
+    color: #555;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+p {
+    margin-bottom: 0.75rem;
+    color: #666;
+}
+
+.tech-info {
+    background-color: #2d3436;
+    color: #00b894;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-family: 'Courier New', monospace;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+/* Ocultar indicadores por defecto */
+.portrait-mode,
+.landscape-mode,
+.portrait-video,
+.landscape-video,
+.portrait-game,
+.landscape-game,
+.portrait-chart,
+.landscape-chart,
+.portrait-reading,
+.landscape-reading,
+.portrait-hint,
+.landscape-hint,
+.portrait-only,
+.landscape-only {
+    display: none;
+}
+
+.device-frame {
+    border: 0.5rem solid #2d3436;
+    border-radius: 1rem;
+    background-color: #dfe6e9;
+    margin: 1rem auto;
+    text-align: center;
+    position: relative;
+}
+
+.device-frame.portrait {
+    width: 8rem;
+    height: 14rem;
+}
+
+.device-frame.landscape {
+    width: 14rem;
+    height: 8rem;
+}
+
+.screen {
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    font-weight: bold;
+    color: #2d3436;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding-top: 20%;
+}
+
+.use-case-grid {
+    margin-top: 1.5rem;
+}
+
+.use-case-grid::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.use-case {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 0.25rem solid #e17055;
+    margin-bottom: 1.5rem;
+}
+
+.syntax-examples {
+    margin-top: 1.5rem;
+}
+
+.syntax-examples::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.syntax-card {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+pre {
+    background-color: #2d3436;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    margin-top: 0.75rem;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+}
+
+.tip-box {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    border-left: 0.25rem solid #e17055;
+}
+
+.tip-box h3 {
+    color: #2d3436;
+    margin-bottom: 0.75rem;
+}
+
+.tip-box p {
+    color: #2d3436;
+    margin-bottom: 0.75rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #2d3436;
+    color: white;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* ===================================
+   PORTRAIT (VERTICAL)
+   La altura es mayor que el ancho
+   =================================== */
+@media (orientation: portrait) {
+    .portrait-mode {
+        display: block;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        text-align: center;
+    }
+
+    .portrait-mode .icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+        color: white;
+    }
+
+    /* Casos de uso en portrait */
+    .portrait-video,
+    .portrait-game,
+    .portrait-chart,
+    .portrait-reading {
+        display: block;
+    }
+
+    .video-demo {
+        margin: 1rem 0;
+    }
+
+    .video-player {
+        background-color: #000;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        color: white;
+        position: relative;
+    }
+
+    .play-button {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .game-demo {
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #dfe6e9;
+        border-radius: 0.5rem;
+    }
+
+    .game-screen {
+        background-color: #2d3436;
+        padding: 3rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .controls.vertical {
+        text-align: center;
+    }
+
+    .controls.vertical > button {
+        display: block;
+        margin: 0.5rem auto;
+    }
+
+    .horizontal-controls {
+        text-align: center;
+        margin: 0.5rem 0;
+    }
+
+    .horizontal-controls button {
+        display: inline-block;
+        margin: 0 0.25rem;
+    }
+
+    .controls button {
+        background-color: #0984e3;
+        color: white;
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        font-size: 1.25rem;
+        cursor: pointer;
+    }
+
+    .chart-demo {
+        margin: 1rem 0;
+    }
+
+    .chart.vertical-chart {
+        height: 12rem;
+        background-color: #dfe6e9;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .bar {
+        background: linear-gradient(to top, #0984e3, #74b9ff);
+        width: 3rem;
+        border-radius: 0.25rem;
+        display: inline-block;
+        vertical-align: bottom;
+        margin: 0 0.25rem;
+    }
+
+    .reading-demo {
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #dfe6e9;
+        border-radius: 0.5rem;
+    }
+
+    .text-column.single {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+    }
+
+    .layout-info {
+        text-align: center;
+        margin-top: 0.5rem;
+        font-weight: bold;
+        color: #2d3436;
+    }
+
+
+    .portrait-hint {
+        display: block;
+        background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 1.125rem;
+        font-weight: bold;
+        animation: pulse 2s infinite;
+    }
+
+    .portrait-only {
+        display: block;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+}
+
+/* ===================================
+   LANDSCAPE (HORIZONTAL)
+   El ancho es mayor que la altura
+   =================================== */
+@media (orientation: landscape) {
+    .landscape-mode {
+        display: block;
+        background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        text-align: center;
+    }
+
+    .landscape-mode .icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        color: white;
+    }
+
+    /* Casos de uso en landscape */
+    .landscape-video,
+    .landscape-game,
+    .landscape-chart,
+    .landscape-reading {
+        display: block;
+    }
+
+    .video-demo {
+        margin: 1rem 0;
+    }
+
+    .video-player {
+        background-color: #000;
+        padding: 4rem 2rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        color: white;
+        position: relative;
+    }
+
+    .play-button {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .game-demo {
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #dfe6e9;
+        border-radius: 0.5rem;
+        overflow: hidden; /* clearfix */
+    }
+
+    .game-demo::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .game-screen {
+        background-color: #2d3436;
+        padding: 2rem 4rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 3rem;
+        float: left;
+        width: 50%;
+        margin: 0 1%;
+    }
+
+    .controls.horizontal-left {
+        float: left;
+        width: 20%;
+        margin-right: 2%;
+    }
+
+    .controls.horizontal-left button,
+    .controls.horizontal-right button {
+        display: block;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    .controls.horizontal-right {
+        float: right;
+        width: 20%;
+        margin-left: 2%;
+    }
+
+    .controls button {
+        background-color: #e84393;
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        min-width: 3rem;
+    }
+
+    .chart-demo {
+        margin: 1rem 0;
+    }
+
+    .chart.horizontal-chart {
+        background-color: #dfe6e9;
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .bar-h {
+        background: linear-gradient(to right, #e84393, #fd79a8);
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+        color: white;
+        font-weight: bold;
+        text-align: right;
+        margin-bottom: 0.5rem;
+    }
+
+    .bar-h:last-child {
+        margin-bottom: 0;
+    }
+
+    .reading-demo {
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #dfe6e9;
+        border-radius: 0.5rem;
+    }
+
+    .text-columns {
+        overflow: hidden; /* clearfix */
+    }
+
+    .text-columns::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .text-column {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+    }
+
+    .text-column:last-child {
+        margin-right: 0;
+    }
+
+    .layout-info {
+        text-align: center;
+        margin-top: 0.5rem;
+        font-weight: bold;
+        color: #2d3436;
+    }
+
+    /* Dos columnas con float */
+    .use-case {
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+    }
+
+    .use-case:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .use-case:nth-child(2n+1) {
+        clear: left; /* Forzar nueva fila en elementos impares */
+    }
+
+    .syntax-card {
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+    }
+
+    .syntax-card:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .syntax-card:nth-child(2n+1) {
+        clear: left; /* Forzar nueva fila en elementos impares */
+    }
+
+    .landscape-hint {
+        display: block;
+        background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 1.125rem;
+        font-weight: bold;
+        animation: pulse 2s infinite;
+        clear: both; /* Asegurar que no flote */
+    }
+
+    .landscape-only {
+        display: block;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    /* Optimización para landscape: reducir altura del header */
+    header {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* ===================================
+   COMBINACIÓN: Móvil en Landscape
+   =================================== */
+@media (max-width: 48em) and (orientation: landscape) {
+    /* Optimizaciones específicas para móvil horizontal */
+    header {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 0.875rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    .game-screen {
+        padding: 1.5rem 3rem;
+        font-size: 2rem;
+    }
+}
+
+/* ===================================
+   COMBINACIÓN: Portrait Muy Pequeño
+   Para pantallas menores a 420px (26.25em) en vertical
+   Soluciona problemas de visualización del gráfico
+   =================================== */
+@media (max-width: 26.25em) and (orientation: portrait) {
+    /* Reducir ancho de barras del gráfico para que quepan bien */
+    .bar {
+        width: 1.75rem; /* Reducido de 3rem a 1.75rem (28px) */
+        margin: 0 0.125rem; /* Reducido margen lateral */
+    }
+
+    /* Reducir padding general para aprovechar espacio */
+    section {
+        padding: 0.75rem;
+    }
+
+    main {
+        padding: 0.75rem;
+    }
+
+    .game-screen {
+        padding: 2rem 1rem;
+        font-size: 2.5rem;
+    }
+
+    .controls button {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    /* Reducir tamaños de texto en casos de uso */
+    .use-case {
+        padding: 1rem;
+    }
+
+    .use-case h3 {
+        font-size: 1rem;
+    }
+
+    .use-case p {
+        font-size: 0.875rem;
+    }
+
+    /* Ajustar altura del gráfico */
+    .chart.vertical-chart {
+        height: 10rem; /* Reducido de 12rem a 10rem */
+    }
+
+    /* Hacer el device frame más pequeño */
+    .device-frame.portrait {
+        width: 6rem;
+        height: 10.5rem;
+    }
+
+    .screen {
+        font-size: 0.75rem;
+    }
+}
+

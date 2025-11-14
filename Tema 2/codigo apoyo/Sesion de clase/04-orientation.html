@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 4: Media Queries - Portrait y Landscape</title>
+    <link rel="stylesheet" href="04-orientation.css">
+</head>
+<body>
+    <header>
+        <h1>Media Queries: Orientación</h1>
+        <p class="subtitle">Portrait (Vertical) vs Landscape (Horizontal)</p>
+    </header>
+
+    <main>
+        <section class="info-card">
+            <h2>¿Qué es la orientación?</h2>
+            <p>La orientación se refiere a si el dispositivo está en modo vertical (portrait) u horizontal (landscape).</p>
+            <p>Esta característica es especialmente útil para tablets y móviles que pueden rotar.</p>
+        </section>
+
+        <section class="orientation-indicator">
+            <div class="portrait-mode">
+                <div class="icon">📱</div>
+                <h2>Modo Portrait (Vertical)</h2>
+                <p>La altura es mayor que el ancho</p>
+                <p class="tech-info">@media (orientation: portrait)</p>
+                <div class="visual-demo">
+                    <div class="device-frame portrait">
+                        <div class="screen">
+                            <p>Alto > Ancho</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="landscape-mode">
+                <div class="icon">📱🔄</div>
+                <h2>Modo Landscape (Horizontal)</h2>
+                <p>El ancho es mayor que la altura</p>
+                <p class="tech-info">@media (orientation: landscape)</p>
+                <div class="visual-demo">
+                    <div class="device-frame landscape">
+                        <div class="screen">
+                            <p>Ancho > Alto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="use-cases">
+            <h2>Casos de Uso Comunes</h2>
+
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <h3>📹 Reproductor de Vídeo</h3>
+                    <p>En landscape, el vídeo puede ocupar más espacio horizontal para mejor visualización.</p>
+                    <div class="video-demo portrait-video">
+                        <div class="video-player">
+                            <div class="play-button">▶</div>
+                            <p>Vídeo en Portrait</p>
+                        </div>
+                    </div>
+                    <div class="video-demo landscape-video">
+                        <div class="video-player">
+                            <div class="play-button">▶</div>
+                            <p>Vídeo en Landscape - Pantalla completa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <h3>🎮 Juegos</h3>
+                    <p>Los controles se reorganizan según la orientación para mejor ergonomía.</p>
+                    <div class="game-demo portrait-game">
+                        <div class="game-screen">🎮</div>
+                        <div class="controls vertical">
+                            <button>↑</button>
+                            <div class="horizontal-controls">
+                                <button>←</button>
+                                <button>→</button>
+                            </div>
+                            <button>↓</button>
+                        </div>
+                    </div>
+                    <div class="game-demo landscape-game">
+                        <div class="controls horizontal-left">
+                            <button>↑</button>
+                            <button>←</button>
+                            <button>→</button>
+                            <button>↓</button>
+                        </div>
+                        <div class="game-screen">🎮</div>
+                        <div class="controls horizontal-right">
+                            <button>A</button>
+                            <button>B</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <h3>📊 Gráficos</h3>
+                    <p>Los gráficos aprovechan el espacio disponible según la orientación.</p>
+                    <div class="chart-demo portrait-chart">
+                        <div class="chart vertical-chart">
+                            <div class="bar" style="height: 60%"></div>
+                            <div class="bar" style="height: 80%"></div>
+                            <div class="bar" style="height: 40%"></div>
+                            <div class="bar" style="height: 90%"></div>
+                        </div>
+                        <p>Gráfico vertical</p>
+                    </div>
+                    <div class="chart-demo landscape-chart">
+                        <div class="chart horizontal-chart">
+                            <div class="bar-h" style="width: 60%">60%</div>
+                            <div class="bar-h" style="width: 80%">80%</div>
+                            <div class="bar-h" style="width: 40%">40%</div>
+                            <div class="bar-h" style="width: 90%">90%</div>
+                        </div>
+                        <p>Gráfico horizontal</p>
+                    </div>
+                </div>
+
+                <div class="use-case">
+                    <h3>📰 Lectura</h3>
+                    <p>El layout del texto se optimiza para cada orientación.</p>
+                    <div class="reading-demo portrait-reading">
+                        <div class="text-column single">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p>Sed do eiusmod tempor incididunt ut labore.</p>
+                        </div>
+                        <p class="layout-info">Una columna</p>
+                    </div>
+                    <div class="reading-demo landscape-reading">
+                        <div class="text-columns">
+                            <div class="text-column">
+                                <p>Lorem ipsum dolor sit amet.</p>
+                            </div>
+                            <div class="text-column">
+                                <p>Consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                        <p class="layout-info">Dos columnas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="syntax-section">
+            <h2>Sintaxis de Orientación</h2>
+            <div class="syntax-examples">
+                <div class="syntax-card">
+                    <h3>Portrait (Vertical)</h3>
+                    <pre><code>@media (orientation: portrait) {
+    /* Estilos cuando la altura > ancho */
+    .content {
+        flex-direction: column;
+    }
+}</code></pre>
+                </div>
+
+                <div class="syntax-card">
+                    <h3>Landscape (Horizontal)</h3>
+                    <pre><code>@media (orientation: landscape) {
+    /* Estilos cuando el ancho > altura */
+    .content {
+        flex-direction: row;
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <h3>💡 Consejo</h3>
+                <p>Combina orientación con tamaño de pantalla para mejores resultados:</p>
+                <pre><code>@media (max-width: 48em) and (orientation: landscape) {
+    /* Móvil en horizontal */
+    header {
+        height: 3rem; /* Reducir altura del header */
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="interactive-section">
+            <h2>🔄 Prueba Rotando tu Dispositivo</h2>
+            <p>Si estás en un móvil o tablet, rota tu dispositivo para ver los cambios.</p>
+            <p>Si estás en desktop, redimensiona la ventana del navegador cambiando la relación entre ancho y alto.</p>
+
+            <div class="rotation-hint portrait-hint">
+                <p>👉 Rota a horizontal (landscape) para ver el cambio →</p>
+            </div>
+            <div class="rotation-hint landscape-hint">
+                <p>👉 Rota a vertical (portrait) para ver el cambio ↓</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UNIR - JPM - 2025</p>
+        <p class="rotate-instruction portrait-only">Rota tu dispositivo para experimentar</p>
+        <p class="rotate-instruction landscape-only">¡Perfecto! Ahora prueba en vertical</p>
+    </footer>
+</body>
+</html>
+
