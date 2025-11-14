@@ -1,0 +1,351 @@
+/* ===================================
+   ESTILOS BASE - MOBILE FIRST
+   Estos estilos se aplican a MÓVILES por defecto
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    /* ⚠️ PROBLEMA INTENCIONAL: Texto muy pequeño en móvil */
+    font-size: 10px; /* ¡ERROR! Debería usar rem o em */
+}
+
+header {
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 20px; /* Demasiado pequeño en móvil */
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    margin-top: 5px;
+    font-size: 10px; /* Prácticamente ilegible */
+    opacity: 0.9;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+section {
+    background: white;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+p {
+    margin-bottom: 8px;
+    font-size: 10px; /* Difícil de leer */
+}
+
+/* Indicadores de dispositivo - móvil visible por defecto */
+.device-indicator {
+    display: none;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.device-indicator.mobile {
+    display: block;
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    color: white;
+}
+
+.info-card {
+    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+    color: white;
+}
+
+.syntax-card {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 8px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 8px; /* Casi ilegible */
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.warning {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Layout sin grid/flex - una columna en móvil */
+.grid-layout {
+    margin-top: 15px;
+}
+
+.card {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 5px;
+    border-left: 4px solid #667eea;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 14px; /* Muy pequeño */
+    margin-bottom: 5px;
+}
+
+.card p {
+    font-size: 10px; /* Difícil de leer */
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    margin-top: 15px;
+    font-size: 10px;
+}
+
+footer p {
+    margin-bottom: 5px;
+}
+
+
+/* ===================================
+   TABLET - Notación Antigua (min-width)
+   A partir de 768px
+   =================================== */
+@media (min-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    section {
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+    /* Ocultar indicador móvil, mostrar tablet */
+    .device-indicator.mobile {
+        display: none;
+    }
+
+    .device-indicator.tablet {
+        display: block;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        color: white;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
+        color: white;
+    }
+
+    pre {
+        font-size: 12px;
+        padding: 12px;
+    }
+
+    .syntax-card {
+        padding: 15px;
+    }
+
+    /* Layout de 2 columnas sin grid - usando float */
+    .card {
+        width: 48%;
+        float: left;
+        margin-right: 2%;
+        margin-bottom: 15px;
+    }
+
+    .card:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    /* Clearfix para el contenedor */
+    .grid-layout::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .card h3 {
+        font-size: 20px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+
+    footer {
+        font-size: 14px;
+        padding: 20px;
+    }
+}
+
+/* ===================================
+   DESKTOP - Notación Antigua (min-width)
+   A partir de 1025px
+   =================================== */
+@media (min-width: 1025px) {
+    header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    main {
+        padding: 25px;
+    }
+
+    section {
+        padding: 30px;
+    }
+
+    /* Ocultar tablet, mostrar desktop */
+    .device-indicator.tablet {
+        display: none;
+    }
+
+    .device-indicator.desktop {
+        display: block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+        border-left: 5px solid #ff7675;
+    }
+
+    /* Layout de 3 columnas sin grid - usando float */
+    .card {
+        width: 32%;
+        margin-right: 2%;
+    }
+
+    .card:nth-child(2n) {
+        margin-right: 2%; /* Resetear el estilo de tablet */
+    }
+
+    .card:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .card h3 {
+        font-size: 24px;
+    }
+
+    .card p {
+        font-size: 16px;
+    }
+
+    pre {
+        font-size: 14px;
+        padding: 15px;
+    }
+}
+
+/* ===================================
+   NOTA EDUCATIVA:
+
+   Este CSS demuestra el PROBLEMA de usar px fijos
+   en un enfoque MOBILE-FIRST:
+
+   1. ESTILOS BASE (móvil):
+      - Tamaños muy pequeños (10px, 14px) - ¡ERROR!
+      - Difícil de leer en dispositivos móviles
+
+   2. TABLET (768px+):
+      - Mejora un poco pero sigue siendo subóptimo
+
+   3. DESKTOP (1025px+):
+      - Tamaños más legibles pero no escalables
+
+   PROBLEMA PRINCIPAL:
+   - Usa px fijos en lugar de rem/em
+   - No respeta preferencias del usuario
+   - Mala accesibilidad
+
+   La solución correcta está en 03-width-rem.css
+   =================================== */
+
+
+

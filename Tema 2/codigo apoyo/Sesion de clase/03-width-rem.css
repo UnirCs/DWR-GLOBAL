@@ -1,0 +1,505 @@
+/* ===================================
+   ESTILOS BASE - MOBILE FIRST
+   Tamaños para móvil con unidades relativas
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Configuración de tamaño base */
+html {
+    font-size: 16px; /* 1rem = 16px FIJO - NO cambia con el viewport */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    font-size: 1rem; /* ✅ Tamaño base relativo y legible */
+}
+
+header {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    color: white;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.75rem; /* ✅ Legible en móvil */
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    opacity: 0.95;
+}
+
+main {
+    max-width: 75rem; /* 1200px / 16 = 75rem */
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+section {
+    background: white;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+}
+
+p {
+    margin-bottom: 0.75rem;
+}
+
+ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* Indicadores de dispositivo */
+.device-indicator {
+    display: none;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Móvil visible por defecto */
+.device-indicator.mobile {
+    display: block;
+    background-color: #e8f5e9;
+    border: 2px solid #00b894;
+    color: #2d3436;
+}
+
+.info-card {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    color: white;
+}
+
+/* Layout sin grid - una columna en móvil */
+.comparison-grid {
+    margin-top: 1.5rem;
+}
+
+.comparison-card {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.comparison-card.bad {
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    color: white;
+    /* ❌ Tamaños FIJOS en px - NO respetan preferencias del usuario */
+    font-size: 14px !important;
+}
+
+.comparison-card.bad h3 {
+    font-size: 18px !important;
+}
+
+.comparison-card.bad p {
+    font-size: 14px !important;
+}
+
+.comparison-card.bad li {
+    font-size: 13px !important;
+    margin-bottom: 0.5rem;
+}
+
+.comparison-card.bad pre {
+    font-size: 11px !important;
+    padding: 1rem;
+}
+
+.comparison-card.bad code {
+    font-size: 11px !important;
+}
+
+.comparison-card.good {
+    background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+    color: white;
+    /* ✅ Tamaños RELATIVOS en rem - SÍ respetan preferencias del usuario */
+    font-size: 0.875rem !important;
+}
+
+.comparison-card.good h3 {
+    font-size: 1.125rem !important;
+}
+
+.comparison-card.good p {
+    font-size: 0.875rem !important;
+}
+
+.comparison-card.good li {
+    font-size: 0.8125rem !important;
+    margin-bottom: 0.5rem;
+}
+
+.comparison-card.good pre {
+    font-size: 0.6875rem !important;
+    padding: 1rem;
+}
+
+.comparison-card.good code {
+    font-size: 0.6875rem !important;
+}
+
+.comparison-card ul {
+    list-style-position: inside;
+    margin: 1rem 0;
+}
+
+.comparison-card li {
+    margin-bottom: 0.5rem;
+}
+
+/* Pre y code solo para elementos que NO están en comparison-card */
+section:not(.comparison) pre {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+}
+
+.comparison-card pre {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Benefit items sin flexbox */
+.benefit-list {
+    margin-top: 1.5rem;
+}
+
+.benefit-item {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    border-left: 0.25rem solid #00b894;
+    margin-bottom: 1rem;
+}
+
+.icon {
+    font-size: 2rem;
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.benefit-item h3 {
+    margin-bottom: 0.5rem;
+    color: #00b894;
+}
+
+.benefit-item p {
+    margin: 0;
+    color: #555;
+}
+
+/* Layout sin grid - una columna */
+.grid-layout {
+    margin-top: 1.25rem;
+}
+
+.card {
+    background-color: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: 0.375rem;
+    border-left: 0.25rem solid #00b894;
+    margin-bottom: 1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background-color: #2d3436;
+    color: white;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+footer p:last-child {
+    margin-bottom: 0;
+    opacity: 0.8;
+}
+
+/* ===================================
+   TABLET - Breakpoint en EM
+   Ancho 48em+ (768px con fuente base 16px)
+   =================================== */
+@media (min-width: 48em) {
+    h1 {
+        font-size: 2.25rem; /* 36px / 16 = 2.25rem */
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    header {
+        padding: 2rem;
+    }
+
+    main {
+        padding: 1.5rem;
+    }
+
+    section {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    /* Ocultar móvil, mostrar tablet */
+    .device-indicator.mobile {
+        display: none;
+    }
+
+    .device-indicator.tablet {
+        display: block;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        color: white;
+        border: 2px solid #0984e3;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #fab1a0 0%, #ff7675 100%);
+        color: white;
+    }
+
+    /* 2 columnas usando float */
+    .comparison-card {
+        width: 48%;
+        float: left;
+        margin-right: 2%;
+        margin-bottom: 1.5rem;
+    }
+
+    .comparison-card:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .comparison-grid::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* 2 columnas para benefit items */
+    .benefit-item {
+        width: 48%;
+        float: left;
+        margin-right: 2%;
+        margin-bottom: 1rem;
+    }
+
+    .benefit-item:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .benefit-list::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* 2 columnas para cards */
+    .card {
+        width: 48%;
+        float: left;
+        margin-right: 2%;
+    }
+
+    .card:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .grid-layout::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .card h3 {
+        font-size: 1.25rem;
+    }
+
+    section:not(.comparison) pre {
+        font-size: 0.875rem;
+    }
+}
+
+/* ===================================
+   DESKTOP - Breakpoint en EM
+   Ancho 64em+ (1024px)
+   =================================== */
+@media (min-width: 64em) {
+    h1 {
+        font-size: 3rem; /* 48px / 16 = 3rem */
+    }
+
+    .subtitle {
+        font-size: 1.125rem;
+    }
+
+    header {
+        padding: 2.5rem;
+    }
+
+    main {
+        padding: 2rem;
+    }
+
+    section {
+        padding: 2rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    /* Ocultar tablet, mostrar desktop */
+    .device-indicator.tablet {
+        display: none;
+    }
+
+    .device-indicator.desktop {
+        display: block;
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        color: white;
+        border: 2px solid #6c5ce7;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+        border-left: 0.3125rem solid #e17055;
+    }
+
+    /* 2 columnas mantenidas en desktop */
+    .comparison-card {
+        width: 48%;
+    }
+
+    /* 2 columnas para benefits */
+    .benefit-item {
+        width: 48%;
+    }
+
+    /* 3 columnas para cards */
+    .card {
+        width: 32%;
+        margin-right: 2%;
+    }
+
+    .card:nth-child(2n) {
+        margin-right: 2%; /* Resetear estilo de tablet */
+    }
+
+    .card:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .card h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ===================================
+   DESKTOP GRANDE - Breakpoint en EM
+   Ancho 90em+ (1440px)
+   =================================== */
+@media (min-width: 90em) {
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.25rem;
+    }
+
+    /* Ocultar desktop, mostrar large */
+    .device-indicator.desktop {
+        display: none;
+    }
+
+    .device-indicator.large {
+        display: block;
+        background: linear-gradient(135deg, #e17055 0%, #fab1a0 100%);
+        color: white;
+        border: 2px solid #e17055;
+    }
+}
+
+/* ===================================
+   NOTA EDUCATIVA:
+
+   Este CSS demuestra el USO CORRECTO de unidades relativas:
+
+   1. REM para tamaños de fuente:
+      - 1rem = tamaño de fuente del elemento raíz (<html>)
+      - Por defecto 16px, pero respeta preferencias del usuario
+      - Escalable y accesible
+
+   2. EM para breakpoints:
+      - Los breakpoints en em son mejores que en px
+      - Se adaptan cuando el usuario cambia el tamaño de fuente
+      - 48em ≈ 768px (con fuente base 16px)
+      - 64em ≈ 1024px (con fuente base 16px)
+      - 90em ≈ 1440px (con fuente base 16px)
+
+   3. Mobile-First:
+      - Estilos base para móvil
+      - Solo min-width en breakpoints
+      - Sin solapamientos
+
+   4. Sin Grid/Flexbox:
+      - Layout con float
+      - Clearfix para limpiar floats
+      - Compatible con navegadores antiguos
+
+   5. Ventajas:
+      - Texto siempre legible en todos los dispositivos
+      - Respeta preferencias de accesibilidad del usuario
+      - Mejor experiencia de usuario
+   =================================== */
+
+
+

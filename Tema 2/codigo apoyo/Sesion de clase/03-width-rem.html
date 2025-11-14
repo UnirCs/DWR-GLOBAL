@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 3: Media Queries - Width con Unidades Relativas</title>
+    <link rel="stylesheet" href="03-width-rem.css">
+</head>
+<body>
+    <header>
+        <h1>Media Queries: Width con REM</h1>
+        <p class="subtitle">✅ Usando unidades relativas para mejor accesibilidad</p>
+    </header>
+
+    <main>
+        <section class="info-card">
+            <h2>✅ Solución con Tamaños Relativos</h2>
+            <p>Este ejemplo usa <strong>rem</strong> (root em) para tamaños de fuente y <strong>em</strong> para los breakpoints.</p>
+            <p>Ahora el texto es <strong>legible en móvil</strong> y se adapta al tamaño de fuente preferido del usuario.</p>
+        </section>
+
+        <section class="device-info">
+            <h2>¿En qué dispositivo estás?</h2>
+            <div class="device-indicator large">
+                <h3>🖥️ Desktop Grande</h3>
+                <p>Ancho mayor a 90em (≈1440px con fuente base 16px)</p>
+                <p>Breakpoint: @media (min-width: 90em)</p>
+            </div>
+
+            <div class="device-indicator desktop">
+                <h3>💻 Escritorio</h3>
+                <p>Ancho entre 64em y 90em (≈1024px - 1439px)</p>
+                <p>Breakpoint: @media (min-width: 64em)</p>
+            </div>
+
+            <div class="device-indicator tablet">
+                <h3>📱 Tablet</h3>
+                <p>Ancho entre 48em y 64em (≈768px - 1023px)</p>
+                <p>Breakpoint: @media (min-width: 48em)</p>
+            </div>
+
+            <div class="device-indicator mobile">
+                <h3>📱 Móvil</h3>
+                <p>Ancho menor a 48em (≈768px)</p>
+                <p>Breakpoint: Estilos base</p>
+                <p class="success">✅ ¡El texto ahora es perfectamente legible!</p>
+            </div>
+        </section>
+
+        <section class="comparison">
+            <h2>Comparación: PX vs REM</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-card bad">
+                    <h3>❌ Con Píxeles (px)</h3>
+                    <ul>
+                        <li>Tamaño fijo que no respeta preferencias del usuario</li>
+                        <li>Problemas de accesibilidad</li>
+                        <li>Texto ilegible en móvil cuando se usan valores pequeños</li>
+                        <li>No se adapta si el usuario cambia el tamaño de fuente</li>
+                    </ul>
+                    <pre><code>body {
+    font-size: 10px; /* ¡Error! */
+}
+
+@media (max-width: 768px) {
+    /* Breakpoint fijo */
+}</code></pre>
+                </div>
+
+                <div class="comparison-card good">
+                    <h3>✅ Con REM/EM</h3>
+                    <ul>
+                        <li>Respeta preferencias de tamaño de fuente</li>
+                        <li>Mejor accesibilidad</li>
+                        <li>Texto siempre legible en todos los dispositivos</li>
+                        <li>Se adapta a las necesidades del usuario</li>
+                    </ul>
+                    <pre><code>body {
+    font-size: 1rem; /* ¡Correcto! */
+}
+
+@media (width < 48em) {
+    /* Breakpoint relativo */
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <h2>Beneficios de Usar Unidades Relativas</h2>
+
+            <div class="benefit-list">
+                <div class="benefit-item">
+                    <span class="icon">♿</span>
+                    <h3>Accesibilidad</h3>
+                    <p>Los usuarios con problemas de visión pueden ajustar el tamaño de fuente en su navegador.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <span class="icon">📐</span>
+                    <h3>Escalabilidad</h3>
+                    <p>Todo el diseño escala proporcionalmente manteniendo las relaciones de tamaño.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <span class="icon">🎯</span>
+                    <h3>Consistencia</h3>
+                    <p>Los breakpoints se ajustan según el contexto del usuario, no valores arbitrarios.</p>
+                </div>
+
+                <div class="benefit-item">
+                    <span class="icon">🔍</span>
+                    <h3>Preferencias de Fuente</h3>
+                    <p>REM respeta cuando el usuario cambia el tamaño de fuente en las preferencias del navegador. PX ignora estas preferencias de accesibilidad.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-example">
+            <h2>Contenido Responsive</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel justo eu libero tincidunt maximus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>Tarjeta 1</h3>
+                    <p>Texto legible en todos los tamaños de pantalla gracias al uso de rem.</p>
+                </div>
+                <div class="card">
+                    <h3>Tarjeta 2</h3>
+                    <p>El padding y margins también usan rem para mantener proporciones.</p>
+                </div>
+                <div class="card">
+                    <h3>Tarjeta 3</h3>
+                    <p>Los breakpoints en em se adaptan a las preferencias del usuario.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UNIR - JPM - 2025</p>
+        <p>Media queries con width y tamaño de fuente en REM</p>
+    </footer>
+</body>
+</html>
+

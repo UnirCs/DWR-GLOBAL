@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 2: Media Queries - Width (Notación Antigua vs Nueva)</title>
+    <link rel="stylesheet" href="02-width-px.css">
+</head>
+<body>
+    <header>
+        <h1>Media Queries: Width con Píxeles</h1>
+        <p class="subtitle">Comparando notación antigua (min-width/max-width) con notación nueva (rangos)</p>
+    </header>
+
+    <main>
+        <section class="info-card">
+            <h2>⚠️ Problema de Tamaños Fijos</h2>
+            <p>Este ejemplo usa píxeles (px) en lugar de unidades relativas como em o rem.</p>
+            <p>En dispositivos móviles, el texto se verá DEMASIADO PEQUEÑO porque no escala con el tamaño de fuente del usuario.</p>
+        </section>
+
+        <section class="device-info">
+            <h2>¿En qué dispositivo estás?</h2>
+            <div class="device-indicator desktop">
+                <h3>🖥️ Escritorio</h3>
+                <p>Ancho mayor a 1024px</p>
+                <p>Usando notación antigua: @media (min-width: 1025px)</p>
+            </div>
+
+            <div class="device-indicator tablet">
+                <h3>📱 Tablet</h3>
+                <p>Ancho entre 768px y 1024px</p>
+                <p>Usando notación antigua: @media (min-width: 768px) and (max-width: 1024px)</p>
+            </div>
+
+            <div class="device-indicator mobile">
+                <h3>📱 Móvil</h3>
+                <p>Ancho menor a 768px</p>
+                <p>Usando notación nueva (rangos): @media (width < 768px)</p>
+                <p class="warning">⚠️ El texto aquí se ve MUY PEQUEÑO porque usa 10px fijos!</p>
+            </div>
+        </section>
+
+        <section class="syntax-examples">
+            <h2>Sintaxis Utilizada</h2>
+
+            <div class="syntax-card">
+                <h3>Notación Antigua (Legacy)</h3>
+                <pre><code>/* Mínimo */
+@media (min-width: 768px) {
+    /* Estilos para 768px y más */
+}
+
+/* Máximo */
+@media (max-width: 767px) {
+    /* Estilos para menos de 768px */
+}
+
+/* Rango */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Estilos entre 768px y 1024px */
+}</code></pre>
+            </div>
+
+            <div class="syntax-card">
+                <h3>Notación Nueva (Media Queries Level 4)</h3>
+                <pre><code>/* Mínimo */
+@media (width >= 768px) {
+    /* Estilos para 768px y más */
+}
+
+/* Máximo */
+@media (width < 768px) {
+    /* Estilos para menos de 768px */
+}
+
+/* Rango */
+@media (768px <= width <= 1024px) {
+    /* Estilos entre 768px y 1024px */
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="content-example">
+            <h2>Contenido de Ejemplo</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel justo eu libero tincidunt maximus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>Tarjeta 1</h3>
+                    <p>Contenido de la primera tarjeta con información relevante.</p>
+                </div>
+                <div class="card">
+                    <h3>Tarjeta 2</h3>
+                    <p>Contenido de la segunda tarjeta con más detalles.</p>
+                </div>
+                <div class="card">
+                    <h3>Tarjeta 3</h3>
+                    <p>Contenido de la tercera tarjeta con información adicional.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UNIR - JPM - 2025</p>
+        <p>Media queries con width y tamaños de fuente en PX - Peligroso en dispositivos pequeños</p>
+    </footer>
+</body>
+</html>
+
