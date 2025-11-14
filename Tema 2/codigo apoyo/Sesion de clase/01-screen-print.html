@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 1: Media Queries - Screen y Print</title>
+    <link rel="stylesheet" href="01-screen-print.css">
+</head>
+<body>
+    <header>
+        <h1>Media Queries: Screen vs Print</h1>
+        <nav>
+            <ul>
+                <li><a href="#seccion1">Sección 1</a></li>
+                <li><a href="#seccion2">Sección 2</a></li>
+                <li><a href="#seccion3">Sección 3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            <h2 id="seccion1">¿Qué son las Media Queries?</h2>
+            <p>Las media queries son una característica de CSS3 que permite aplicar estilos diferentes según las características del dispositivo donde se visualiza la página web.</p>
+            <p>En este ejemplo, verás cómo los estilos cambian entre la visualización en pantalla (screen) y la impresión (print).</p>
+
+            <div class="info-box">
+                <h3>Instrucciones</h3>
+                <p>Para ver las diferencias:</p>
+                <ul>
+                    <li>Visualiza esta página normalmente en tu navegador</li>
+                    <li>Luego, usa la función de Vista Previa de Impresión (Ctrl+P o Cmd+P)</li>
+                    <li>Observa cómo cambian los colores y la visibilidad de elementos</li>
+                </ul>
+            </div>
+        </article>
+
+        <article>
+            <h2 id="seccion2">Diferencias entre Screen y Print</h2>
+            <p><strong>Screen:</strong> Optimizado para visualización en pantalla con colores vivos y elementos interactivos.</p>
+            <p><strong>Print:</strong> Optimizado para impresión con colores neutros, fuentes serif y sin elementos innecesarios como navegación.</p>
+
+            <div class="screen-only">
+                <p>⚠️ Este bloque SOLO es visible en pantalla, NO aparecerá al imprimir.</p>
+            </div>
+
+            <div class="print-only">
+                <p>📄 Este bloque SOLO es visible al imprimir, NO aparece en pantalla.</p>
+            </div>
+        </article>
+
+        <article>
+            <h2 id="seccion3">Contenido de Ejemplo</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; UNIR - JPM - 2025</p>
+        <p class="screen-only">Ejemplo de media queries de pantalla y vista de impresión</p>
+    </footer>
+</body>
+</html>
+

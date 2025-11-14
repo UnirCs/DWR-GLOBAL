@@ -1,0 +1,214 @@
+/* ===================================
+   ESTILOS BASE (Aplicables a todos los medios)
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+article {
+    margin-bottom: 30px;
+}
+
+/* ===================================
+   MEDIA QUERY: SCREEN
+   Estilos para visualización en pantalla
+   =================================== */
+@media screen {
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+    }
+
+    header {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    h1 {
+        color: #fff;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        color: #ffd700;
+        font-size: 1.8em;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin-top: 15px;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 16px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .info-box {
+        background-color: rgba(255, 215, 0, 0.2);
+        border-left: 4px solid #ffd700;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+
+    .info-box h3 {
+        color: #ffd700;
+    }
+
+    .screen-only {
+        display: block;
+        background-color: rgba(0, 255, 0, 0.2);
+        border: 2px solid #00ff00;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .print-only {
+        display: none;
+    }
+
+    footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid rgba(255, 255, 255, 0.3);
+        text-align: center;
+    }
+}
+
+/* ===================================
+   MEDIA QUERY: PRINT
+   Estilos para impresión
+   =================================== */
+@media print {
+    /* NOTA: Los navegadores NO imprimen backgrounds por defecto.
+       Para verlo, activa "Gráficos de fondo" en las opciones de impresión.
+       Como alternativa, usamos bordes que SÍ se imprimen siempre. */
+    body {
+        font-family: Georgia, 'Times New Roman', serif;
+        background-color: blueviolet;
+        color: #000;
+        font-size: 12pt;
+    }
+
+    header {
+        border: 5px solid blueviolet; /* Esto SÍ se verá siempre */
+        padding: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        background-color: lavender; /* Fondo suave que SÍ se ve si activas gráficos */
+    }
+
+    h1 {
+        color: blueviolet; /* El texto SÍ se imprime en color */
+        font-size: 24pt;
+        border-bottom: 1px solid blueviolet;
+        padding-bottom: 5px;
+    }
+
+    h2 {
+        color: darkviolet; /* Títulos en violeta oscuro */
+        font-size: 18pt;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        color: #333;
+        font-size: 14pt;
+    }
+
+    /* Ocultar navegación en impresión */
+    nav {
+        display: none;
+    }
+
+    /* Evitar saltos de página dentro de artículos */
+    article {
+        page-break-inside: avoid;
+    }
+
+    /* Mostrar URLs de los enlaces después del texto */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        color: #666;
+    }
+
+    .info-box {
+        border: 1px solid blueviolet; /* Borde violeta que SÍ se imprime */
+        padding: 10px;
+        margin: 15px 0;
+        background-color: lavender; /* Fondo suave (requiere activar gráficos) */
+    }
+
+    .info-box h3 {
+        color: blueviolet; /* Texto violeta */
+    }
+
+    /* Ocultar elementos solo de pantalla */
+    .screen-only {
+        display: none !important;
+    }
+
+    /* Mostrar elementos solo de impresión */
+    .print-only {
+        display: block;
+        border: 1px dashed blueviolet; /* Borde violeta punteado */
+        padding: 10px;
+        margin: 15px 0;
+        background-color: lavender; /* Fondo suave (requiere activar gráficos) */
+        font-weight: bold;
+        color: darkviolet; /* Texto violeta oscuro */
+    }
+
+    footer {
+        margin-top: 30px;
+        padding-top: 10px;
+        border-top: 1px solid blueviolet; /* Borde violeta */
+        text-align: center;
+        font-size: 10pt;
+        color: blueviolet; /* Texto violeta */
+    }
+}
+
