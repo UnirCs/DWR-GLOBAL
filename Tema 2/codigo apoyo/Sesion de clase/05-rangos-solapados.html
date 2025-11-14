@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 6: Media Queries - Rangos Mal Definidos (Cascada Rota)</title>
+    <link rel="stylesheet" href="05-rangos-solapados.css">
+</head>
+<body>
+    <header>
+        <h1>⚠️ Media Queries: Rangos Mal Definidos</h1>
+        <p class="subtitle">Ejemplo de cómo NO hacer media queries - Cascada CSS rota</p>
+    </header>
+
+    <main>
+        <section class="warning-card">
+            <h2>🚨 ¡ATENCIÓN! Este es un ANTI-PATRÓN</h2>
+            <p>Este archivo demuestra <strong>ERRORES COMUNES</strong> al definir media queries con rangos que se solapan.</p>
+            <p>Estos errores rompen la cascada CSS y causan comportamientos impredecibles.</p>
+            <p><strong>NO uses este código en producción.</strong> Está aquí solo con fines educativos.</p>
+        </section>
+
+        <section class="device-indicator">
+            <h2>¿Qué breakpoint se está aplicando?</h2>
+            <p class="debug-text">El color de este texto no está claro</p>
+            <div class="debug-explanation">
+                <p><strong>🔍 Demostración en vivo:</strong> Redimensiona la ventana y observa cómo el color del texto cambia de forma impredecible.</p>
+                <p>Cada media query usa un selector CSS diferente con distinta especificidad, pero debido a los solapamientos, el último selector definido en el código "gana" por cascada, NO el más específico. Esto hace el código difícil de depurar.</p>
+            </div>
+
+            <div class="indicator mobile">
+                <h3>📱 Móvil</h3>
+                <p class="range">Supuestamente: 0 - 768px</p>
+                <p class="problem">⚠️ PROBLEMA: Este rango también se aplica en tablets pequeñas</p>
+            </div>
+
+            <div class="indicator tablet">
+                <h3>📱 Tablet</h3>
+                <p class="range">Supuestamente: 600px - 1024px</p>
+                <p class="problem">⚠️ PROBLEMA: Se solapa con móvil (600-768px)</p>
+            </div>
+
+            <div class="indicator desktop">
+                <h3>💻 Desktop</h3>
+                <p class="range">Supuestamente: 900px - ∞</p>
+                <p class="problem">⚠️ PROBLEMA: Se solapa con tablet (900-1024px)</p>
+            </div>
+
+            <div class="indicator large">
+                <h3>🖥️ Desktop Grande</h3>
+                <p class="range">Supuestamente: 1200px - ∞</p>
+                <p class="problem">⚠️ PROBLEMA: Múltiples reglas compiten por especificidad</p>
+            </div>
+        </section>
+
+        <section class="problems-section">
+            <h2>Problemas Causados por los Solapamientos</h2>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <h3>❌ Problema 1: Rangos que se Solapan</h3>
+                    <div class="code-example">
+                        <pre><code>/* ❌ MAL */
+/* Móvil: 0-768px */
+@media (max-width: 768px) { ... }
+
+/* Tablet: 600-1024px */
+@media (min-width: 600px) and (max-width: 1024px) { ... }
+
+/* Desktop: 900px+ */
+@media (min-width: 900px) { ... }</code></pre>
+                    </div>
+                    <p class="explanation">
+                        <strong>Problema:</strong> Entre 600-768px se aplican AMBOS breakpoints (móvil Y tablet).
+                        Entre 900-1024px se aplican AMBOS (tablet Y desktop). Esto causa conflictos.
+                    </p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>❌ Problema 2: Especificidad Confusa</h3>
+                    <p class="explanation" style="margin-bottom: 1rem;">
+                        <strong>Observa el párrafo arriba "El color de este texto no está claro":</strong>
+                        Redimensiona lentamente la ventana y verás cómo cambia de color de forma impredecible.
+                        Aunque algunos selectores tienen diferente especificidad, el último en el código "gana" por cascada.
+                    </p>
+                    <div class="code-example">
+                        <h4 style="color: #000; margin-bottom: 0.75rem;">Selectores CSS Usados:</h4>
+                        <pre><code>/* Móvil (0-768px) - Color AZUL */
+.debug-text { color: #0984e3; }
+/* Especificidad: 0,0,1,0 */
+
+/* Tablet (600-1024px) - Color VERDE */
+section .debug-text { color: #00b894; }
+/* Especificidad: 0,0,2,0 - ¡MÁS específico! */
+
+/* Desktop (900px+) - Color MORADO */
+.device-indicator .debug-text { color: #6c5ce7; }
+/* Especificidad: 0,0,2,0 - Igual que tablet */
+/* Pero GANA por cascada (está DESPUÉS) */
+
+/* Large (1200px+) - Color NARANJA */
+p.debug-text { color: #e17055; }
+/* Especificidad: 0,0,1,1 - MENOS que otros */
+/* ¡Pero GANA igualmente por cascada! */</code></pre>
+                    </div>
+                    <div class="visual-timeline">
+                        <div class="timeline">
+                            <div class="range-bar mobile-bar">Móvil (0-768)</div>
+                            <div class="range-bar tablet-bar">Tablet (600-1024)</div>
+                            <div class="range-bar desktop-bar">Desktop (900+)</div>
+                            <div class="overlap-zone zone1">Solape</div>
+                            <div class="overlap-zone zone2">Solape</div>
+                        </div>
+                    </div>
+                    <p class="explanation">
+                        <strong>Problema:</strong> En las zonas de solape, el último estilo definido "gana"
+                        debido a la cascada, NO el más específico. Esto es impredecible y difícil de debuggear.
+                    </p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>❌ Problema 3: Gaps (Huecos)</h3>
+                    <div class="code-example">
+                        <pre><code>/* ❌ MAL - Hay un gap entre 768 y 900 */
+@media (max-width: 768px) {
+    /* Estilos móvil */
+}
+
+@media (min-width: 900px) {
+    /* Estilos desktop */
+}
+
+/* Entre 769-899px NO hay estilos definidos! */</code></pre>
+                    </div>
+                    <p class="explanation">
+                        <strong>Problema:</strong> Rangos discontinuos dejan "huecos" donde no se aplican
+                        estilos específicos, causando diseños rotos en ciertos tamaños.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="solution-section">
+            <h2>✅ La Solución Correcta</h2>
+
+            <div class="solution-grid">
+                <div class="solution-card bad">
+                    <h3>❌ INCORRECTO (Solapado)</h3>
+                    <pre><code>/* Rangos que se solapan */
+@media (max-width: 768px) { }
+@media (min-width: 600px)
+   and (max-width: 1024px) { }
+@media (min-width: 900px) { }</code></pre>
+                    <div class="timeline-bad">
+                        <div class="point">0</div>
+                        <div class="segment overlap">600</div>
+                        <div class="point">768</div>
+                        <div class="segment overlap">900</div>
+                        <div class="point">1024</div>
+                        <div class="segment">∞</div>
+                    </div>
+                </div>
+
+                <div class="solution-card good">
+                    <h3>✅ CORRECTO (Sin Solapamiento)</h3>
+                    <pre><code>/* Móvil primero (mobile-first) */
+/* Base: 0+ */
+body { }
+
+/* Tablet: 768px+ */
+@media (min-width: 768px) { }
+
+/* Desktop: 1024px+ */
+@media (min-width: 1024px) { }
+
+/* Desktop grande: 1440px+ */
+@media (min-width: 1440px) { }</code></pre>
+                    <div class="timeline-good">
+                        <div class="point">0</div>
+                        <div class="segment clean">768</div>
+                        <div class="point">1024</div>
+                        <div class="segment clean">1440</div>
+                        <div class="point">∞</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="best-practices">
+                <h3>📋 Mejores Prácticas</h3>
+                <ul>
+                    <li>✅ Usa <strong>mobile-first</strong>: Prioriza min-width, sin max-width. Este ultimo es mas restrictivo</li>
+                    <li>✅ Define breakpoints <strong>consecutivos sin huecos ni solapamientos</strong></li>
+                    <li>✅ <strong>Limita el número de breakpoints</strong></li>
+                    <li>✅ Documenta claramente qué rango cubre cada breakpoint</li>
+                    <li>❌ EVITA usar min-width y max-width juntos en el mismo breakpoint</li>
+                    <li>❌ EVITA crear rangos que se solapan</li>
+                    <li>❌ EVITA dejar huecos entre breakpoints</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UNIR - JPM - 2025</p>
+        <p>⚠️ Este es un ANTI-PATRÓN - Aprende de estos errores para evitarlos</p>
+    </footer>
+</body>
+</html>
+

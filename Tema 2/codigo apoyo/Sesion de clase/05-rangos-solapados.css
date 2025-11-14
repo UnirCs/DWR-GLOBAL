@@ -1,0 +1,664 @@
+/* ===================================
+   ⚠️ ESTE CSS CONTIENE ERRORES INTENCIONALES
+   Demuestra cómo NO escribir media queries
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    font-size: 1rem;
+}
+
+header {
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    opacity: 0.95;
+}
+
+main {
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+}
+
+section {
+    background: white;
+    margin-bottom: 1.25rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #d63031;
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+}
+
+h3 {
+    color: #555;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+h4 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 0.75rem;
+    color: #666;
+}
+
+ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.warning-card {
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+    color: white;
+    border: 0.25rem solid #a00;
+    animation: warningPulse 2s infinite;
+}
+
+@keyframes warningPulse {
+    0%, 100% { border-color: #a00; }
+    50% { border-color: #ff0; }
+}
+
+/* Ocultar indicadores por defecto */
+.indicator {
+    display: none;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border: 0.25rem solid;
+}
+
+/* Párrafo de demostración de cascada */
+.debug-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 0.25rem dashed #ddd;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.debug-explanation {
+    background-color: #ffeaa7;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 0.25rem solid #fdcb6e;
+}
+
+.debug-explanation p {
+    margin-bottom: 0.5rem;
+    color: #2d3436;
+}
+
+.debug-explanation p:last-child {
+    margin-bottom: 0;
+}
+
+.range {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.problem {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+.problems-grid {
+    margin-top: 1.5rem;
+}
+
+.problem-card {
+    background-color: #fff5f5;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 0.25rem solid #d63031;
+    margin-bottom: 1.5rem;
+}
+
+.code-example pre {
+    background-color: #2d3436;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+}
+
+.explanation {
+    background-color: #ffeaa7;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    border-left: 0.25rem solid #fdcb6e;
+    color: #2d3436;
+}
+
+.visual-timeline {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.375rem;
+}
+
+.timeline {
+    position: relative;
+    height: 8rem;
+}
+
+.range-bar {
+    position: absolute;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.875rem;
+    opacity: 0.7;
+}
+
+.mobile-bar {
+    background-color: #0984e3;
+    width: 76.8%;
+    top: 0;
+    left: 0;
+}
+
+.tablet-bar {
+    background-color: #00b894;
+    width: 42.4%;
+    top: 2.5rem;
+    left: 60%;
+}
+
+.desktop-bar {
+    background-color: #6c5ce7;
+    width: 50%;
+    top: 5rem;
+    left: 50%;
+}
+
+.overlap-zone {
+    position: absolute;
+    height: 1.5rem;
+    background-color: #d63031;
+    opacity: 0.8;
+    border: 2px dashed #fff;
+}
+
+.zone1 {
+    width: 16.8%;
+    top: 0;
+    left: 60%;
+}
+
+.zone2 {
+    width: 12.4%;
+    top: 2.5rem;
+    left: 90%;
+}
+
+.inconsistency-demo {
+    margin: 1rem 0;
+}
+
+.demo-box {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+    border: 0.25rem dashed #d63031;
+}
+
+.current-color {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+
+.chaos-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.chaos-item {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 0.125rem solid #ddd;
+    text-align: center;
+}
+
+.resize-instruction {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.solution-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.solution-card {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.solution-card.bad {
+    background: linear-gradient(135deg, #ff7675 0%, #ff4757 100%);
+    color: white;
+}
+
+.solution-card.good {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    color: white;
+}
+
+.timeline-bad,
+.timeline-good {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 0.375rem;
+    gap: 0.5rem;
+}
+
+.point {
+    background-color: white;
+    color: #2d3436;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    font-size: 0.875rem;
+}
+
+.segment {
+    flex: 1;
+    height: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+}
+
+.segment.overlap {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 0, 0, 0.7),
+        rgba(255, 0, 0, 0.7) 10px,
+        rgba(255, 255, 0, 0.7) 10px,
+        rgba(255, 255, 0, 0.7) 20px
+    );
+}
+
+.segment.clean {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.best-practices {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    border-left: 0.25rem solid #00b894;
+}
+
+.best-practices h3 {
+    color: #00b894;
+    margin-bottom: 1rem;
+}
+
+.comparison-container {
+    display: grid;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.comparison-column {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.visual-chaos,
+.visual-clean {
+    position: relative;
+    height: 3rem;
+    background-color: white;
+    border-radius: 0.375rem;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.chaos-bar,
+.clean-bar {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.875rem;
+}
+
+.conflict-marker {
+    position: absolute;
+    top: -0.5rem;
+    font-size: 1.5rem;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+.chaos-note {
+    color: #d63031;
+    font-weight: bold;
+    text-align: center;
+}
+
+.clean-note {
+    color: #00b894;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #d63031;
+    color: white;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* ===================================
+   ❌ ERROR 1: RANGOS SOLAPADOS
+   Móvil hasta 768px
+   =================================== */
+@media (max-width: 768px) {
+    /* Selector simple de clase - Especificidad: 0,0,1,0 */
+    .debug-text {
+        color: #0984e3;
+        border-color: #0984e3;
+    }
+
+    .indicator.mobile {
+        display: block;
+        background-color: #0984e3;
+        color: white;
+        border-color: #0984e3;
+    }
+
+    .demo-box {
+        background-color: #0984e3;
+        color: white;
+    }
+
+    #color-name::after {
+        content: "Azul (Móvil)";
+    }
+
+    .chaos-item.item1 {
+        font-size: 0.875rem; /* Pequeño */
+        background-color: #0984e3;
+        color: white;
+    }
+
+    .chaos-item.item2 {
+        padding: 0.5rem; /* Poco padding */
+        background-color: #74b9ff;
+    }
+
+    .chaos-item.item3 {
+        background-color: #a29bfe;
+    }
+
+    .chaos-item.item4 {
+        grid-column: span 2;
+    }
+}
+
+/* ===================================
+   ❌ ERROR 2: SOLAPE CON MÓVIL
+   Tablet de 600px a 1024px
+   ¡SE SOLAPA con móvil entre 600-768px!
+   =================================== */
+@media (min-width: 600px) and (max-width: 1024px) {
+    /* Selector descendente - Especificidad: 0,0,2,0 */
+    /* ¡CONFLICTO! Entre 600-768px compite con el selector de móvil */
+    section .debug-text {
+        color: #00b894;
+        border-color: #00b894;
+    }
+
+    .indicator.tablet {
+        display: block;
+        background-color: #00b894;
+        color: white;
+        border-color: #00b894;
+    }
+
+    /* ¡CONFLICTO! Entre 600-768px esto sobrescribe los estilos de móvil */
+    .demo-box {
+        background-color: #00b894;
+        color: white;
+    }
+
+    #color-name::after {
+        content: "Verde (Tablet) - ¡Sobrescrito!";
+    }
+
+    .chaos-item.item1 {
+        font-size: 1.125rem; /* Mediano - CONFLICTO con móvil */
+        background-color: #00b894;
+        color: white;
+    }
+
+    .chaos-item.item2 {
+        padding: 1.5rem; /* Mucho padding - CONFLICTO */
+        background-color: #55efc4;
+    }
+
+    .chaos-item.item3 {
+        background-color: #ffeaa7;
+    }
+}
+
+/* ===================================
+   ❌ ERROR 3: MÚLTIPLES SOLAPES
+   Desktop desde 900px
+   ¡SE SOLAPA con tablet entre 900-1024px!
+   =================================== */
+@media (min-width: 900px) {
+    /* Selector de clase múltiple - Especificidad: 0,0,2,0 */
+    /* ¡CONFLICTO! Entre 900-1024px compite con tablet */
+    /* Aunque tiene la MISMA especificidad que tablet, GANA porque va DESPUÉS */
+    .device-indicator .debug-text {
+        color: #6c5ce7;
+        border-color: #6c5ce7;
+    }
+
+    .indicator.desktop {
+        display: block;
+        background-color: #6c5ce7;
+        color: white;
+        border-color: #6c5ce7;
+    }
+
+    /* ¡CONFLICTO! Entre 900-1024px esto sobrescribe tablet */
+    .demo-box {
+        background-color: #6c5ce7;
+        color: white;
+    }
+
+    #color-name::after {
+        content: "Morado (Desktop) - ¡Sobrescrito otra vez!";
+    }
+
+    .chaos-item.item1 {
+        font-size: 1.5rem; /* Grande - CONFLICTO con tablet */
+        background-color: #6c5ce7;
+        color: white;
+    }
+
+    .chaos-item.item2 {
+        padding: 2rem; /* Más padding - CONFLICTO */
+        background-color: #a29bfe;
+    }
+
+    .chaos-item.item3 {
+        background-color: #fd79a8;
+    }
+
+    .chaos-item.item4 {
+        grid-column: span 1; /* CONFLICTO con móvil */
+    }
+
+    .solution-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .comparison-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===================================
+   ❌ ERROR 4: MÁS SOLAPAMIENTO
+   Desktop Grande desde 1200px
+   ¡SE SOLAPA con desktop desde 900px!
+   =================================== */
+@media (min-width: 1200px) {
+    /* Selector de elemento + clase - Especificidad: 0,0,1,1 */
+    /* ¡CONFLICTO! Entre 1200px+ compite con desktop. No se aplica el estilo deseado */
+    p.debug-text {
+        color: #e17055;
+        border-color: #e17055;
+    }
+
+    .indicator.large {
+        display: block;
+        background-color: #e17055;
+        color: white;
+        border-color: #e17055;
+    }
+
+    /* Más conflictos de cascada */
+    .demo-box {
+        background-color: #e17055;
+        color: white;
+    }
+
+    #color-name::after {
+        content: "Naranja (Desktop Grande) - ¡Sobrescrito de nuevo!";
+    }
+
+    .chaos-item.item1 {
+        font-size: 1.75rem; /* Muy grande */
+        background-color: #e17055;
+        color: white;
+    }
+
+    .chaos-item.item2 {
+        padding: 2.5rem; /* Padding enorme */
+        background-color: #fab1a0;
+    }
+
+    .chaos-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===================================
+   NOTA:
+
+   Los problemas en este CSS:
+
+   1. SOLAPAMIENTO 600-768px:
+      - Móvil (@media max-width: 768px) ✓
+      - Tablet (@media min-width: 600px) ✓
+      - AMBOS SE APLICAN = CONFLICTO
+
+   2. SOLAPAMIENTO 900-1024px:
+      - Tablet (@media max-width: 1024px) ✓
+      - Desktop (@media min-width: 900px) ✓
+      - AMBOS SE APLICAN = CONFLICTO
+
+   3. CASCADA IMPREDECIBLE:
+      - El último estilo gana, no el más específico
+      - Difícil de debuggear
+      - Comportamiento inconsistente
+
+   SOLUCIÓN CORRECTA (Mobile-First):
+
+   @media (min-width: 48em) { } /* Tablet: 768px+ */
+   @media (min-width: 64em) { } /* Desktop: 1024px+ */
+   @media (min-width: 90em) { } /* Large: 1440px+ */
+
+    /* Sin max-width, sin solapamientos, sin conflictos.
+
+   =================================== */
+

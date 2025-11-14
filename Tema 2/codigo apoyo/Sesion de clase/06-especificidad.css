@@ -1,0 +1,317 @@
+/* ===================================
+   RESET Y BASE
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    padding: 1rem;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    opacity: 0.95;
+}
+
+main {
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+section {
+    background: white;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+}
+
+p {
+    margin-bottom: 0.75rem;
+    line-height: 1.8;
+}
+
+code {
+    background-color: #f8f9fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin: 0.25rem 0;
+}
+
+.explicacion {
+    background-color: #ffeaa7;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    border-left: 0.25rem solid #fdcb6e;
+}
+
+.explicacion p {
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #2d3436;
+    color: white;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+footer p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===================================
+   EJEMPLO 1: Elemento vs Clase
+   =================================== */
+
+/* Especificidad: 0,0,0,1 */
+p {
+    color: blue;
+}
+
+/* Especificidad: 0,0,1,0 - GANA */
+.texto {
+    color: red;
+}
+
+/* ===================================
+   EJEMPLO 2: Clase vs ID
+   =================================== */
+
+/* La clase ya está definida arriba: 0,0,1,0 */
+
+/* Especificidad: 0,1,0,0 - GANA */
+#parrafo-especial {
+    color: green;
+}
+
+/* ===================================
+   EJEMPLO 3: Selector Descendente
+   =================================== */
+
+/* La clase .texto ya está definida: 0,0,1,0 */
+
+/* Especificidad: 0,0,2,0 - GANA (dos clases) */
+.contenedor .texto {
+    color: purple;
+}
+
+/* ===================================
+   EJEMPLO 4: Elemento + Clase vs Solo Clase
+   =================================== */
+
+/* Especificidad: 0,0,1,1 - GANA (clase + elemento) */
+p.resaltado {
+    color: brown;
+}
+
+/* Especificidad: 0,0,1,0 */
+.resaltado {
+    color: orange;
+}
+
+/* ===================================
+   EJEMPLO 5: Múltiples Clases
+   =================================== */
+
+/* Especificidad: 0,0,1,0 */
+.importante {
+    color: blue;
+}
+
+/* Especificidad: 0,0,2,0 - GANA (dos clases) */
+.importante.destacado {
+    color: teal;
+}
+
+/* ===================================
+   EJEMPLO 6: ID vs Múltiples Clases
+   =================================== */
+
+/* Especificidad: 0,0,3,0 (tres clases) */
+.importante.destacado.resaltado {
+    color: orange;
+}
+
+/* Especificidad: 0,1,0,0 - GANA (un ID supera cualquier cantidad de clases) */
+#texto-unico {
+    color: darkblue;
+}
+
+/* ===================================
+   EJEMPLO 7: Inline Style
+   El estilo inline se define en el HTML: style="color: crimson"
+   Especificidad: 1,0,0,0 - SIEMPRE GANA (excepto con !important)
+   =================================== */
+
+#parrafo-inline {
+    color: green; /* No se aplica, pierde contra inline */
+}
+
+/* ===================================
+   EJEMPLO 8: !important
+   =================================== */
+
+/* Especificidad: ignorada por !important */
+.forzado {
+    color: gray !important;
+}
+
+#pForzado {
+    color: white;
+}
+
+/* Esta regla no se aplica, pierde contra !important */
+p {
+    color: black;
+}
+
+/* ===================================
+   ESTILOS PARA LA TABLA DE RESUMEN
+   =================================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+thead {
+    background-color: #667eea;
+    color: white;
+}
+
+th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f1f3f5;
+}
+
+/* ===================================
+   ESTILOS PARA LA SECCIÓN DE REGLAS
+   =================================== */
+
+.reglas ul {
+    list-style: none;
+    margin-left: 0;
+}
+
+.reglas li {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.375rem;
+    border-left: 0.25rem solid #667eea;
+}
+
+.reglas li:last-child {
+    margin-bottom: 0;
+}
+
+/* ===================================
+   ESTILOS PARA LA INTRODUCCIÓN
+   =================================== */
+
+.intro {
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    border-left: 0.25rem solid #00acc1;
+}
+
+.intro p {
+    color: #2d3436;
+}
+
+/* ===================================
+   ESTILOS PARA LOS EJEMPLOS
+   =================================== */
+
+.ejemplo {
+    border-left: 0.25rem solid #667eea;
+}
+
+.ejemplo > p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+}
+
+/* ===================================
+   NOTA:
+
+   La especificidad CSS se calcula con 4 valores:
+   (inline, IDs, clases/atributos/pseudo-clases, elementos/pseudo-elementos)
+
+   Ejemplos:
+   - style="..."          → 1,0,0,0
+   - #id                  → 0,1,0,0
+   - .clase               → 0,0,1,0
+   - p                    → 0,0,0,1
+   - #id .clase p         → 0,1,1,1
+   - .clase1.clase2       → 0,0,2,0
+
+   Regla de oro:
+   A mayor número en la posición más a la izquierda, mayor especificidad.
+   Con igual especificidad en una posición, se compara la siguiente.
+   Con igual especificidad en todas las posicione, gana el último definido (cascada).
+
+   !important rompe este sistema y debe evitarse.
+   =================================== */
+

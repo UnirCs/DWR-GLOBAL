@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 6: Especificidad CSS</title>
+    <link rel="stylesheet" href="06-especificidad.css">
+</head>
+<body>
+    <header>
+        <h1>Especificidad CSS</h1>
+        <p class="subtitle">Entendiendo qué regla se aplica cuando hay conflictos</p>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>¿Qué es la Especificidad?</h2>
+            <p>La especificidad determina qué regla CSS se aplica cuando múltiples reglas apuntan al mismo elemento.</p>
+            <p>Se calcula como: <strong>(inline, IDs, clases/atributos, elementos)</strong></p>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 1: Selector de Elemento vs Clase</h2>
+            <p class="texto">Este párrafo tiene la clase "texto"</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>p { color: blue; } → Especificidad: 0,0,0,1</code><br>
+                <code>.texto { color: red; } → Especificidad: 0,0,1,0</code><br>
+                <p><strong>✅ Gana:</strong> .texto (mayor especificidad) → Color ROJO</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 2: Clase vs ID</h2>
+            <p id="parrafo-especial" class="texto">Este párrafo tiene clase "texto" e ID "parrafo-especial"</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>.texto { color: red; } → Especificidad: 0,0,1,0</code><br>
+                <code>#parrafo-especial { color: green; } → Especificidad: 0,1,0,0</code><br>
+                <p><strong>✅ Gana:</strong> #parrafo-especial (ID tiene más peso) → Color VERDE</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 3: Selector Descendente</h2>
+            <div class="contenedor">
+                <p class="texto">Este párrafo está dentro de un div con clase "contenedor"</p>
+            </div>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>.texto { color: red; } → Especificidad: 0,0,1,0</code><br>
+                <code>.contenedor .texto { color: purple; } → Especificidad: 0,0,2,0</code><br>
+                <p><strong>✅ Gana:</strong> .contenedor .texto (más clases) → Color MORADO</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 4: Elemento + Clase vs Solo Clase</h2>
+            <p class="resaltado">Este párrafo tiene clase "resaltado"</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>.resaltado { color: orange; } → Especificidad: 0,0,1,0</code><br>
+                <code>p.resaltado { color: brown; } → Especificidad: 0,0,1,1</code><br>
+                <p><strong>✅ Gana:</strong> p.resaltado (clase + elemento) → Color MARRÓN</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 5: Múltiples Clases</h2>
+            <p class="importante destacado">Este párrafo tiene dos clases: "importante" y "destacado"</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>.importante { color: blue; } → Especificidad: 0,0,1,0</code><br>
+                <code>.importante.destacado { color: teal; } → Especificidad: 0,0,2,0</code><br>
+                <p><strong>✅ Gana:</strong> .importante.destacado (dos clases) → Color VERDE AZULADO</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 6: ID vs Múltiples Clases</h2>
+            <p id="texto-unico" class="importante destacado resaltado">Este párrafo tiene un ID y tres clases</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>.importante.destacado.resaltado { color: orange; } → Especificidad: 0,0,3,0</code><br>
+                <code>#texto-unico { color: darkblue; } → Especificidad: 0,1,0,0</code><br>
+                <p><strong>✅ Gana:</strong> #texto-unico (un solo ID supera cualquier cantidad de clases) → Color AZUL OSCURO</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 7: Inline Style (Máxima Especificidad)</h2>
+            <p id="parrafo-inline" class="texto" style="color: crimson;">Este párrafo tiene estilo inline</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>#parrafo-inline { color: green; } → Especificidad: 0,1,0,0</code><br>
+                <code>style="color: crimson" → Especificidad: 1,0,0,0</code><br>
+                <p><strong>✅ Gana:</strong> style inline (máxima especificidad) → Color CARMESÍ</p>
+            </div>
+        </section>
+
+        <section class="ejemplo">
+            <h2>Ejemplo 8: !important (Rompe Todo)</h2>
+            <p class="forzado importante" id="pForzado">Este párrafo tiene clase "forzado"</p>
+            <div class="explicacion">
+                <p><strong>Reglas aplicadas:</strong></p>
+                <code>.forzado { color: gray !important; } → Especificidad: ∞</code><br>
+                <code>p { color: black; } → Especificidad: 0,0,0,1</code><br>
+                <p><strong>✅ Gana:</strong> .forzado con !important (ignora especificidad) → Color GRIS</p>
+                <p><strong>⚠️ EVITA !important:</strong> Rompe el flujo natural de la cascada y dificulta el mantenimiento.</p>
+            </div>
+        </section>
+
+        <section class="resumen">
+            <h2>📊 Resumen de Especificidad</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Selector</th>
+                        <th>Especificidad</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Inline style</td>
+                        <td>1,0,0,0</td>
+                        <td>style="color: red"</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>0,1,0,0</td>
+                        <td>#miID</td>
+                    </tr>
+                    <tr>
+                        <td>Clase, atributo, pseudo-clase</td>
+                        <td>0,0,1,0</td>
+                        <td>.miClase, [type="text"], :hover</td>
+                    </tr>
+                    <tr>
+                        <td>Elemento, pseudo-elemento</td>
+                        <td>0,0,0,1</td>
+                        <td>p, div, ::before</td>
+                    </tr>
+                    <tr>
+                        <td>Universal, combinadores</td>
+                        <td>0,0,0,0</td>
+                        <td>*, +, >, ~</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="reglas">
+            <h2>📋 Reglas de Oro</h2>
+            <ul>
+                <li>✅ A <strong>mayor especificidad</strong>, mayor prioridad</li>
+                <li>✅ Con <strong>igual especificidad</strong>, gana el último definido (cascada)</li>
+                <li>✅ Un <strong>ID</strong> siempre gana sobre cualquier cantidad de clases</li>
+                <li>✅ El <strong>estilo inline</strong> tiene la máxima especificidad (sin !important)</li>
+                <li>⚠️ <strong>!important</strong> rompe todo el sistema, úsalo solo como último recurso</li>
+                <li>💡 Mantén la <strong>especificidad baja</strong> para facilitar el mantenimiento</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UNIR - JPM - 2025</p>
+        <p>Comprende la especificidad para escribir CSS más predecible y mantenible</p>
+    </footer>
+</body>
+</html>
+
