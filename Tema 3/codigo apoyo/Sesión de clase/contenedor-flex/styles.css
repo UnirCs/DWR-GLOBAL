@@ -1,0 +1,241 @@
+/* ================================
+   RESET
+================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #e5e7eb;
+  color: #0f172a;
+}
+
+/* ================================
+   LAYOUT GENERAL
+================================ */
+
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px 40px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: 1.9rem;
+}
+
+.page-header p {
+  margin: 0;
+  color: #4b5563;
+}
+
+/* ================================
+   TARJETAS DE EJEMPLO
+================================ */
+
+.example-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 20px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.example-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+}
+
+.explanation {
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+/* ================================
+   LAYOUT INTERNO DEMO + CÓDIGO
+================================ */
+
+.content-row {
+  display: flex;
+  flex-wrap: wrap;              /* permite saltar de línea para evitar solapamiento */
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.demo-area,
+.code-block {
+  flex: 1 1 320px;              /* ancho mínimo razonable para cada lado */
+  min-width: 280px;
+}
+
+/* ================================
+   DEMO BOX
+================================ */
+
+.demo-box {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 80px;
+  margin-bottom: 4px;
+  border: 1px solid #cbd5e1;    /* línea que has pedido */
+}
+
+.demo-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 8px 0 6px;
+}
+
+/* ================================
+   CODE BLOCK
+================================ */
+
+.code-block {
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.82rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ================================
+   PLAYGROUND BASE
+================================ */
+
+.playground {
+  display: flex;
+  gap: 8px;
+}
+
+.playground-wrap .item,
+.playground-multiline .item {
+  flex: 0 0 80px;
+}
+
+.playground-tall {
+  height: 130px;
+}
+
+/* items visuales */
+
+.playground .item {
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* alturas distintas para align-items */
+
+.playground-tall .alto {
+  height: 70px;
+}
+
+.playground-tall .peque {
+  height: 32px;
+}
+
+/* multiline para align-content */
+
+.playground-multiline {
+  flex-wrap: wrap;
+  height: 200px;
+}
+
+/* ================================
+   CONTROLES
+================================ */
+
+.playground-controls {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.playground-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.playground-controls select {
+  padding: 4px 6px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 0.9rem;
+}
+
+.playground-resize {
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.playground-resize input[type="range"] {
+  width: 180px;
+  margin-left: 6px;
+}
+
+.values {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.values-title {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.values ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.values li + li {
+  margin-top: 3px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+  .content-row {
+    flex-direction: column;    /* demo arriba, código abajo */
+  }
+
+  .demo-area,
+  .code-block {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .code-block {
+    margin-top: 4px;
+  }
+}

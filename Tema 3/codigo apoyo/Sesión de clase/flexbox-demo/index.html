@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Playground Flexbox por secciones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    /* ===============================
+       ESTILOS GENERALES
+    ================================ */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #e0f2fe 0, #f3f4f6 45%, #e5e7eb 100%);
+      color: #0f172a;
+    }
+
+    main {
+      max-width: 1400px; /* más ancho general */
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.8rem;
+    }
+
+    h2 {
+      margin: 0 0 4px;
+      font-size: 1.3rem;
+    }
+
+    p {
+      margin: 0 0 10px;
+    }
+
+    .page-intro {
+      margin-bottom: 20px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    /* ===============================
+       CONTENEDOR DE CADA EJERCICIO
+    ================================ */
+    .play-section {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 32px;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .play-section-header {
+      margin-bottom: 14px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+    }
+
+    .play-section-header small {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+    }
+
+    .play-section-header p {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    /* ===============================
+       NUEVO LAYOUT: PREVIEW 70% + EDITOR 30%
+    ================================ */
+    .play-section-layout {
+      display: grid;
+      grid-template-columns: 70% 30%; /* preview muy amplia */
+      gap: 40px;                      /* más espacio */
+      align-items: flex-start;
+    }
+
+    /* ===============================
+       PREVIEW GRANDE + AJUSTABLE
+    ================================ */
+    .play-preview {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 24px;                /* más aire */
+      border: 1px solid #e5e7eb;
+      min-height: 340px;            /* más alta */
+      resize: horizontal;           /* permite ajustar para ver wraps, etc */
+      overflow: auto;
+      transform: scale(1.02);       /* ligeramente más grande */
+      transform-origin: top left;
+    }
+
+    /* ===============================
+       CAJETILLA DE CSS (EDITOR)
+    ================================ */
+    .play-editor {
+      background: #020617;
+      color: #e5e7eb;
+      border-radius: 14px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Courier New", monospace;
+      border: 1px solid #1f2937;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.7);
+
+      max-width: 430px;  /* limitado */
+      margin-left: auto; /* pegado a la derecha */
+    }
+
+    .play-editor label {
+      display: block;
+      margin-bottom: 6px;
+      color: #9ca3af;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .play-editor textarea {
+      width: 100%;
+      min-height: 300px;
+      background: #020617;
+      border-radius: 8px;
+      border: 1px solid #111827;
+      padding: 12px;
+      color: #e5e7eb;
+      font: inherit;
+      resize: vertical;
+      outline: none;
+      white-space: pre-wrap;
+    }
+
+    .play-editor textarea:focus {
+      background: #020617; /* mantiene el fondo negro */
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    @media (max-width: 880px) {
+      .play-section-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .play-preview {
+        resize: none;
+      }
+
+      .play-editor {
+        max-width: 100%;
+      }
+    }
+
+    /* ===============================
+       CABECERA SIN FLEX
+    ================================ */
+    .header-demo {
+      background: linear-gradient(135deg, #0f172a, #111827);
+      color: #e5e7eb;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.8);
+    }
+
+    .header-brand {
+      margin-bottom: 12px;
+    }
+
+    .header-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: conic-gradient(from 160deg, #22c55e, #22d3ee, #6366f1, #22c55e);
+      margin-bottom: 4px;
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.6);
+    }
+
+    .header-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .header-subtitle {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .header-nav {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+    }
+
+    .header-nav li {
+      display: inline-block;
+      margin-right: 8px;
+      margin-bottom: 4px;
+    }
+
+    .header-nav a {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+    }
+
+    .header-nav a:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: #3b82f6;
+    }
+
+    /* ===============================
+       TARJETAS SIN FLEX
+    ================================ */
+    .cards-demo {
+      margin: -4px;
+    }
+
+    .course-card {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      margin: 4px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: top;
+      width: 100%;
+    }
+
+    @media (min-width: 720px) {
+      .course-card {
+        width: calc(50% - 8px); 
+      }
+    }
+
+    .course-card-media {
+      height: 150px;
+      overflow: hidden;
+    }
+
+    .course-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .course-card-body {
+      padding: 14px;
+    }
+
+    .course-card-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .course-card-meta {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .course-card-text {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-bottom: 6px;
+    }
+
+    .course-card-footer {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #e5e7eb;
+    }
+
+    .course-card-footer span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.83rem;
+      color: #6b7280;
+    }
+
+    /* ===============================
+       FORMULARIO SIN FLEX
+    ================================ */
+    .form-demo {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .form-demo form {
+      margin-top: 4px;
+    }
+
+    .form-field {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.85rem;
+      color: #374151;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font: inherit;
+      background: #ffffff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+      background: #ffffff;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      margin-top: 8px;
+    }
+
+    .form-actions .btn {
+      margin-right: 8px;
+    }
+
+    /* ===============================
+       BOTONES GENÉRICOS
+    ================================ */
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+  </style>
+
+  <!-- Estilos dinámicos para cada sección -->
+  <style id="css-header-preview"></style>
+  <style id="css-cards-preview"></style>
+  <style id="css-form-preview"></style>
+</head>
+
+<body>
+  <main>
+    <section class="page-intro">
+      <h1>Playground Flexbox por secciones</h1>
+      <p>
+        Cada bloque tiene una vista a la izquierda y una cajetilla de CSS a la derecha.
+        Lo que escribas en cada cajetilla solo afecta a esa sección.
+      </p>
+    </section>
+
+    <!-- ===========================================================
+         1) CABECERA
+    ============================================================ -->
+    <section class="play-section">
+      <div class="play-section-header">
+        <small>Ejercicio 1</small>
+        <h2>Cabecera con logo y menú</h2>
+        <p>Maqueta el logo y el menú con Flexbox (fila, alineaciones, espacios…).</p>
+      </div>
+
+      <div class="play-section-layout">
+        <!-- PREVIEW CABECERA -->
+        <div class="play-preview">
+          <div class="header-demo">
+            <div class="header-brand">
+              <div class="header-logo"></div>
+              <div class="header-title">Flexbox Academy</div>
+              <div class="header-subtitle">Aprende a maquetar interfaces modernas</div>
+            </div>
+
+            <ul class="header-nav">
+              <li><a href="#">Inicio</a></li>
+              <li><a href="#">Cursos</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- EDITOR CSS CABECERA -->
+        <div class="play-editor">
+          <label for="css-header-editor">CSS cabecera</label>
+          <textarea
+            id="css-header-editor"
+            data-style-target="css-header-preview"
+>.header-demo {
+
+}
+
+.header-brand {
+
+}
+
+.header-nav {
+
+}
+
+.header-nav li {
+
+}
+
+.header-nav a {
+
+}</textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================================
+         2) TARJETAS
+    ============================================================ -->
+    <section class="play-section">
+      <div class="play-section-header">
+        <small>Ejercicio 2</small>
+        <h2>Tarjetas de cursos</h2>
+        <p>Crea una rejilla flexible con Flexbox a partir de estas tarjetas.</p>
+      </div>
+
+      <div class="play-section-layout">
+        <!-- PREVIEW TARJETAS -->
+        <div class="play-preview">
+          <div class="cards-demo">
+            <article class="course-card">
+              <div class="course-card-media">
+                <img
+                  src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Pantalla con código"
+                />
+              </div>
+              <div class="course-card-body">
+                <h3 class="course-card-title">Flexbox desde cero</h3>
+                <div class="course-card-meta">Nivel básico · 8 lecciones</div>
+                <p class="course-card-text">
+                  Entiende qué es un contenedor flexible, un ítem y conceptos como
+                  <em>eje principal</em> y <em>eje cruzado</em>.
+                </p>
+                <div class="course-card-footer">
+                  <span>Duración: 3h</span>
+                  <button class="btn btn-primary">Ver más</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-media">
+                <img
+                  src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Persona con portátil"
+                />
+              </div>
+              <div class="course-card-body">
+                <h3 class="course-card-title">Layouts responsive</h3>
+                <div class="course-card-meta">Intermedio · 12 lecciones</div>
+                <p class="course-card-text">
+                  Combina Flexbox con media queries para que tus diseños funcionen bien en
+                  móvil, tablet y escritorio.
+                </p>
+                <div class="course-card-footer">
+                  <span>Duración: 5h</span>
+                  <button class="btn btn-primary">Ver más</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-media">
+                <img
+                  src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Escritorio con varios dispositivos"
+                />
+              </div>
+              <div class="course-card-body">
+                <h3 class="course-card-title">Componentes reutilizables</h3>
+                <div class="course-card-meta">Avanzado · 10 lecciones</div>
+                <p class="course-card-text">
+                  Diseña tarjetas, menús y formularios que se adapten al contenido y que sean
+                  fáciles de reutilizar en distintos layouts.
+                </p>
+                <div class="course-card-footer">
+                  <span>Duración: 4h</span>
+                  <button class="btn btn-primary">Ver más</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- EDITOR CSS TARJETAS -->
+        <div class="play-editor">
+          <label for="css-cards-editor">CSS tarjetas</label>
+          <textarea
+            id="css-cards-editor"
+            data-style-target="css-cards-preview"
+>.cards-demo {
+
+}
+
+.course-card {
+
+}
+
+.course-card-footer {
+
+}</textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================================
+         3) FORMULARIO
+    ============================================================ -->
+    <section class="play-section">
+      <div class="play-section-header">
+        <small>Ejercicio 3</small>
+        <h2>Formulario de contacto</h2>
+        <p>
+          Organiza los campos con Flexbox (dos columnas, mensaje a ancho completo, botones alineados, etc.).
+        </p>
+      </div>
+
+      <div class="play-section-layout">
+        <!-- PREVIEW FORMULARIO -->
+        <div class="play-preview">
+          <div class="form-demo">
+            <form>
+              <div class="form-field">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" placeholder="Tu nombre" />
+              </div>
+
+              <div class="form-field">
+                <label for="email">Correo electrónico</label>
+                <input id="email" type="email" placeholder="nombre@ejemplo.com" />
+              </div>
+
+              <div class="form-field">
+                <label for="tipo">Tipo de consulta</label>
+                <select id="tipo">
+                  <option>Soporte técnico</option>
+                  <option>Dudas sobre los cursos</option>
+                  <option>Información general</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" placeholder="Escribe tu mensaje..."></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- EDITOR CSS FORMULARIO -->
+        <div class="play-editor">
+          <label for="css-form-editor">CSS formulario</label>
+          <textarea
+            id="css-form-editor"
+            data-style-target="css-form-preview"
+>.form-demo form {
+
+}
+
+.form-field {
+
+}
+
+.form-actions {
+
+}</textarea>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Script: conecta cada textarea con su <style> correspondiente -->
+  <script>
+    const editors = document.querySelectorAll("[data-style-target]");
+
+    editors.forEach((textarea) => {
+      const styleId = textarea.dataset.styleTarget;
+      const styleTag = document.getElementById(styleId);
+
+      // Inicializar con el contenido inicial de la cajetilla
+      styleTag.textContent = textarea.value;
+
+      // Actualizar en vivo
+      textarea.addEventListener("input", () => {
+        styleTag.textContent = textarea.value;
+      });
+    });
+  </script>
+</body>
+</html>

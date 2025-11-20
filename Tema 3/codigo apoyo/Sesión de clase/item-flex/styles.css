@@ -1,0 +1,263 @@
+/* ======================================================
+   RESET
+====================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #e5e7eb;
+  color: #0f172a;
+}
+
+/* ======================================================
+   WRAPPER + TITULOS
+====================================================== */
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px 40px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: 1.9rem;
+}
+
+.page-header p {
+  margin: 0;
+  color: #4b5563;
+}
+
+/* ======================================================
+   TARJETAS / SECCIONES
+====================================================== */
+.example-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.example-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+}
+
+.explanation {
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+/* ======================================================
+   BLOQUES TEÓRICOS
+====================================================== */
+.values {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.values-title {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.values ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+}
+
+.values li + li {
+  margin-top: 3px;
+}
+
+/* ======================================================
+   LAYOUT DEMO + CODE
+====================================================== */
+.content-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.demo-area,
+.code-block {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
+/* ======================================================
+   DEMO BOX
+====================================================== */
+.demo-box {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 80px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 6px;
+}
+
+/* Flex para los ítems */
+.item-playground {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.item-playground--align {
+  height: 140px;
+  align-items: center;
+}
+
+/* Items */
+.item-playground .item {
+  background: #3b82f6;
+  color: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+  flex: 0 1 auto;
+}
+
+/* Items específicos para comparar tamaños */
+.bigger-item {
+  width: 130px;
+  flex-basis: 130px;
+}
+
+/* Tamaños diferentes para align-self */
+/* Contenedor alto para ver claramente stretch */
+.clearer-align-self {
+  height: 180px;
+  align-items: flex-start; /* default alignment for comparison */
+}
+
+/* Ítems sin altura fija para permitir stretch */
+.clearer-align-self .item {
+  height: auto;
+  padding: 10px 14px;
+  background: #3b82f6;
+  border-radius: 6px;
+  color: white;
+}
+
+.item-playground--align .alto {
+  height: 80px;
+}
+
+.item-playground--align .peque {
+  height: 32px;
+}
+
+/* Para el ejemplo AUTO vs 0 */
+.basis-compare .item {
+  background: #6366f1;
+}
+
+/* ======================================================
+   CODE BLOCK
+====================================================== */
+.code-block {
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ======================================================
+   CONTROLES
+====================================================== */
+.playground-controls {
+  margin-bottom: 12px;
+}
+
+.playground-controls--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* SELECT — versión bonita con bordes redondeados */
+.playground-controls select {
+  padding: 6px 16px;
+  border-radius: 9999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+
+  /* Flechita custom */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path d='M5.5 7.5l4.5 4 4.5-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+  padding-right: 32px;
+}
+
+/* RANGO */
+.playground-controls input[type="range"] {
+  cursor: pointer;
+}
+
+.range-value {
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+/* Slider de ancho */
+.playground-resize {
+  margin-bottom: 12px;
+}
+
+.playground-resize input[type="range"] {
+  width: 220px;
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+@media (max-width: 900px) {
+  .content-row {
+    flex-direction: column;
+  }
+
+  .demo-area,
+  .code-block {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}

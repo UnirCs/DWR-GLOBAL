@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propiedades del Contenedor Flex</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrapper">
+    <header class="page-header">
+      <h1>Propiedades del contenedor Flexbox</h1>
+      <p>
+        Cambia los valores de cada propiedad y observa cómo se transforma el contenedor
+        en tiempo real.
+      </p>
+    </header>
+
+    <!-- ======================================================
+         1. FLEX-DIRECTION
+    ======================================================= -->
+    <section class="example-card">
+      <h2>1. <code>flex-direction</code></h2>
+      <p class="explanation">
+        Define la dirección del <strong>eje principal</strong>: cómo se ordenan los ítems dentro del contenedor.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>flex-direction</code>:</p>
+        <ul>
+          <li><code>row</code> (por defecto): ítems en fila, de izquierda a derecha.</li>
+          <li><code>row-reverse</code>: fila invertida, de derecha a izquierda.</li>
+          <li><code>column</code>: ítems en columna, de arriba abajo.</li>
+          <li><code>column-reverse</code>: columna invertida, de abajo arriba.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              flex-direction:
+              <select
+                data-playground-select
+                data-target="pg-flex-direction"
+                data-prop="flex-direction"
+              >
+                <option value="row" selected>row (por defecto)</option>
+                <option value="row-reverse">row-reverse</option>
+                <option value="column">column</option>
+                <option value="column-reverse">column-reverse</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input
+                type="range"
+                min="160"
+                max="600"
+                value="320"
+                data-resize-target="pg-flex-direction"
+              />
+            </label>
+          </div>
+
+          <div id="pg-flex-direction" class="demo-box playground">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.contenedor {
+  display: flex;
+  flex-direction: row;  /* row | row-reverse | column | column-reverse */
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         2. FLEX-WRAP
+    ======================================================= -->
+    <section class="example-card">
+      <h2>2. <code>flex-wrap</code></h2>
+      <p class="explanation">
+        Controla si los ítems se mantienen en una única línea o pueden “saltar” a varias líneas.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>flex-wrap</code>:</p>
+        <ul>
+          <li><code>nowrap</code> (por defecto): una sola línea; los ítems se encogen para intentar caber.</li>
+          <li><code>wrap</code>: permite varias líneas, que aparecen hacia abajo.</li>
+          <li><code>wrap-reverse</code>: igual que <code>wrap</code>, pero las nuevas líneas aparecen hacia arriba.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              flex-wrap:
+              <select
+                data-playground-select
+                data-target="pg-flex-wrap"
+                data-prop="flex-wrap"
+              >
+                <option value="nowrap" selected>nowrap (por defecto)</option>
+                <option value="wrap">wrap</option>
+                <option value="wrap-reverse">wrap-reverse</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input
+                type="range"
+                min="160"
+                max="600"
+                value="280"
+                data-resize-target="pg-flex-wrap"
+              />
+            </label>
+          </div>
+
+          <div id="pg-flex-wrap" class="demo-box playground playground-wrap">
+            <div class="item">A</div>
+            <div class="item">B</div>
+            <div class="item">C</div>
+            <div class="item">D</div>
+            <div class="item">E</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.contenedor {
+  display: flex;
+  flex-wrap: nowrap;   /* nowrap | wrap | wrap-reverse */
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         3. FLEX-FLOW
+    ======================================================= -->
+    <section class="example-card">
+      <h2>3. <code>flex-flow</code></h2>
+      <p class="explanation">
+        Es la abreviatura de <code>flex-direction</code> + <code>flex-wrap</code>.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>flex-flow</code> (combinaciones):</p>
+        <ul>
+          <li><code>row nowrap</code>: fila en una sola línea.</li>
+          <li><code>row wrap</code>: fila con salto a nuevas líneas hacia abajo.</li>
+          <li><code>column nowrap</code>: columna en una sola “línea” vertical.</li>
+          <li><code>column wrap</code>: columna donde las filas se apilan verticalmente.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              flex-flow:
+              <select
+                data-playground-select
+                data-target="pg-flex-flow"
+                data-prop="flex-flow"
+              >
+                <option value="row nowrap" selected>row nowrap</option>
+                <option value="row wrap">row wrap</option>
+                <option value="column nowrap">column nowrap</option>
+                <option value="column wrap">column wrap</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input
+                type="range"
+                min="160"
+                max="600"
+                value="280"
+                data-resize-target="pg-flex-flow"
+              />
+            </label>
+          </div>
+
+          <div id="pg-flex-flow" class="demo-box playground playground-wrap">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.contenedor {
+  display: flex;
+  flex-flow: row nowrap;   /* &lt;direction&gt; &lt;wrap&gt; */
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         4. JUSTIFY-CONTENT
+    ======================================================= -->
+    <section class="example-card">
+      <h2>4. <code>justify-content</code></h2>
+      <p class="explanation">
+        Alinea y distribuye los ítems a lo largo del <strong>eje principal</strong>.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>justify-content</code>:</p>
+        <ul>
+          <li><code>flex-start</code> (por defecto): ítems agrupados al inicio del eje.</li>
+          <li><code>center</code>: ítems centrados.</li>
+          <li><code>flex-end</code>: ítems agrupados al final del eje.</li>
+          <li><code>space-between</code>: primer ítem al inicio, último al final y espacio igual entre los demás.</li>
+          <li><code>space-around</code>: cada ítem tiene espacio alrededor; los bordes exteriores reciben la mitad.</li>
+          <li><code>space-evenly</code>: todos los espacios son exactamente iguales, incluyendo bordes.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              justify-content:
+              <select
+                data-playground-select
+                data-target="pg-justify-content"
+                data-prop="justify-content"
+              >
+                <option value="flex-start" selected>flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input
+                type="range"
+                min="160"
+                max="600"
+                value="360"
+                data-resize-target="pg-justify-content"
+              />
+            </label>
+          </div>
+
+          <div id="pg-justify-content" class="demo-box playground">
+            <div class="item">A</div>
+            <div class="item">B</div>
+            <div class="item">C</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.contenedor {
+  display: flex;
+  justify-content: flex-start;
+  /* flex-start | center | flex-end
+     space-between | space-around | space-evenly */
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         5. ALIGN-ITEMS
+    ======================================================= -->
+    <section class="example-card">
+      <h2>5. <code>align-items</code></h2>
+      <p class="explanation">
+        Alinea los ítems en el <strong>eje cruzado</strong> (perpendicular al principal).
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>align-items</code>:</p>
+        <ul>
+          <li><code>stretch</code> (por defecto): los ítems se estiran para rellenar el eje cruzado.</li>
+          <li><code>flex-start</code>: ítems pegados al inicio del eje cruzado.</li>
+          <li><code>center</code>: ítems centrados en el eje cruzado.</li>
+          <li><code>flex-end</code>: ítems pegados al final del eje cruzado.</li>
+          <li><code>baseline</code>: alineados según la línea base del texto.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              align-items:
+              <select
+                data-playground-select
+                data-target="pg-align-items"
+                data-prop="align-items"
+              >
+                <option value="stretch" selected>stretch (por defecto)</option>
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="baseline">baseline</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input
+                type="range"
+                min="160"
+                max="600"
+                value="360"
+                data-resize-target="pg-align-items"
+              />
+            </label>
+          </div>
+
+          <div
+            id="pg-align-items"
+            class="demo-box playground playground-tall"
+          >
+            <div class="item alto">Alto</div>
+            <div class="item">Medio</div>
+            <div class="item peque">Peque</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.contenedor {
+  display: flex;
+  align-items: center;
+  /* stretch | flex-start | center | flex-end | baseline */
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         6. ALIGN-CONTENT
+    ======================================================= -->
+    <section class="example-card">
+      <h2>6. <code>align-content</code></h2>
+      <p class="explanation">
+        Alinea el conjunto de filas o columnas de ítems cuando hay varias líneas (requiere <code>flex-wrap</code>).
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>align-content</code>:</p>
+        <ul>
+          <li><code>stretch</code> (por defecto): las líneas se expanden para rellenar todo el eje cruzado.</li>
+          <li><code>flex-start</code>: las líneas se agrupan al inicio del eje cruzado.</li>
+          <li><code>center</code>: las líneas se agrupan en el centro.</li>
+          <li><code>flex-end</code>: las líneas se agrupan al final del eje cruzado.</li>
+          <li><code>space-between</code>: espacio solo entre líneas, primera y última pegadas a los bordes.</li>
+          <li><code>space-around</code>: espacio alrededor de cada línea; los bordes tienen la mitad.</li>
+          <li><code>space-evenly</code>: espacios iguales entre líneas y entre líneas y bordes.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              align-content:
+              <select
+                data-playground-select
+                data-target="pg-align-content"
+                data-prop="align-content"
+              >
+                <option value="stretch" selected>stretch (por defecto)</option>
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input
+                type="range"
+                min="160"
+                max="600"
+                value="280"
+                data-resize-target="pg-align-content"
+              />
+            </label>
+          </div>
+
+          <div
+            id="pg-align-content"
+            class="demo-box playground playground-multiline"
+          >
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

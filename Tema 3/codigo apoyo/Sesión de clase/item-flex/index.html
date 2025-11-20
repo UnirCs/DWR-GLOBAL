@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propiedades del Ítem Flex</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="wrapper">
+    <header class="page-header">
+      <h1>Propiedades del Ítem Flexbox</h1>
+      <p>
+        Modifica las propiedades de cada ítem y observa cómo cambia su
+        comportamiento dentro del contenedor flexible.
+      </p>
+    </header>
+
+    <!-- ======================================================
+         1. ORDER
+    ======================================================= -->
+    <section class="example-card">
+      <h2>1. <code>order</code></h2>
+      <p class="explanation">
+        Cambia el <strong>orden visual</strong> de un ítem dentro del contenedor,
+        sin alterar el orden real en el HTML.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>order</code>:</p>
+        <ul>
+          <li><code>0</code> (por defecto): posición original.</li>
+          <li>Números mayores: aparecen más tarde.</li>
+          <li>Números menores: aparecen antes.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls playground-controls--grid">
+
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <select data-item-control data-target="pg-order" data-item="1" data-prop="order">
+                <option value="0" selected>order: 0</option>
+                <option value="1">order: 1</option>
+                <option value="2">order: 2</option>
+                <option value="3">order: 3</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <select data-item-control data-target="pg-order" data-item="2" data-prop="order">
+                <option value="0" selected>order: 0</option>
+                <option value="1">order: 1</option>
+                <option value="2">order: 2</option>
+                <option value="3">order: 3</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <select data-item-control data-target="pg-order" data-item="3" data-prop="order">
+                <option value="0" selected>order: 0</option>
+                <option value="1">order: 1</option>
+                <option value="2">order: 2</option>
+                <option value="3">order: 3</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="160" max="600" value="360" data-resize-target="pg-order" />
+            </label>
+          </div>
+
+          <div id="pg-order" class="demo-box item-playground">
+            <div class="item bigger-item">1</div>
+            <div class="item bigger-item">2</div>
+            <div class="item bigger-item">3</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.item { order: 0; }
+.item-primero { order: -1; }</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         2. FLEX-GROW
+    ======================================================= -->
+    <section class="example-card">
+      <h2>2. <code>flex-grow</code></h2>
+      <p class="explanation">
+        Determina cuánto crece un ítem cuando hay espacio sobrante en el
+        contenedor.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>flex-grow</code>:</p>
+        <ul>
+          <li><code>0</code>: no crece (valor por defecto).</li>
+          <li><code>1</code> o más: crece proporcionalmente.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+
+          <div class="playground-controls playground-controls--grid">
+
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <input type="range" min="0" max="3" value="0" step="1"
+                     data-item-control data-target="pg-flex-grow" data-item="1" data-prop="flex-grow">
+              <span data-range-label>0</span>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <input type="range" min="0" max="3" value="1" step="1"
+                     data-item-control data-target="pg-flex-grow" data-item="2" data-prop="flex-grow">
+              <span data-range-label>1</span>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <input type="range" min="0" max="3" value="2" step="1"
+                     data-item-control data-target="pg-flex-grow" data-item="3" data-prop="flex-grow">
+              <span data-range-label>2</span>
+            </div>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="200" max="700" value="500" data-resize-target="pg-flex-grow" />
+            </label>
+          </div>
+
+          <div id="pg-flex-grow" class="demo-box item-playground">
+            <div class="item bigger-item">1</div>
+            <div class="item bigger-item">2</div>
+            <div class="item bigger-item">3</div>
+          </div>
+
+        </div>
+
+        <pre class="code-block"><code>.item { flex-grow: 0; }  
+.item-crece { flex-grow: 2; }</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         3. FLEX-SHRINK
+    ======================================================= -->
+    <section class="example-card">
+      <h2>3. <code>flex-shrink</code></h2>
+      <p class="explanation">
+        Indica cuánto puede <strong>encogerse</strong> un ítem cuando no cabe
+        el contenido.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores:</p>
+        <ul>
+          <li><code>1</code> (por defecto): el ítem se encoge.</li>
+          <li><code>0</code>: NO se encoge (ideal para ítems “importantes”).</li>
+          <li><code>2</code> o más: se encoge aún más que los demás.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+
+          <div class="playground-controls playground-controls--grid">
+
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <select data-item-control data-target="pg-flex-shrink" data-item="1" data-prop="flex-shrink">
+                <option value="1" selected>shrink: 1</option>
+                <option value="0">shrink: 0</option>
+                <option value="2">shrink: 2</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <select data-item-control data-target="pg-flex-shrink" data-item="2" data-prop="flex-shrink">
+                <option value="1" selected>shrink: 1</option>
+                <option value="0">shrink: 0</option>
+                <option value="2">shrink: 2</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <select data-item-control data-target="pg-flex-shrink" data-item="3" data-prop="flex-shrink">
+                <option value="1" selected>shrink: 1</option>
+                <option value="0">shrink: 0</option>
+                <option value="2">shrink: 2</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="160" max="600" value="260" data-resize-target="pg-flex-shrink" />
+            </label>
+          </div>
+
+          <div id="pg-flex-shrink" class="demo-box item-playground">
+            <div class="item bigger-item">1</div>
+            <div class="item bigger-item">2</div>
+            <div class="item bigger-item">3</div>
+          </div>
+
+        </div>
+
+        <pre class="code-block"><code>.item { flex-shrink: 1; }  
+.item-no-encoge { flex-shrink: 0; }</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         4. FLEX-BASIS
+    ======================================================= -->
+    <section class="example-card">
+      <h2>4. <code>flex-basis</code></h2>
+      <p class="explanation">
+        Define el tamaño base inicial del ítem antes de aplicar crecimiento
+        (<code>flex-grow</code>) o encogimiento (<code>flex-shrink</code>).
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores:</p>
+        <ul>
+          <li><code>auto</code>: usa el contenido o el width.</li>
+          <li>Cualquier medida: px, %, rem…</li>
+          <li>Los valores del selector son solo <strong>ejemplos</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+
+          <div class="playground-controls playground-controls--grid">
+
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <select data-item-control data-target="pg-flex-basis" data-item="1" data-prop="flex-basis">
+                <option value="auto" selected>auto</option>
+                <option value="80px">80px (ejemplo)</option>
+                <option value="150px">150px (ejemplo)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <select data-item-control data-target="pg-flex-basis" data-item="2" data-prop="flex-basis">
+                <option value="auto" selected>auto</option>
+                <option value="120px">120px (ejemplo)</option>
+                <option value="200px">200px (ejemplo)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <select data-item-control data-target="pg-flex-basis" data-item="3" data-prop="flex-basis">
+                <option value="auto" selected>auto</option>
+                <option value="60px">60px (ejemplo)</option>
+                <option value="180px">180px (ejemplo)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="220" max="700" value="420" data-resize-target="pg-flex-basis" />
+            </label>
+          </div>
+
+          <div id="pg-flex-basis" class="demo-box item-playground">
+            <div class="item bigger-item">1</div>
+            <div class="item bigger-item">2</div>
+            <div class="item bigger-item">3</div>
+          </div>
+
+        </div>
+
+        <pre class="code-block"><code>.item { flex-basis: auto; }
+/* ejemplos: 80px, 150px, 30%… */</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         EJEMPLO ESPECIAL: AUTO vs 0
+    ======================================================= -->
+    <!-- <section class="example-card">
+      <h2>Ejemplo especial: <code>flex-basis auto</code> vs <code>0</code></h2>
+      <p class="explanation">
+        <code>auto</code> usa el tamaño natural del ítem.  
+        <code>0</code> ignora ese tamaño y reparte el espacio solo según
+        <code>flex-grow</code>.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores del ejemplo:</p>
+        <ul>
+          <li><code>auto</code>: tamaño natural, igual que su width.</li>
+          <li><code>0</code>: reparto proporcional ("resetea" su tamaño original, ocupa lo que su contenido ocupa).</li>
+          <li>Los valores del selector son solo <strong>ejemplos</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+
+          <div class="playground-controls playground-controls--grid">
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <select data-item-control data-target="pg-basis-compare" data-item="1" data-prop="flex-basis">
+                <option value="auto" selected>auto (natural)</option>
+                <option value="0">0 (reparto puro)</option>
+                <option value="120px">120px (ejemplo)</option>
+                <option value="200px">200px (ejemplo)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <select data-item-control data-target="pg-basis-compare" data-item="2" data-prop="flex-basis">
+                <option value="auto" selected>auto (natural)</option>
+                <option value="0">0 (reparto puro)</option>
+                <option value="120px">120px (ejemplo)</option>
+                <option value="200px">200px (ejemplo)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <select data-item-control data-target="pg-basis-compare" data-item="3" data-prop="flex-basis">
+                <option value="auto" selected>auto (natural)</option>
+                <option value="0">0 (reparto puro)</option>
+                <option value="120px">120px (ejemplo)</option>
+                <option value="200px">200px (ejemplo)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="240" max="750" value="460" data-resize-target="pg-basis-compare" />
+            </label>
+          </div>
+
+          <div id="pg-basis-compare" class="demo-box item-playground basis-compare">
+            <div class="item bigger-item">Texto muy largo 1</div>
+            <div class="item bigger-item">B</div>
+            <div class="item bigger-item">Contenido más largo aún 3</div>
+          </div>
+
+        </div>
+
+        <pre class="code-block"><code>.item-auto { flex-basis: auto; }
+.item-zero { flex-basis: 0; }</code></pre>
+      </div>
+    </section> -->
+
+    <!-- ======================================================
+         5. FLEX (SHORTHAND)
+    ======================================================= -->
+    <section class="example-card">
+      <h2>5. <code>flex</code> (shorthand)</h2>
+      <p class="explanation">
+        Abrevia <code>flex-grow</code>, <code>flex-shrink</code> y
+        <code>flex-basis</code>.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de ejemplo:</p>
+        <ul>
+          <li><code>flex: 0 1 auto</code> → valor por defecto. ("No crezcas aunque haya espacio sobrante, encógete cuando se estreche el contenedor y usa el tamaño de tu <i>witdh</i> original como punto de partida").</li>
+          <li><code>flex: 1</code> → igual a <code>1 1 0</code> (reparto igualado, opción más flexible). ("Crece si hay espacio sobrante en el contenedor, encógete cuando sea necesario y olvida tu tamaño inicial para ajustarte proporcionalmente").</li>
+          <li><code>flex: 0 0 auto</code> → tamaño fijo. ("No crezcas aunque haya espacio sobrante, no te encojas cuando se estreche el contenedor y usa el tamaño de tu <i>witdh</i> original como punto de partida").</li>
+          <li><em>Los valores del selector son solo ejemplos.</em></li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+
+          <div class="playground-controls playground-controls--grid">
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <select data-item-control data-target="pg-flex" data-item="1" data-prop="flex">
+                <option value="0 1 auto" selected>0 1 auto</option>
+                <option value="1 1 0">1 1 0</option>
+                <option value="0 0 auto">0 0 auto</option>
+                <option value="2 1 150px">2 1 150px</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <select data-item-control data-target="pg-flex" data-item="2" data-prop="flex">
+                <option value="0 1 auto" selected>0 1 auto</option>
+                <option value="1 1 0">1 1 0</option>
+                <option value="0 0 auto">0 0 auto</option>
+                <option value="2 1 150px">2 1 150px</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <select data-item-control data-target="pg-flex" data-item="3" data-prop="flex">
+                <option value="0 1 auto" selected>0 1 auto</option>
+                <option value="1 1 0">1 1 0</option>
+                <option value="0 0 auto">0 0 auto</option>
+                <option value="2 1 150px">2 1 150px</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="220" max="700" value="450" data-resize-target="pg-flex" />
+            </label>
+          </div>
+
+          <div id="pg-flex" class="demo-box item-playground">
+            <div class="item bigger-item">Texto muy largo 1</div>
+            <div class="item bigger-item">B</div>
+            <div class="item bigger-item">Contenido más largo aún 3</div>
+          </div>
+
+        </div>
+
+        <pre class="code-block"><code>.item { flex: 1; }  
+.item-fijo { flex: 0 0 auto; }</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         6. ALIGN-SELF (ACTUALIZADO)
+    ======================================================= -->
+    <section class="example-card">
+      <h2>6. <code>align-self</code></h2>
+
+      <p class="explanation">
+        Permite definir la alineación individual de un ítem en el
+        <strong>eje cruzado</strong>, ignorando la alineación general del
+        contenedor definida con <code>align-items</code>.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Valores de <code>align-self</code>:</p>
+        <ul>
+          <li><strong>auto</strong>: hereda la alineación del contenedor.</li>
+          <li><strong>flex-start</strong>: al inicio del eje cruzado.</li>
+          <li><strong>center</strong>: centrado en el eje cruzado.</li>
+          <li><strong>flex-end</strong>: al final del eje cruzado.</li>
+          <li><strong>stretch</strong>: ocupa todo el espacio disponible (cuando no se le ha asignado un <i>height</i>).</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+
+          <div class="playground-controls playground-controls--grid">
+
+            <div class="control-group">
+              <span>Ítem 1:</span>
+              <select
+                data-item-control data-target="pg-align-self"
+                data-item="1" data-prop="align-self">
+                <option value="auto" selected>auto</option>
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="stretch">stretch</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 2:</span>
+              <select
+                data-item-control data-target="pg-align-self"
+                data-item="2" data-prop="align-self">
+                <option value="auto" selected>auto</option>
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="stretch">stretch</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <span>Ítem 3:</span>
+              <select
+                data-item-control data-target="pg-align-self"
+                data-item="3" data-prop="align-self">
+                <option value="auto" selected>auto</option>
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="stretch">stretch</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="playground-resize">
+            <label>
+              Ancho del contenedor:
+              <input type="range" min="220" max="700" value="420" data-resize-target="pg-align-self" />
+            </label>
+          </div>
+
+          <div id="pg-align-self" class="demo-box item-playground item-playground--align clearer-align-self">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+        </div>
+
+        </div>
+
+        <pre class="code-block"><code>.item { align-self: auto; }
+
+/* Ejemplos */
+.item-inicio { align-self: flex-start; }
+.item-centro { align-self: center; }
+.item-final { align-self: flex-end; }
+.item-estirado { align-self: stretch; }</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

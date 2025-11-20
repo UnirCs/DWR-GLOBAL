@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ejemplos de uso de Flexbox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- CABECERA CON MENÚ FLEX (full-width, pegada arriba) -->
+  <header class="main-header">
+    <div class="main-header-inner">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-name">Flexbox UI</div>
+      </div>
+      <ul class="nav">
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#tarjetas">Tarjetas</a></li>
+        <li><a href="#formulario">Formulario</a></li>
+        <li><a href="#layout">Layout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="page-wrapper">
+    <h1>Ejemplos prácticos de Flexbox en interfaces</h1>
+    <p class="explanation">
+      En esta página se muestran varios patrones habituales de interfaz maquetados con Flexbox:
+      un menú de navegación, un conjunto de tarjetas, un formulario y un layout con sidebar.
+      Cada bloque incluye una breve explicación de cómo se está utilizando Flexbox.
+    </p>
+
+    <!-- 1. MENÚ DE NAVEGACIÓN (solo explicativo, el menú real está en el header) -->
+    <section id="menu">
+      <div class="section-header">
+        <small>Ejemplo 1</small>
+        <h2>Menú de navegación con Flexbox</h2>
+      </div>
+
+      <p class="explanation">
+        En la cabecera de la página se utiliza un contenedor flex para alinear el logotipo y el
+        menú en una sola fila. El menú en sí también es un contenedor flex para repartir sus
+        elementos de manera uniforme y permitir que se adapten en pantallas pequeñas con
+        <code>flex-wrap</code>.
+      </p>
+
+      <div class="demo-box">
+        <p><strong>Propiedades clave:</strong></p>
+        <ul>
+          <li><code>.main-header-inner { display: flex; justify-content: space-between; }</code></li>
+          <li><code>.nav { display: flex; gap: 16px; }</code></li>
+          <li><code>@media</code> se usa para cambiar a columna en móviles.</li>
+        </ul>
+      </div>
+
+      <pre class="inline-code">
+.main-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+}</pre>
+    </section>
+
+    <!-- 2. TARJETAS DE INFORMACIÓN -->
+    <section id="tarjetas">
+      <div class="section-header">
+        <small>Ejemplo 2</small>
+        <h2>Tarjetas de información (cards)</h2>
+      </div>
+
+      <p class="explanation">
+        Aquí Flexbox se usa para distribuir tarjetas en una fila que se adapta a distintos anchos
+        de pantalla. El contenedor utiliza <code>flex-wrap</code> para que las tarjetas salten a
+        la siguiente línea cuando no hay espacio suficiente.
+      </p>
+
+      <div class="demo-box">
+        <div class="cards-container">
+          <article class="card">
+            <span class="card-badge">Curso</span>
+            <div class="card-title">Flexbox desde cero</div>
+            <p style="font-size: 0.85rem;">
+              Aprende los conceptos básicos de contenedores e ítems flexibles, con ejemplos prácticos.
+            </p>
+            <div class="card-actions">
+              <button class="btn btn-secondary">Detalles</button>
+              <button class="btn btn-primary">Inscribirme</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="card-badge">Práctica</span>
+            <div class="card-title">Maquetación responsive</div>
+            <p style="font-size: 0.85rem;">
+              Crea layouts que se adapten automáticamente a diferentes tamaños de pantalla con
+              pocas líneas de CSS.
+            </p>
+            <div class="card-actions">
+              <button class="btn btn-secondary">Ver guía</button>
+              <button class="btn btn-primary">Empezar</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="card-badge">Ejemplo</span>
+            <div class="card-title">Componentes reutilizables</div>
+            <p style="font-size: 0.85rem;">
+              Usa Flexbox para que las tarjetas funcionen igual aunque cambie la cantidad de texto
+              o de botones.
+            </p>
+            <div class="card-actions">
+              <button class="btn btn-secondary">Código</button>
+              <button class="btn btn-primary">Ver demo</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <pre class="inline-code">
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.card {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+}</pre>
+    </section>
+
+    <!-- 3. FORMULARIO CON FLEX -->
+    <section id="formulario">
+      <div class="section-header">
+        <small>Ejemplo 3</small>
+        <h2>Formulario maquetado con Flexbox</h2>
+      </div>
+
+      <p class="explanation">
+        En este formulario Flexbox se usa para colocar varios campos en la misma fila.
+        Gracias a <code>flex-wrap</code>, cuando no hay espacio suficiente, los campos pasan
+        automáticamente a la siguiente línea sin necesidad de modificar el HTML.
+      </p>
+
+      <div class="demo-box">
+        <form class="form-container">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" type="text" placeholder="Introduce tu nombre" />
+            </div>
+            <div class="form-field">
+              <label for="apellidos">Apellidos</label>
+              <input id="apellidos" type="text" placeholder="Introduce tus apellidos" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="email">Correo electrónico</label>
+              <input id="email" type="email" placeholder="nombre@ejemplo.com" />
+            </div>
+            <div class="form-field">
+              <label for="tipo">Tipo de consulta</label>
+              <select id="tipo">
+                <option>Soporte técnico</option>
+                <option>Dudas sobre el curso</option>
+                <option>Información de precios</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" placeholder="Escribe tu mensaje..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+
+      <pre class="inline-code">
+.form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-field {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+}</pre>
+    </section>
+
+    <!-- 4. LAYOUT CON SIDEBAR + CONTENIDO -->
+    <section id="layout">
+      <div class="section-header">
+        <small>Ejemplo 4</small>
+        <h2>Layout con panel lateral y contenido principal</h2>
+      </div>
+
+      <p class="explanation">
+        Aquí Flexbox se usa para crear un layout muy típico: un panel lateral con filtros y un
+        área principal de contenido. En pantallas anchas se muestran en dos columnas; en pantallas
+        pequeñas se apilan gracias a <code>flex-wrap</code>.
+      </p>
+
+      <div class="demo-box">
+        <div class="layout-container">
+          <aside class="layout-sidebar">
+            <h3 style="margin-top: 0; font-size: 0.95rem;">Filtros</h3>
+            <ul class="filter-list">
+              <li>🏷️ Categoría: Todos</li>
+              <li>⭐ Valoración &gt; 4.0</li>
+              <li>💶 Precio: &lt; 50€</li>
+              <li>📍 Distancia &lt; 5 km</li>
+            </ul>
+          </aside>
+
+          <section class="layout-main">
+            <h3 style="margin-top: 0; font-size: 0.95rem;">Resultados</h3>
+            <p style="font-size: 0.85rem;">
+              Esta zona podría contener tarjetas, una tabla de resultados o cualquier otro
+              componente. El contenedor flex reparte el espacio disponible entre el panel lateral
+              y el contenido principal.
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <pre class="inline-code">
+.layout-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.layout-sidebar {
+  flex: 0 0 220px;
+}
+
+.layout-main {
+  flex: 1 1 260px;
+}</pre>
+    </section>
+  </main>
+</body>
+</html>
