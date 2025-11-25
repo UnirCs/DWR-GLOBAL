@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Acme Workspace – Plataforma para equipos modernos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="page-row header-row">
+      <div class="page-section">
+
+        <div class="site-header">
+          <div class="logo">Acme</div>
+
+          <nav class="main-nav">
+            <a href="#">Producto</a>
+            <a href="#">Precios</a>
+            <a href="#">Clientes</a>
+            <a href="#">Recursos</a>
+            <a href="#">Contacto</a>
+          </nav>
+
+          <a href="#" class="btn-cta">Probar gratis</a>
+        </div>
+
+      </div>
+
+      <aside class="live-editor">
+        <h3>CSS cabecera</h3>
+        <textarea spellcheck="false">
+.site-header {
+    /* Añadir estilos */
+}
+
+.main-nav {
+    /* Añadir estilos */
+}
+
+.main-nav a {
+    /* Añadir estilos */
+}
+
+.btn-cta {
+    /* Añadir estilos */
+}
+        </textarea>
+      </aside>
+    </header>
+
+    <section class="page-row content-row">
+      <div class="page-section">
+
+        <section class="hero">
+          <h1>La forma más sencilla de coordinar a tu equipo</h1>
+          <p>
+            Acme Workspace reúne tareas, archivos y comunicación en un solo lugar
+            para que puedas centrarte en lo importante.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn-primary">Comenzar ahora</a>
+            <a href="#" class="btn-secondary">Ver demo</a>
+          </div>
+        </section>
+
+        <section class="features-section">
+          <h2>Todo lo que necesitas para trabajar en equipo</h2>
+          <p class="features-intro">
+            Centraliza la información y reduce el caos de herramientas dispersas.
+          </p>
+
+          <div class="features">
+            <article class="card">
+              <h3>Panel unificado</h3>
+              <p>Estado de proyectos, próximas entregas y responsables en un único lugar.</p>
+            </article>
+
+            <article class="card">
+              <h3>Documentos compartidos</h3>
+              <p>Edita y comenta documentos con tu equipo en tiempo real.</p>
+            </article>
+
+            <article class="card">
+              <h3>Automatizaciones</h3>
+              <p>Crea flujos que asignen tareas y notificaciones de forma automática.</p>
+            </article>
+
+            <article class="card">
+              <h3>Seguridad empresarial</h3>
+              <p>Permisos avanzados, registros de actividad y cifrado de extremo a extremo.</p>
+            </article>
+          </div>
+        </section>
+
+      </div>
+
+      <aside class="live-editor">
+        <h3>CSS contenido</h3>
+        <textarea spellcheck="false">
+.hero-actions {
+    /* Añadir estilos */
+}
+
+.btn-primary {
+    /* Añadir estilos */
+}
+
+.btn-secondary {
+    /* Añadir estilos */
+}
+
+.features {
+    /* Añadir estilos */
+}
+
+.card {
+    /* Añadir estilos */
+}
+        </textarea>
+      </aside>
+    </section>
+
+    <footer class="page-row footer-row">
+      <div class="page-section">
+
+        <div class="site-footer">
+          <div class="footer-col">
+            <h4>Producto</h4>
+            <a href="#">Características</a>
+            <a href="#">Integraciones</a>
+            <a href="#">Novedades</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Empresa</h4>
+            <a href="#">Sobre nosotros</a>
+            <a href="#">Empleo</a>
+            <a href="#">Sala de prensa</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>Recursos</h4>
+            <a href="#">Centro de ayuda</a>
+            <a href="#">Guías</a>
+            <a href="#">Eventos</a>
+          </div>
+        </div>
+
+        <p class="footer-meta">© 2025 Acme Technologies. Todos los derechos reservados.</p>
+
+      </div>
+
+      <aside class="live-editor">
+        <h3>CSS pie de página</h3>
+        <textarea spellcheck="false">
+.site-footer {
+    /* Añadir estilos */
+}
+
+.footer-col {
+    /* Añadir estilos */
+}
+
+.footer-col a {
+    /* Añadir estilos */
+}
+
+.footer-meta {
+    /* Añadir estilos */
+}
+        </textarea>
+      </aside>
+    </footer>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const editors = document.querySelectorAll('.live-editor textarea');
+
+      editors.forEach((textarea, index) => {
+        const styleEl = document.createElement('style');
+        styleEl.setAttribute('data-editor-style', index);
+        document.head.appendChild(styleEl);
+
+        const applyStyles = () => {
+          styleEl.textContent = textarea.value;
+        };
+
+        textarea.addEventListener('input', applyStyles);
+        applyStyles();
+      });
+    });
+  </script>
+</body>
+</html>

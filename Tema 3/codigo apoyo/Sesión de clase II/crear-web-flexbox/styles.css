@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 24px 24px 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+}
+
+.page-row {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.page-section {
+  flex: 2;
+}
+
+.live-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.live-editor textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 220px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  background: #f9fafb;
+}
+
+/* CABECERA sin Flexbox */
+.site-header {
+  padding: 12px 0;
+}
+
+.logo {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.main-nav a {
+  display: block;
+  margin-bottom: 4px;
+  text-decoration: none;
+  color: #4b5563;
+}
+
+.btn-cta {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #4f46e5;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* HERO sin Flexbox */
+.hero-actions a {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 8px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: #111827;
+  color: #fff;
+}
+
+.btn-secondary {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+}
+
+/* FEATURES sin Flexbox */
+.features {
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: #f9fafb;
+}
+
+/* FOOTER sin Flexbox */
+.site-footer {
+}
+
+.footer-col {
+  margin-bottom: 12px;
+}
+
+.footer-col a {
+  display: block;
+  text-decoration: none;
+  color: #4b5563;
+}
+
+.footer-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+@media (max-width: 900px) {
+  .page-row {
+    flex-direction: column;
+  }
+}
