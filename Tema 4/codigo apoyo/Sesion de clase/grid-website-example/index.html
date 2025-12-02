@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>ActivaFit – Página completa con CSS Grid</title>
+
+  <style>
+    :root {
+      --bg-page: #0b1120;
+      --bg-card: #020617;
+      --bg-demo: #020617;
+      --bg-item: #1e293b;
+      --accent: #22c55e;
+      --accent-soft: #16a34a33;
+      --border-soft: #1f2937;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #f97316;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1f2937 0, #020617 50%, #000 100%);
+      color: var(--text-main);
+    }
+
+    .page {
+      max-width: 1800px;
+      margin: 24px auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.2fr);
+      gap: 28px;
+    }
+
+    /* COLUMNA IZQUIERDA: página realista */
+    .page-preview {
+      background: #020617cc;
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .preview-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid #111827;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to right, #020617, #0f172a);
+    }
+
+    .preview-header h1 {
+      margin: 0;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .preview-header span {
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    /* COLUMNA DERECHA: editores */
+    .page-editors {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .editor-block {
+      background: #020617cc;
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      padding: 12px 12px 14px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .editor-header h2 {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .editor-header small {
+      color: var(--danger);
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .btn-reset {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      padding: 3px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .editor-block textarea {
+      width: 100%;
+      min-height: 150px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      color: var(--text-main);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 8px 10px;
+      resize: vertical;
+    }
+
+    .hint {
+      margin: 4px 0 0;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ========================================= */
+    /* PÁGINA REALISTA: GRID PRINCIPAL          */
+    /* ========================================= */
+
+    .site-grid {
+      /* El layout general se controla desde el editor #css-layout */
+      min-height: 100%;
+      background: radial-gradient(circle at top, #020617, #020617, #020617);
+    }
+
+    /* Estilos base de contenido (tipografía, etc.) */
+    .site-header,
+    .site-hero,
+    .site-features,
+    .site-aside,
+    .site-pricing,
+    .site-footer {
+      padding: 18px 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #16a34a55;
+      background: var(--accent-soft);
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .site-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .logo-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      background: radial-gradient(circle at 20% 20%, #22c55e, #16a34a, #15803d);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: transparent;
+      color: #022c22;
+      font-weight: 600;
+    }
+
+    .site-header-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #1f2937;
+      color: var(--accent);
+    }
+
+    .stat-pill span {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    /* HERO: texto + imagen / calendario */
+
+    .hero-title {
+      font-size: 26px;
+      margin: 0 0 6px;
+    }
+
+    .hero-text {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 450px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .hero-meta {
+      margin-top: 12px;
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-cal {
+      background: #020617;
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      padding: 10px 12px;
+      font-size: 11px;
+    }
+
+    .hero-cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .hero-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .hero-cal-day {
+      text-align: center;
+      padding: 4px 0;
+      border-radius: 6px;
+      background: #020617;
+      border: 1px solid #020617;
+      color: #6b7280;
+    }
+
+    .hero-cal-day--active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #022c22;
+    }
+
+    .hero-cal-day--class {
+      border-color: #4b5563;
+      color: var(--text-main);
+    }
+
+    /* FEATURES: cards */
+
+    .feature-tag {
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .feature-title {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .feature-desc {
+      margin: 0 0 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .dot-green {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    /* ASIDE: reservas / info */
+
+    .aside-card {
+      background: #020617;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 10px 12px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .aside-card h3 {
+      margin: 0 0 6px;
+      font-size: 13px;
+    }
+
+    .class-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      color: var(--text-muted);
+    }
+
+    .class-row strong {
+      color: var(--text-main);
+    }
+
+    .tag-small {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      color: #9ca3af;
+    }
+
+    /* PRICING: grid de planes */
+
+    .pricing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .pricing-title {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .pricing-toggle {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pricing-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .plan {
+      background: #020617;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 12px;
+      font-size: 12px;
+    }
+
+    .plan--highlight {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px #22c55e44;
+    }
+
+    .plan-name {
+      font-size: 13px;
+      margin: 0 0 4px;
+    }
+
+    .plan-price {
+      font-size: 18px;
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .plan-price span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .plan-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 10px;
+    }
+
+    .plan-list li {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+      color: var(--text-muted);
+    }
+
+    .plan-cta {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: var(--text-muted);
+      padding: 6px 0;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .plan--highlight .plan-cta {
+      background: var(--accent);
+      border-color: transparent;
+      color: #022c22;
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+
+    .site-footer {
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid #111827;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 11px;
+    }
+
+    /* Responsive general */
+
+    @media (max-width: 1100px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .page {
+        padding: 12px;
+      }
+      .page-preview {
+        border-radius: 12px;
+      }
+      .site-header-sub {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- COLUMNA IZQUIERDA: PÁGINA GRID COMPLETA -->
+  <div class="page-preview">
+    <div class="preview-header">
+      <h1>Vista previa · ActivaFit</h1>
+      <span>Maquetado con CSS Grid</span>
+    </div>
+
+    <div class="site-grid">
+      <!-- Todas estas secciones se distribuyen con Grid desde el editor "Layout general" -->
+
+      <header class="site-header">
+        <div class="badge">
+          <span class="badge-dot"></span> Panel de control · Gimnasio ActivaFit
+        </div>
+
+        <div class="site-header-top">
+          <div class="logo">
+            <div class="logo-mark"></div>
+            <span>ActivaFit Studio</span>
+          </div>
+          <nav class="nav-links">
+            <span>Dashboard</span>
+            <span>Clases</span>
+            <span>Entrenadores</span>
+            <span>Informes</span>
+          </nav>
+          <div class="nav-actions">
+            <button class="btn">Centro Ayuda</button>
+            <button class="btn btn-primary">Nueva reserva</button>
+          </div>
+        </div>
+
+        <div class="site-header-sub">
+          <span>Resumen del rendimiento del club · Semana del 3 al 9 de marzo</span>
+          <span class="stat-pill">
+            ▲ 18% <span> más reservas que la semana pasada</span>
+          </span>
+        </div>
+      </header>
+
+      <section class="site-hero">
+        <h2 class="hero-title">Gestiona horarios, reservas y aforo en una sola pantalla.</h2>
+        <p class="hero-text">
+          Visualiza el calendario de clases, controla cuántas plazas quedan libres y ajusta
+          la planificación en tiempo real. Todo sincronizado con la app de tus clientes.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary">Crear nueva clase</button>
+          <button class="btn">Ver calendario completo</button>
+        </div>
+
+        <div class="hero-meta">
+          <span>💪 24 clases activas hoy</span>
+          <span>🧍‍♀️ 312 socios con acceso este mes</span>
+        </div>
+
+        <div class="hero-cal">
+          <div class="hero-cal-header">
+            <span>Esta semana</span>
+            <span>Mar · 12 sesiones</span>
+          </div>
+          <div class="hero-cal-grid">
+            <div class="hero-cal-day hero-cal-day--class">L</div>
+            <div class="hero-cal-day hero-cal-day--class">M</div>
+            <div class="hero-cal-day hero-cal-day--active">X</div>
+            <div class="hero-cal-day hero-cal-day--class">J</div>
+            <div class="hero-cal-day hero-cal-day--class">V</div>
+            <div class="hero-cal-day">S</div>
+            <div class="hero-cal-day">D</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="site-features">
+        <div>
+          <div class="feature-tag">Panel de control</div>
+          <h3 class="feature-title">Todo lo que pasa en tu club, en tiempo real.</h3>
+          <p class="feature-desc">
+            Revisa de un vistazo la ocupación de las clases, el estado de las cuotas y
+            las tendencias de asistencia. Identifica las franjas más rentables y ajusta tu
+            oferta al momento.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <h4>Clases y aforo</h4>
+            <ul class="feature-list">
+              <li><span class="dot-green"></span> Ocupación media del 87%</li>
+              <li><span class="dot-green"></span> Lista de espera automática</li>
+              <li><span class="dot-green"></span> Cancelaciones gestionadas desde la app</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <h4>Socios activos</h4>
+            <ul class="feature-list">
+              <li><span class="dot-green"></span> 312 socios con cuota al día</li>
+              <li><span class="dot-green"></span> Alertas de renovaciones en riesgo</li>
+              <li><span class="dot-green"></span> Segmentación por actividad favorita</li>
+            </ul>
+          </article>
+
+          <article class="feature-card">
+            <h4>Finanzas</h4>
+            <ul class="feature-list">
+              <li><span class="dot-green"></span> Ingresos recurrentes mensuales</li>
+              <li><span class="dot-green"></span> Ventas puntuales y extras</li>
+              <li><span class="dot-green"></span> Informes listos para exportar</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <aside class="site-aside">
+        <div class="aside-card">
+          <h3>Próximas clases</h3>
+          <div class="class-row">
+            <span><strong>Crossfit PRO</strong> · 18:00</span>
+            <span class="tag-small">3 plazas</span>
+          </div>
+          <div class="class-row">
+            <span><strong>Yoga suave</strong> · 19:00</span>
+            <span class="tag-small">Completo</span>
+          </div>
+          <div class="class-row">
+            <span><strong>Indoor cycling</strong> · 20:00</span>
+            <span class="tag-small">8 plazas</span>
+          </div>
+        </div>
+
+        <div class="aside-card">
+          <h3>Equipo de entrenadores</h3>
+          <p>4 entrenadores en sala · 3 en clases dirigidas.</p>
+          <p style="margin-top:6px;color:var(--text-muted);">
+            Ajusta disponibilidad y horarios sin salir del panel.
+          </p>
+        </div>
+      </aside>
+
+      <section class="site-pricing">
+        <div class="pricing-header">
+          <h3 class="pricing-title">Planes de suscripción</h3>
+          <div class="pricing-toggle">
+            Facturación <strong>mensual</strong> · Próximamente anual 🔒
+          </div>
+        </div>
+
+        <p class="pricing-note">
+          Configura tus planes desde aquí. Los cambios se sincronizan al momento con la app de tus socios.
+        </p>
+
+        <div class="pricing-grid">
+          <article class="plan">
+            <h4 class="plan-name">Esencial</h4>
+            <p class="plan-price">29€ <span>/ mes</span></p>
+            <ul class="plan-list">
+              <li>· Acceso a sala fitness</li>
+              <li>· 4 clases dirigidas al mes</li>
+              <li>· App de reservas básica</li>
+            </ul>
+            <button class="plan-cta">Configurar plan</button>
+          </article>
+
+          <article class="plan plan--highlight">
+            <h4 class="plan-name">Completo</h4>
+            <p class="plan-price">49€ <span>/ mes</span></p>
+            <ul class="plan-list">
+              <li>· Clases ilimitadas</li>
+              <li>· Gestión avanzada de reservas</li>
+              <li>· Soporte prioritario</li>
+            </ul>
+            <button class="plan-cta">Configurar plan</button>
+          </article>
+
+          <article class="plan">
+            <h4 class="plan-name">Studio PRO</h4>
+            <p class="plan-price">79€ <span>/ mes</span></p>
+            <ul class="plan-list">
+              <li>· Todos los centros de tu cadena</li>
+              <li>· Informes avanzados</li>
+              <li>· Soporte dedicado</li>
+            </ul>
+            <button class="plan-cta">Configurar plan</button>
+          </article>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>© 2025 ActivaFit Studio · Panel de gestión de gimnasios</span>
+        <div class="footer-links">
+          <a href="#">Términos</a>
+          <a href="#">Privacidad</a>
+          <a href="#">Soporte</a>
+        </div>
+      </footer>
+
+    </div> <!-- .site-grid -->
+  </div> <!-- .page-preview -->
+
+
+
+  <!-- COLUMNA DERECHA: CAJETILLAS DE CÓDIGO -->
+  <div class="page-editors">
+
+    <!-- LAYOUT GENERAL -->
+    <section class="editor-block">
+      <div class="editor-header">
+        <div>
+          <h2>Layout general (Grid principal)</h2>
+          <small>Edita la rejilla global: header, hero, features, aside, pricing, footer</small>
+        </div>
+        <button class="btn-reset" data-reset="css-layout" type="button">Reset</button>
+      </div>
+
+<textarea id="css-layout" class="js-css-editor"
+data-target-style="style-layout"
+data-default=".site-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1.1fr);
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-areas:
+    &quot;header header&quot;
+    &quot;hero   hero&quot;
+    &quot;features aside&quot;
+    &quot;pricing aside&quot;
+    &quot;footer  footer&quot;;
+  gap: 14px;
+  padding: 18px 18px 20px;
+}
+
+/* Asignación de áreas */
+.site-header { grid-area: header; }
+.site-hero { grid-area: hero; }
+.site-features { grid-area: features; }
+.site-aside { grid-area: aside; }
+.site-pricing { grid-area: pricing; }
+.site-footer { grid-area: footer; }
+
+/* Prueba a cambiar la distribución, por ejemplo:
+   &quot;header header&quot;
+   &quot;hero   aside&quot;
+   &quot;features aside&quot;
+   &quot;pricing pricing&quot;
+   &quot;footer  footer&quot;;
+*/
+">
+</textarea>
+      <p class="hint">Juega con grid-template-areas para reorganizar la página sin tocar el HTML.</p>
+    </section>
+
+
+
+    <!-- HERO -->
+    <section class="editor-block">
+      <div class="editor-header">
+        <div>
+          <h2>Sección hero (texto + calendario)</h2>
+          <small>Edita cómo se reparten columnas y filas en el hero</small>
+        </div>
+        <button class="btn-reset" data-reset="css-hero" type="button">Reset</button>
+      </div>
+
+<textarea id="css-hero" class="js-css-editor"
+data-target-style="style-hero"
+data-default=".site-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
+  grid-template-rows: auto auto;
+  gap: 12px 18px;
+  align-items: start;
+  background: radial-gradient(circle at top left, #0f172a, #020617);
+  border-radius: 16px;
+  border: 1px solid #111827;
+}
+
+/* Hacemos que el texto ocupe toda la columna izquierda
+   y el calendario la derecha */
+.site-hero .hero-title,
+.site-hero .hero-text,
+.site-hero .hero-actions,
+.site-hero .hero-meta {
+  grid-column: 1 / 2;
+}
+
+.site-hero .hero-cal {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+}
+
+/* Responsive opcional: en pantallas estrechas apilar todo */
+@media (max-width: 900px) {
+  .site-hero {
+    grid-template-columns: 1fr;
+  }
+  .site-hero .hero-cal {
+    grid-column: 1 / 2;
+    grid-row: auto;
+  }
+}
+">
+</textarea>
+      <p class="hint">Prueba a cambiar el número de columnas o a mover el calendario usando grid-column y grid-row.</p>
+    </section>
+
+
+
+    <!-- FEATURES -->
+    <section class="editor-block">
+      <div class="editor-header">
+        <div>
+          <h2>Bloque de características (cards)</h2>
+          <small>Controla la rejilla de tarjetas con repeat(), fr, minmax()</small>
+        </div>
+        <button class="btn-reset" data-reset="css-features" type="button">Reset</button>
+      </div>
+
+<textarea id="css-features" class="js-css-editor"
+data-target-style="style-features"
+data-default=".site-features {
+  background: #020617;
+  border-radius: 14px;
+  border: 1px solid #111827;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.feature-card {
+  background: #020617;
+  border-radius: 12px;
+  border: 1px solid #1f2937;
+  padding: 10px 12px;
+}
+
+/* Prueba:
+   - Cambiar auto-fit por auto-fill
+   - Usar repeat(3, 1fr)
+   - Ajustar minmax(180px, 1.2fr)
+*/
+">
+</textarea>
+      <p class="hint">Aquí se ve muy bien la diferencia entre auto-fit/auto-fill y minmax() modificando el número de columnas.</p>
+    </section>
+
+
+
+    <!-- PRICING -->
+    <section class="editor-block">
+      <div class="editor-header">
+        <div>
+          <h2>Grid de planes de precios</h2>
+          <small>Maqueta cómo se distribuyen los planes y cuál destaca</small>
+        </div>
+        <button class="btn-reset" data-reset="css-pricing" type="button">Reset</button>
+      </div>
+
+<textarea id="css-pricing" class="js-css-editor"
+data-target-style="style-pricing"
+data-default=".site-pricing {
+  background: #020617;
+  border-radius: 14px;
+  border: 1px solid #111827;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Prueba:
+   - Dejar solo 2 columnas en pantallas medianas
+   - Hacer que el plan destacado ocupe más espacio */
+@media (max-width: 1000px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+">
+</textarea>
+      <p class="hint">Puedes hacer que el plan central ocupe 2 columnas usando grid-column en .plan--highlight.</p>
+    </section>
+
+  </div> <!-- .page-editors -->
+
+</div> <!-- .page -->
+
+<script>
+  // Inicializa los editores dinámicos
+  function initEditors() {
+    document.querySelectorAll('.js-css-editor').forEach((ta) => {
+      const styleId = ta.dataset.targetStyle;
+      const defaultCode = ta.dataset.default;
+
+      const styleEl = document.createElement('style');
+      styleEl.id = styleId;
+      document.head.appendChild(styleEl);
+
+      // Valor inicial
+      ta.value = defaultCode;
+
+      const apply = () => {
+        styleEl.textContent = ta.value;
+      };
+
+      ta.addEventListener('input', apply);
+      apply();
+    });
+  }
+
+  // Botones Reset
+  function initResetButtons() {
+    document.querySelectorAll('.btn-reset').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.reset;
+        const ta = document.getElementById(id);
+        ta.value = ta.dataset.default;
+        ta.dispatchEvent(new Event('input'));
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initEditors();
+    initResetButtons();
+  });
+</script>
+
+</body>
+</html>
