@@ -1,205 +1,142 @@
+/* ======== VARIABLES ======== */
 :root {
-  --bg-page: #eef1f4;
-  --bg-card: #ffffff;
-  --bg-demo: #f8fafc;
-  --bg-item: #dce7ff;
-  --bg-item-alt: #1f2937;
-  --border-soft: #d0d7e1;
-  --text-main: #111827;
-  --text-muted: #6b7280;
-  --accent: #4f46e5;
-  --accent-soft: #e0e7ff;
+  --bg: #f8fafc;
+  --bg-dark: #ffffff;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-inv: #0f172a;
+  --bg-item: #f1f5f9;
+  --bg-item-dark: #e5e7eb;
+  --border: #cbd5e1;
+  --border-dark: #94a3b8;
 }
 
 body.theme-dark {
-  --bg-page: #020617;
-  --bg-card: #020617;
-  --bg-demo: #020617;
-  --bg-item: #1e293b;
-  --bg-item-alt: #f97316;
-  --border-soft: #1e293b;
-  --text-main: #e5e7eb;
+  --bg: #020617;
+  --bg-dark: #0b1120;
+  --text: #e5e7eb;
   --text-muted: #9ca3af;
-  --accent: #f97316;
-  --accent-soft: #1f2937;
-}
-
-* {
-  box-sizing: border-box;
+  --text-inv: #e5e7eb;
+  --bg-item: #0f172a;
+  --bg-item-dark: #1e293b;
+  --border: #334155;
+  --border-dark: #64748b;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg-page);
-  color: var(--text-main);
-  transition: background 0.2s ease, color 0.2s ease;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* Página ancha para que quepan demos + cajetillas */
+/* ======== PAGE ======== */
 .page {
-  max-width: 1800px;
-  margin: 32px auto;
-  padding: 32px 32px 48px;
-  background: var(--bg-card);
-  border-radius: 18px;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.18);
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* Header */
+/* ======== HEADER ======== */
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 40px;
-}
-
-.page-header h1 {
-  margin: 0 0 6px;
-  font-size: 24px;
+  gap: 1rem;
 }
 
 .page-header p {
-  margin: 0;
   max-width: 900px;
-  color: var(--text-muted);
+  line-height: 1.4;
 }
 
 .theme-toggle {
-  border: 1px solid var(--border-soft);
-  background: var(--bg-demo);
-  padding: 8px 14px;
-  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
   cursor: pointer;
-  font-size: 14px;
 }
 
-/* Layout de cada playground */
+/* ======== PLAYGROUND SECTIONS ======== */
 .playground {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
-  gap: 40px;
-  margin-bottom: 48px;
-  align-items: flex-start;
+  grid-template-columns: 1fr 420px;
+  gap: 1.2rem;
+  align-items: start;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(148, 163, 184, 0.08);
 }
 
 .playground-main h2 {
-  margin: 0 0 6px;
+  margin-top: 0;
 }
 
-.playground-main p {
-  margin: 0 0 10px;
+.prop-explanation {
+  font-size: 0.9rem;
   color: var(--text-muted);
 }
 
-/* Controles: slider + select */
+/* ======== CONTROL ROW ======== */
 .control-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 1rem;
   align-items: center;
-  margin: 8px 0 6px;
+  margin-bottom: 0.5rem;
 }
 
-.slider-group {
-  flex: 1 1 220px;
-}
-
-.slider-group label {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.slider-value {
-  font-weight: 600;
-  color: var(--accent);
-}
-
-input[type="range"] {
-  width: 100%;
-}
-
-.select-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 260px;
-}
-
+.slider-group label,
 .select-group label {
-  font-size: 13px;
-}
-
-.prop-select {
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-demo);
-  font-size: 13px;
-}
-
-/* Explicaciones bajo el select */
-.prop-explanation {
-  margin: 6px 0 10px;
-  font-size: 13px;
+  font-size: 0.8rem;
   color: var(--text-muted);
 }
 
-/* Zona de demo visual */
+.slider-group input[type="range"] {
+  width: 260px;
+}
+
+.select-group select {
+  padding: 0.25rem 0.5rem;
+}
+
+/* ======== DEMO ======== */
 .demo-wrapper {
-  border-radius: 12px;
-  border: 1px solid var(--border-soft);
-  padding: 16px;
-  background: var(--bg-demo);
-  transition: width 0.15s ease-out, background 0.2s ease;
-  overflow-x: auto;
+  border: 1px dashed var(--border);
+  padding: 0.8rem;
+  border-radius: 10px;
+  background: #f9fafb;
+  margin-top: 8px;
 }
 
 .demo-box {
-  transition: all 0.15s ease-out;
+  background: var(--bg-dark);
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .demo-box .item {
   background: var(--bg-item);
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  padding: 10px;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-dark);
+  color: var(--text);
   text-align: center;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  font-size: 0.8rem;
 }
 
-.demo-box .item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
-}
-
-.item-special {
-  background: var(--bg-item-alt) !important;
-  color: #f9fafb;
-}
-
-.taller {
-  line-height: 1.3;
-}
-
-/* Genéricos para tarjetas/pastillas (por si los usas en otros ficheros) */
-.card {
-  border-radius: 10px;
-  background: var(--bg-item);
-}
-
-.pill {
-  border-radius: 999px;
-}
-
-/* Columna del editor */
+/* ======== EDITOR ======== */
 .playground-editor {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .editor-header {
@@ -208,50 +145,138 @@ input[type="range"] {
   align-items: center;
 }
 
-.editor-header h3 {
-  margin: 0;
-  font-size: 14px;
+.js-css-editor {
+  width: 100%;
+  height: 440px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  padding: 0.5rem;
 }
 
 .btn-reset {
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-demo);
-  padding: 4px 10px;
-  font-size: 12px;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  background: #b91c1c;
+  color: white;
   cursor: pointer;
+  font-size: 0.75rem;
 }
 
-/* Textarea de código */
-.playground-editor textarea {
-  width: 100%;
-  min-height: 250px;
+/* ======== SLOTS COMPARISON (auto-fit vs auto-fill) ======== */
+
+#demo3-slots-compare {
+  position: relative;
+  transition: width 0.25s ease;
+}
+
+.slots-group {
+  margin-bottom: 1rem;
+}
+
+/* Animación de aparición/desaparición de cada grupo */
+#slots-fit,
+#slots-fill {
+  transition: opacity 0.25s ease, transform 0.25s ease, max-height 0.25s ease, margin-top 0.25s ease;
+}
+
+/* Estado por defecto: ver ambos */
+#demo3-slots-compare[data-view="both"] #slots-fit,
+#demo3-slots-compare[data-view="both"] #slots-fill {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px;
+}
+
+/* Solo auto-fit */
+#demo3-slots-compare[data-view="fit"] #slots-fit {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px;
+}
+
+#demo3-slots-compare[data-view="fit"] #slots-fill {
+  opacity: 0;
+  transform: translateY(6px);
+  max-height: 0;
+  margin-top: 0;
+}
+
+/* Solo auto-fill */
+#demo3-slots-compare[data-view="fill"] #slots-fill {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px;
+}
+
+#demo3-slots-compare[data-view="fill"] #slots-fit {
+  opacity: 0;
+  transform: translateY(6px);
+  max-height: 0;
+  margin-top: 0;
+}
+
+/* Borde para ver claramente los límites del grid
+   y apreciar el espacio libre que queda en auto-fill */
+#slots-fit.slots-grid-fit,
+#slots-fill.slots-grid-fill {
+  border: 2px dashed #f59e0b;
   border-radius: 10px;
-  border: 1px solid var(--border-soft);
-  background: #02061708;
-  color: var(--text-main);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 13px;
-  padding: 10px 12px;
-  resize: vertical;
+  background: #fffbeb;
 }
 
-/* Responsive */
-@media (max-width: 1100px) {
-  .page {
-    padding: 20px;
-  }
+/* Visual de slots (compartido) */
+.slot {
+  height: 40px;
+  border-radius: 999px;
+  border: 1px dashed #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #475569;
+  background: #ffffff;
+  transition: all 0.25s ease;
+}
 
-  .playground {
-    grid-template-columns: 1fr;
-  }
+.slot--busy {
+  border-style: solid;
+  border-color: #22c55eaa;
+  background: #ecfdf3;
+  color: #15803d;
+}
 
-  .demo-wrapper {
-    width: 100% !important;
-  }
+/* Ejemplo real auto-fit: grid de productos */
+.product-grid-autofit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
 
-  .playground-editor textarea {
-    min-height: 200px;
-  }
+.product-card {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.product-name {
+  margin: 0 0 4px;
+  font-size: 13px;
+}
+
+.product-meta {
+  margin: 0 0 6px;
+  color: #64748b;
+}
+
+.product-price {
+  margin: 0;
+  font-weight: 600;
 }
