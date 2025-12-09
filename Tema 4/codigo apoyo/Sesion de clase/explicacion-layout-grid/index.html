@@ -28,19 +28,20 @@
 
 
   <!-- ========================================================= -->
-  <!-- 1. CONTENEDOR GRID: COLUMNAS Y FILAS                       -->
+  <!-- 1. COLUMNAS: grid-template-columns                        -->
   <!-- ========================================================= -->
   <section class="playground">
     <div class="playground-main">
-      <h2>1. Contenedor Grid: columnas y filas</h2>
+      <h2>1. Columnas en Grid: <code>grid-template-columns</code> y <code>fr</code></h2>
       <p>
-        Grid se activa con <strong>display: grid</strong>. Con
-        <code>grid-template-columns</code> decides cuántas columnas hay y cómo se
-        reparte el ancho. Las <strong>filas se generan solas</strong>.
+        Grid se activa con <strong>display: grid</strong>. En esta sección nos centramos
+        únicamente en las <strong>columnas</strong> usando <code>grid-template-columns</code>.
+        Las filas se irán creando automáticamente según el número de ítems.
       </p>
 
       <p class="prop-explanation">
-        Es decir: más columnas ⇒ menos filas; menos columnas ⇒ más filas.
+        Cambiando las columnas decides cuántos ítems caben por fila.  
+        Más columnas ⇒ menos filas; menos columnas ⇒ más filas.
       </p>
 
       <div class="control-row">
@@ -52,7 +53,7 @@
         </div>
 
         <div class="select-group">
-          <label for="select1">Presets</label>
+          <label for="select1">Presets columnas</label>
           <select id="select1" class="prop-select">
             <option value="2cols">2 columnas iguales (1fr, 1fr)</option>
             <option value="3cols">3 columnas iguales (repeat(3, 1fr))</option>
@@ -77,7 +78,7 @@
 
     <aside class="playground-editor">
       <div class="editor-header">
-        <h3>CSS contenedor</h3>
+        <h3>CSS contenedor (columnas)</h3>
         <button class="btn-reset" data-reset="css1" type="button">Reset</button>
       </div>
 
@@ -97,15 +98,32 @@ data-default="#demo1 {
 
 
   <!-- ========================================================= -->
-  <!-- 2. COLUMNAS, FILAS Y VALORES                              -->
+  <!-- 2. FILAS: grid-template-rows vs grid-auto-rows            -->
   <!-- ========================================================= -->
   <section class="playground">
     <div class="playground-main">
-      <h2>2. Columnas, filas y valores (<code>px</code>, <code>fr</code>, <code>auto</code>)</h2>
+      <h2>2. Filas en Grid: <code>grid-template-rows</code> y <code>grid-auto-rows</code></h2>
+
       <p>
-        Mezclamos columnas fijas (<code>px</code>) con columnas flexibles (<code>1fr</code>).
-        <code>1fr</code> reparte el espacio libre. Para las filas, <code>auto</code>
-        toma la altura del contenido.
+        Aquí nos centramos en cómo se calculan las <strong>filas</strong>.
+        Grid distingue entre:
+      </p>
+      <ul class="prop-explanation">
+        <li>
+          <strong>Filas explícitas</strong> → las que defines con
+          <code>grid-template-rows</code> (fila 1, fila 2, etc.).
+        </li>
+        <li>
+          <strong>Filas implícitas</strong> → las que Grid crea automáticamente
+          cuando hacen falta más filas. Su altura se controla con
+          <code>grid-auto-rows</code>.
+        </li>
+      </ul>
+
+      <p class="prop-explanation">
+        En todos los presets mantenemos <strong>3 columnas</strong>. Lo que cambia es
+        cómo se le da altura a las filas: solo implícitas, explícitas + implícitas,
+        o todo por <code>grid-auto-rows</code>.
       </p>
 
       <div class="control-row">
@@ -117,11 +135,12 @@ data-default="#demo1 {
         </div>
 
         <div class="select-group">
-          <label for="select2">Presets</label>
+          <label for="select2">Presets filas</label>
           <select id="select2" class="prop-select">
-            <option value="150-1fr-1fr">150px + 1fr + 1fr</option>
-            <option value="3fr">3 columnas 1fr</option>
-            <option value="4cols">4 columnas 1fr</option>
+            <option value="implicit-only">Solo filas implícitas (sin grid-template-rows)</option>
+            <option value="explicit-auto">2 filas explícitas + implícitas auto</option>
+            <option value="explicit-fixed-auto">2 filas explícitas + implícitas fijas (40px)</option>
+            <option value="only-auto-rows">Todas las filas a 100px (solo grid-auto-rows)</option>
           </select>
         </div>
       </div>
@@ -130,19 +149,63 @@ data-default="#demo1 {
 
       <div id="demo2-wrapper" class="demo-wrapper">
         <div id="demo2" class="demo-box">
+          <div class="item">Item 1</div>
+          <div class="item">Item 2</div>
+          <div class="item">Item 3</div>
+          <div class="item">Item 4</div>
+          <div class="item">Item 5</div>
+          <div class="item">Item 6</div>
+          <div class="item">Item 7</div>
+          <div class="item">Item 8</div>
+          <div class="item">Item 9</div>
+        </div>
+      </div>
+
+      <!-- Ejemplo extra: más filas definidas que ítems -->
+      <h3 class="prop-explanation" style="margin-top: 1rem;">
+        Ejemplo extra: defino más filas de las que puedo “llenar”
+      </h3>
+      <p class="prop-explanation">
+        Aquí definimos <strong>5 filas fijas</strong> con <code>grid-template-rows</code>,
+        pero solo hay <strong>3 ítems</strong>.  
+        Grid <em>no inventa ítems nuevos</em> para rellenar las filas: simplemente
+        deja parte del grid vacío. El contenedor tiene altura para 5 filas, pero solo
+        las primeras líneas están ocupadas.
+      </p>
+      <p class="prop-explanation">
+        Las líneas horizontales (las “rejillas” que ves) marcan los límites de cada fila.
+        Se aprecia que hay 5 filas de 40px, aunque solo las dos primeras tengan contenido.
+      </p>
+
+      <div id="demo2b-wrapper" class="demo-wrapper demo-wrapper-rows-extra">
+        <div id="demo2b" class="demo-box demo-rows-explicit">
           <div class="item">1</div>
           <div class="item">2</div>
           <div class="item">3</div>
-          <div class="item">4</div>
-          <div class="item">5</div>
-          <div class="item">6</div>
         </div>
       </div>
+
+      <p class="prop-explanation">
+        CSS que se aplica en este ejemplo:
+      </p>
+      <pre class="code-inline">
+#demo2b {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 40px); /* 5 filas fijas */
+}
+      </pre>
+      <p class="prop-explanation">
+        Conclusión: <strong>puedes definir más filas de las que realmente usas</strong>.
+        El grid existe (las líneas están ahí), pero si no hay ítems en esas celdas,
+        simplemente verás espacio vacío dentro del contenedor.
+      </p>
+
     </div>
 
     <aside class="playground-editor">
       <div class="editor-header">
-        <h3>CSS columnas / filas</h3>
+        <h3>CSS filas</h3>
         <button class="btn-reset" data-reset="css2" type="button">Reset</button>
       </div>
 
@@ -150,8 +213,8 @@ data-default="#demo1 {
 data-target-style="style-css2"
 data-default="#demo2 {
   display: grid;
-  grid-template-columns: 150px 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(3, 1fr);
+  /* Sin grid-template-rows → todas las filas son implícitas */
   gap: 10px;
   padding: 12px;
 }"
@@ -187,14 +250,14 @@ data-default="#demo2 {
 
       <div class="control-row">
         <div class="slider-group">
-          <label for="slider3">Ancho del contenedor:
+          <label for="slider3">Ancho del contenedor (plazas):
             <span id="w3" class="slider-value">1000px</span>
           </label>
           <input id="slider3" type="range" min="340" max="1500" value="1000" />
         </div>
 
         <div class="select-group">
-          <label for="slotsModeSelect">Vista</label>
+          <label for="slotsModeSelect">Vista plazas</label>
           <select id="slotsModeSelect" class="prop-select">
             <option value="both">Ver ambos</option>
             <option value="fit">Solo auto-fit</option>
@@ -401,10 +464,41 @@ data-default="#slots-fit.slots-grid-fit {
   <!-- ========================================================= -->
   <section class="playground">
     <div class="playground-main">
-      <h2>4. <code>grid-column</code> y <code>grid-row</code></h2>
+      <h2>4. <code>grid-column</code> y <code>grid-row</code> (vértices del grid)</h2>
       <p>
-        Un ítem puede ocupar varias columnas o filas indicando el rango
-        <code>inicio / fin</code>. Esto permite destacar bloques dentro del grid.
+        En este ejemplo el contenedor tiene <strong>3 columnas</strong>. Eso significa que
+        hay <strong>4 líneas verticales</strong> (vértices): 1, 2, 3 y 4.
+        <br>
+        <strong>grid-column</strong> y <strong>grid-row</strong> se escriben como
+        <code>inicio / fin</code> y usan precisamente esos vértices.
+      </p>
+
+      <ul class="prop-explanation">
+        <li>
+          <strong>Fila usada:</strong> siempre estamos en la <strong>primera fila</strong>,
+          así que en todos los presets el <code>grid-row</code> es <code>1 / 2</code>  
+          (entre el vértice horizontal 1 y el 2).
+        </li>
+        <li>
+          <code>grid-column: 1 / 4</code> ⇒ del vértice vertical 1 al 4.  
+          Como hay columnas entre (1–2), (2–3) y (3–4), el ítem ocupa las
+          <strong>3 columnas completas</strong>.
+        </li>
+        <li>
+          <code>grid-column: 1 / 3</code> ⇒ del vértice 1 al 3.  
+          Ocupa las columnas entre (1–2) y (2–3): es decir, las
+          <strong>2 columnas de la izquierda</strong>.
+        </li>
+        <li>
+          <code>grid-column: 2 / 4</code> ⇒ del vértice 2 al 4.  
+          Ocupa las columnas entre (2–3) y (3–4): las
+          <strong>2 columnas de la derecha</strong>.
+        </li>
+      </ul>
+
+      <p class="prop-explanation">
+        La tarjeta “Destacado” está coloreada y con un borde distinto para ver claramente
+        qué columnas está ocupando según los vértices que elijas en cada preset.
       </p>
 
       <div class="control-row">
@@ -418,9 +512,9 @@ data-default="#slots-fit.slots-grid-fit {
         <div class="select-group">
           <label for="select4">Presets</label>
           <select id="select4" class="prop-select">
-            <option value="full-row">Ocupar toda la fila (1 / 4)</option>
-            <option value="half">Ocupar 2 columnas (1 / 3)</option>
-            <option value="right">Ocuparse a la derecha (2 / 4)</option>
+            <option value="full-row">De vértice 1 a 4 (fila completa)</option>
+            <option value="half">De vértice 1 a 3 (2 columnas)</option>
+            <option value="right">De vértice 2 a 4 (2 columnas a la derecha)</option>
           </select>
         </div>
       </div>
@@ -449,13 +543,21 @@ data-target-style="style-css4"
 data-default="#demo4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 80px;
   gap: 12px;
   padding: 12px;
 }
 
+/* Item destacado: usa los “vértices” de las líneas del grid
+   grid-column: 1 / 4 → de la línea vertical 1 a la 4 (3 columnas)
+   grid-row: 1 / 2   → entre la línea horizontal 1 y la 2 (1 fila) */
 #demo4 .item-special {
   grid-column: 1 / 4;
   grid-row: 1 / 2;
+  background: #fee2e2;
+  border-color: #b91c1c;
+  color: #7f1d1d;
+  font-weight: 600;
 }"
 ></textarea>
     </aside>
@@ -582,7 +684,6 @@ data-default="#demo5 .layout {
 <!-- SCRIPT COMPLETO                                           -->
 <!-- ========================================================= -->
 <script>
-
 function initEditors() {
   document.querySelectorAll('.js-css-editor').forEach((ta) => {
     const styleId = ta.dataset.targetStyle;
@@ -636,7 +737,7 @@ function initSliders() {
 }
 
 function initSelects() {
-  // Sección 1
+  // Sección 1 (columnas)
   const select1 = document.getElementById('select1');
   const ta1 = document.getElementById('css1');
   const exp1 = document.getElementById('exp1');
@@ -648,7 +749,7 @@ function initSelects() {
   gap: 12px;
   padding: 12px;
 }`,
-      text: "2 columnas (1fr, 1fr)."
+      text: "2 columnas iguales: cada una se lleva el 50% del ancho disponible (1fr + 1fr)."
     },
     '3cols': {
       code: `#demo1 {
@@ -657,7 +758,7 @@ function initSelects() {
   gap: 12px;
   padding: 12px;
 }`,
-      text: "3 columnas iguales con repeat(3, 1fr)."
+      text: "3 columnas iguales con repeat(3, 1fr): se reparten el ancho en tres partes idénticas."
     },
     'fixed-fluid': {
       code: `#demo1 {
@@ -666,7 +767,7 @@ function initSelects() {
   gap: 12px;
   padding: 12px;
 }`,
-      text: "Columna fija + columna flexible."
+      text: "Primera columna fija (200px) y segunda flexible (1fr) que ocupa el resto del espacio."
     }
   };
   select1.addEventListener('change', () => {
@@ -678,40 +779,53 @@ function initSelects() {
   });
   select1.dispatchEvent(new Event('change'));
 
-  // Sección 2
+  // Sección 2 (filas)
   const select2 = document.getElementById('select2');
   const ta2 = document.getElementById('css2');
   const exp2 = document.getElementById('exp2');
   const presets2 = {
-    '150-1fr-1fr': {
+    'implicit-only': {
       code: `#demo2 {
   display: grid;
-  grid-template-columns: 150px 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(3, 1fr);
+  /* Sin grid-template-rows → todas las filas son implícitas */
   gap: 10px;
   padding: 12px;
 }`,
-      text: "150px fijo + dos columnas que se reparten el espacio libre."
+      text: "No definimos grid-template-rows. Todas las filas son implícitas y su altura se calcula con grid-auto-rows (por defecto, auto)."
     },
-    '3fr': {
+    'explicit-auto': {
       code: `#demo2 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 80px 80px; /* 2 filas explícitas */
+  grid-auto-rows: auto;          /* el resto se adaptan al contenido */
   gap: 10px;
   padding: 12px;
 }`,
-      text: "3 columnas flexibles iguales (1fr, 1fr, 1fr)."
+      text: "Dos filas explícitas de 80px. A partir de la tercera, las filas se crean implícitamente con altura auto (según contenido)."
     },
-    '4cols': {
+    'explicit-fixed-auto': {
       code: `#demo2 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 80px 80px; /* filas 1 y 2 */
+  grid-auto-rows: 40px;          /* filas 3, 4, 5... de 40px */
   gap: 10px;
   padding: 12px;
 }`,
-      text: "4 columnas ⇒ menos filas."
+      text: "Fila 1 y 2 miden 80px (explícitas). Las filas implícitas que vienen después tienen altura fija de 40px (grid-auto-rows: 40px)."
+    },
+    'only-auto-rows': {
+      code: `#demo2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Sin filas explícitas, todas implícitas */
+  grid-auto-rows: 100px;  /* todas las filas miden 100px */
+  gap: 10px;
+  padding: 12px;
+}`,
+      text: "No declaramos filas explícitas: todas las filas se crean implícitamente y miden 100px gracias a grid-auto-rows."
     }
   };
   select2.addEventListener('change', () => {
@@ -723,7 +837,7 @@ function initSelects() {
   });
   select2.dispatchEvent(new Event('change'));
 
-  // Sección 4
+  // Sección 4 (vértices grid-column / grid-row)
   const select4 = document.getElementById('select4');
   const ta4 = document.getElementById('css4');
   const exp4 = document.getElementById('exp4');
@@ -732,43 +846,58 @@ function initSelects() {
       code: `#demo4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 80px;
   gap: 12px;
   padding: 12px;
 }
 
 #demo4 .item-special {
-  grid-column: 1 / 4;
-  grid-row: 1 / 2;
+  grid-column: 1 / 4;  /* de vértice vertical 1 a 4 → 3 columnas */
+  grid-row: 1 / 2;     /* entre vértice horizontal 1 y 2 → 1 fila */
+  background: #fee2e2;
+  border-color: #b91c1c;
+  color: #7f1d1d;
+  font-weight: 600;
 }`,
-      text: "El ítem ocupa todas las columnas de la primera fila."
+      text: "Del vértice 1 al 4 en horizontal: el destacado ocupa la fila completa (las 3 columnas). grid-row 1/2 mantiene solo la primera fila."
     },
     'half': {
       code: `#demo4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 80px;
   gap: 12px;
   padding: 12px;
 }
 
 #demo4 .item-special {
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
+  grid-column: 1 / 3;  /* de vértice vertical 1 a 3 → columnas 1 y 2 */
+  grid-row: 1 / 2;     /* primera fila (vértices 1 a 2) */
+  background: #fee2e2;
+  border-color: #b91c1c;
+  color: #7f1d1d;
+  font-weight: 600;
 }`,
-      text: "El ítem ocupa 2 columnas."
+      text: "Del vértice 1 al 3 en horizontal: el destacado ocupa las 2 columnas de la izquierda."
     },
     'right': {
       code: `#demo4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 80px;
   gap: 12px;
   padding: 12px;
 }
 
 #demo4 .item-special {
-  grid-column: 2 / 4;
-  grid-row: 1 / 2;
+  grid-column: 2 / 4;  /* de vértice vertical 2 a 4 → columnas 2 y 3 */
+  grid-row: 1 / 2;     /* primera fila */
+  background: #fee2e2;
+  border-color: #b91c1c;
+  color: #7f1d1d;
+  font-weight: 600;
 }`,
-      text: "Destacado a la derecha ocupando columnas 2 y 3."
+      text: "Del vértice 2 al 4: el destacado ocupa las 2 columnas de la derecha."
     }
   };
   select4.addEventListener('change', () => {
@@ -780,7 +909,7 @@ function initSelects() {
   });
   select4.dispatchEvent(new Event('change'));
 
-  // Sección 5
+  // Sección 5 (grid-template-areas)
   const select5 = document.getElementById('select5');
   const ta5 = document.getElementById('css5');
   const exp5 = document.getElementById('exp5');
@@ -833,7 +962,7 @@ function initSelects() {
   text-align: center;
   padding: 0.75rem;
 }`,
-      text: "Escritorio: sidebar y contenido."
+      text: "Escritorio: sidebar a la izquierda y contenido a la derecha, con header y footer ocupando todo el ancho."
     },
     'mobile': {
       code: `#demo5 .layout {
@@ -884,7 +1013,7 @@ function initSelects() {
   text-align: center;
   padding: 0.75rem;
 }`,
-      text: "Móvil: bloques apilados."
+      text: "Móvil: todo apilado en una sola columna, manteniendo las mismas áreas."
     }
   };
   select5.addEventListener('change', () => {
@@ -896,7 +1025,7 @@ function initSelects() {
   });
   select5.dispatchEvent(new Event('change'));
 
-  // Vista auto-fit / auto-fill (animación)
+  // Vista auto-fit / auto-fill para las plazas
   const slotsModeSelect = document.getElementById('slotsModeSelect');
   const slotsWrapper = document.getElementById('demo3-slots-compare');
   if (slotsModeSelect && slotsWrapper) {

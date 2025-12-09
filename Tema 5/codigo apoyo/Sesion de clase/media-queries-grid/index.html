@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSS Grid + Media Queries – Playground</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 {
+      margin: 0 0 0.25rem;
+      font-size: 1.6rem;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 800px;
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.08);
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 2.3fr 0.7fr; /* parte visual mucho más grande */
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .section-main h2 {
+      margin-top: 0;
+      margin-bottom: 0.35rem;
+      font-size: 1.25rem;
+    }
+
+    .section-main p.description {
+      margin-top: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin: 0.5rem 0 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .controls-secondary {
+      margin-top: 0.25rem;
+    }
+
+    .toggle-group {
+      border-radius: 999px;
+      background: #e5e7eb;
+      padding: 2px;
+      display: inline-flex;
+      gap: 2px;
+    }
+
+    .toggle-btn {
+      border: none;
+      background: transparent;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      color: #4b5563;
+    }
+
+    .toggle-btn.is-active {
+      background: #0f172a;
+      color: white;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hint strong {
+      color: #0f172a;
+    }
+
+    .slider-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-right: 0.5rem;
+    }
+
+    input[type="range"] {
+      width: 260px;
+    }
+
+    .demo-wrapper {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      background: #f9fafb;
+      margin: 0.6rem auto 0; /* centrado, ancho controlado por el slider */
+      transition: width 0.2s ease;
+    }
+
+    .demo-grid {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+
+    /* ==========================
+       SECCIÓN 1: GRID DE TARJETAS
+       ========================== */
+
+    .product-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    /* MODO SIN MEDIA QUERIES (sección 1): SIEMPRE 4 columnas */
+    #section-products.no-mq .product-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* MODO "CON MEDIA QUERIES" SIMULADAS:
+       usamos data-size para simular los breakpoints */
+    #section-products.with-mq .product-grid[data-size="small"] {
+      grid-template-columns: repeat(2, 1fr); /* móvil */
+    }
+
+    #section-products.with-mq .product-grid[data-size="medium"] {
+      grid-template-columns: repeat(3, 1fr); /* tablet */
+    }
+
+    #section-products.with-mq .product-grid[data-size="large"] {
+      grid-template-columns: repeat(4, 1fr); /* escritorio */
+    }
+
+    .product-card {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 0.5rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      font-size: 0.8rem;
+    }
+
+    .product-name {
+      font-weight: 600;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .product-meta {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .product-price {
+      margin: 0.15rem 0 0;
+      font-weight: 600;
+      color: #16a34a;
+    }
+
+    /* Mensaje de modo activo (sección 1 y 2) */
+    .mode-text {
+      font-size: 0.8rem;
+      margin: 0.2rem 0 0.5rem;
+      color: var(--muted);
+    }
+
+    #section-products.no-mq .mode-text--no-mq,
+    #section-layout.no-mq .mode-text--no-mq {
+      display: block;
+    }
+
+    #section-products.no-mq .mode-text--with-mq,
+    #section-layout.no-mq .mode-text--with-mq {
+      display: none;
+    }
+
+    #section-products.with-mq .mode-text--no-mq,
+    #section-layout.with-mq .mode-text--no-mq {
+      display: none;
+    }
+
+    #section-products.with-mq .mode-text--with-mq,
+    #section-layout.with-mq .mode-text--with-mq {
+      display: block;
+    }
+
+    .mode-text--no-mq strong {
+      color: #b91c1c;
+    }
+
+    .mode-text--with-mq strong {
+      color: #15803d;
+    }
+
+    /* ==========================
+       SECCIÓN 2: LAYOUT COMPLETO
+       ========================== */
+
+    .layout-grid {
+      display: grid;
+      min-height: 260px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #e5e7eb;
+    }
+
+    /* Sin media queries: siempre diseño “de escritorio” */
+    #section-layout.no-mq .layout-grid {
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 70px 1fr 60px;
+      grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    }
+
+    /* Con media queries SIMULADAS usando data-size */
+    #section-layout.with-mq .layout-grid[data-size="small"] {
+      /* móvil: apilado */
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-areas:
+        "header"
+        "sidebar"
+        "main"
+        "footer";
+    }
+
+    #section-layout.with-mq .layout-grid[data-size="large"] {
+      /* escritorio: sidebar + contenido */
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 70px 1fr 60px;
+      grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    }
+
+    .layout-header {
+      grid-area: header;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .layout-brand {
+      font-weight: 600;
+    }
+
+    .layout-user {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .layout-sidebar {
+      grid-area: sidebar;
+      background: #e2e8f0;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.84rem;
+    }
+
+    .layout-sidebar h3 {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #475569;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .nav-list li {
+      padding: 0.3rem 0.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.83rem;
+    }
+
+    .nav-list li.is-active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .nav-list li:not(.is-active):hover {
+      background: #cbd5e1;
+    }
+
+    .layout-main {
+      grid-area: main;
+      background: #f8fafc;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.85rem;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 0.5rem;
+    }
+
+    .layout-main h3 {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .stat-value {
+      font-weight: 600;
+    }
+
+    .layout-footer {
+      grid-area: footer;
+      background: #020617;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    /* Panel de código – más pequeño */
+    .code-panel {
+      border-radius: 10px;
+      background: #020617;
+      color: #e5e7eb;
+      padding: 0.6rem;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.7rem; /* más pequeño */
+      line-height: 1.4;
+      white-space: pre;
+      overflow-x: auto;
+      max-height: 420px;
+    }
+
+    .code-panel strong {
+      color: #fbbf24;
+      font-weight: 500;
+    }
+
+    .code-panel .comment {
+      color: #6b7280;
+    }
+
+    .code-panel .selector {
+      color: #38bdf8;
+    }
+
+    .code-panel .prop {
+      color: #a5b4fc;
+    }
+
+    .code-panel .value {
+      color: #4ade80;
+    }
+
+    .code-panel .at {
+      color: #f97316;
+    }
+
+    @media (max-width: 900px) {
+      .section {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-wrapper {
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>CSS Grid + Media Queries – Playground</h1>
+    <p>
+      Demostración interactiva de cómo cambia un layout con Grid cuando aplicamos
+      <strong>media queries</strong>. En el playground simulamos los breakpoints
+      ajustando el ancho del contenedor y cambiando el número de columnas/layout.
+    </p>
+  </header>
+
+  <!-- ==========================
+       SECCIÓN 1: GRID DE TARJETAS
+       ========================== -->
+  <section id="section-products" class="section no-mq">
+    <div class="section-main">
+      <h2>1. Grid de tarjetas de producto</h2>
+      <p class="description">
+        Sin media queries el número de columnas es fijo y el grid puede quedar apelotonado
+        en pantallas pequeñas. Con media queries (aquí simuladas), el número de columnas
+        se adapta al ancho disponible.
+      </p>
+
+      <div class="controls">
+        <div class="toggle-group" data-section="products">
+          <button type="button" class="toggle-btn is-active" data-mode="no-mq">
+            Sin media queries
+          </button>
+          <button type="button" class="toggle-btn" data-mode="with-mq">
+            Con media queries
+          </button>
+        </div>
+        <span class="hint">
+          👉 Cambia de modo y ajusta el ancho del contenedor para ver la diferencia.
+        </span>
+      </div>
+
+      <div class="controls controls-secondary">
+        <span class="slider-label">
+          Ancho del contenedor:
+          <strong id="widthLabelProducts">900px</strong>
+        </span>
+        <input type="range" id="widthSliderProducts" min="320" max="1200" value="900">
+      </div>
+
+      <p class="mode-text mode-text--no-mq">
+        <strong>Modo activo: Sin media queries.</strong>
+        Siempre se usan 4 columnas (<code>repeat(4, 1fr)</code>), aunque el contenedor sea muy
+        estrecho.
+      </p>
+      <p class="mode-text mode-text--with-mq">
+        <strong>Modo activo: Con media queries (simuladas).</strong>
+        “Móvil”: 2 columnas · “Tablet”: 3 columnas · “Escritorio”: 4 columnas.
+      </p>
+
+      <div class="demo-wrapper" id="productsDemoWrapper">
+        <div class="demo-grid">
+          <div class="product-grid">
+            <article class="product-card">
+              <h3 class="product-name">Café en grano</h3>
+              <p class="product-meta">Natural · 500g</p>
+              <p class="product-price">8,90€</p>
+            </article>
+            <article class="product-card">
+              <h3 class="product-name">Taza cerámica</h3>
+              <p class="product-meta">350ml · Apta lavavajillas</p>
+              <p class="product-price">5,50€</p>
+            </article>
+            <article class="product-card">
+              <h3 class="product-name">Filtro reutilizable</h3>
+              <p class="product-meta">Acero inoxidable</p>
+              <p class="product-price">12,90€</p>
+            </article>
+            <article class="product-card">
+              <h3 class="product-name">Espumador leche</h3>
+              <p class="product-meta">USB recargable</p>
+              <p class="product-price">14,90€</p>
+            </article>
+            <article class="product-card">
+              <h3 class="product-name">Termo barista</h3>
+              <p class="product-meta">500ml · Inox</p>
+              <p class="product-price">19,90€</p>
+            </article>
+            <article class="product-card">
+              <h3 class="product-name">Pack cápsulas</h3>
+              <p class="product-meta">Caja 40 uds</p>
+              <p class="product-price">11,90€</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de código sección 1 -->
+    <aside>
+      <div class="code-panel">
+<span class="comment">/* Forma “real” con media queries en CSS (para explicar en clase) */</span>
+<span class="selector">.product-grid</span> <span class="prop">{ display</span>: <span class="value">grid</span>;<span class="prop"> gap</span>: <span class="value">0.75rem</span>; }
+
+<span class="comment">/* Base móvil: 2 columnas */</span>
+<span class="selector">.product-grid</span> <span class="prop">{ grid-template-columns</span>: <span class="value">repeat(2, 1fr)</span>; }
+
+<span class="at">@media</span> (min-width: 640px) {
+  <span class="selector">.product-grid</span> <span class="prop">{ grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>; <span class="comment">/* tablet */</span> }
+}
+
+<span class="at">@media</span> (min-width: 960px) {
+  <span class="selector">.product-grid</span> <span class="prop">{ grid-template-columns</span>: <span class="value">repeat(4, 1fr)</span>; <span class="comment">/* escritorio */</span> }
+}
+
+<span class="comment">
+/*
+En el playground simulamos estos puntos de corte usando data-size="small|medium|large",
+para que el slider de ancho del contenedor dispare estos cambios en lugar del viewport.
+*/
+</span>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ==========================
+       SECCIÓN 2: LAYOUT COMPLETO
+       ========================== -->
+  <section id="section-layout" class="section no-mq">
+    <div class="section-main">
+      <h2>2. Layout completo: Dashboard</h2>
+      <p class="description">
+        Aquí combinamos Grid con <code>grid-template-areas</code> para construir un dashboard.
+        Sin media queries el layout siempre es de escritorio; con media queries (simuladas),
+        en móvil se apila en una sola columna.
+      </p>
+
+      <div class="controls">
+        <div class="toggle-group" data-section="layout">
+          <button type="button" class="toggle-btn is-active" data-mode="no-mq">
+            Sin media queries
+          </button>
+          <button type="button" class="toggle-btn" data-mode="with-mq">
+            Con media queries
+          </button>
+        </div>
+        <span class="hint">
+          👉 Observa cómo la sidebar pasa a estar debajo del header cuando el contenedor es estrecho.
+        </span>
+      </div>
+
+      <div class="controls controls-secondary">
+        <span class="slider-label">
+          Ancho del contenedor:
+          <strong id="widthLabelLayout">900px</strong>
+        </span>
+        <input type="range" id="widthSliderLayout" min="320" max="1200" value="900">
+      </div>
+
+      <p class="mode-text mode-text--no-mq">
+        <strong>Modo activo: Sin media queries.</strong>
+        Siempre 2 columnas (sidebar + contenido), incluso con contenedor estrecho.
+      </p>
+      <p class="mode-text mode-text--with-mq">
+        <strong>Modo activo: Con media queries (simuladas).</strong>
+        “Móvil”: todo apilado; “Escritorio”: sidebar a la izquierda y contenido a la derecha.
+      </p>
+
+      <div class="demo-wrapper" id="layoutDemoWrapper">
+        <div class="layout-grid">
+          <header class="layout-header">
+            <span class="layout-brand">ActivaFit · Panel</span>
+            <span class="layout-user">Laura García · Premium</span>
+          </header>
+          <aside class="layout-sidebar">
+            <h3>Menú</h3>
+            <ul class="nav-list">
+              <li class="is-active">Resumen</li>
+              <li>Reservas</li>
+              <li>Actividades</li>
+              <li>Facturación</li>
+            </ul>
+          </aside>
+          <main class="layout-main">
+            <div>
+              <h3>Resumen de hoy</h3>
+              <p class="hint">
+                Clases programadas, ocupación de salas y pagos pendientes.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-label">Clases de hoy</span>
+                <span class="stat-value">5</span>
+                <span class="hint">3 completadas · 2 próximas</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Ocupación media</span>
+                <span class="stat-value">78%</span>
+                <span class="hint">Tramos 18:00–21:00 al 95%</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Pagos pendientes</span>
+                <span class="stat-value">12</span>
+                <span class="hint">Revisar facturación</span>
+              </div>
+            </div>
+          </main>
+          <footer class="layout-footer">
+            © 2025 ActivaFit · Panel de gestión
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de código sección 2 -->
+    <aside>
+      <div class="code-panel">
+<span class="comment">/* Versión “real” con media queries, para explicar la idea */</span>
+<span class="selector">.layout-grid</span> <span class="prop">{</span>
+  <span class="prop">display</span>: <span class="value">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="value">1fr</span>;
+  <span class="prop">grid-template-rows</span>: <span class="value">auto auto 1fr auto</span>;
+  <span class="prop">grid-template-areas</span>: <span class="value">
+    "header"
+    "sidebar"
+    "main"
+    "footer"</span>;
+<span class="prop">}</span>
+
+<span class="at">@media</span> (min-width: 800px) {
+  <span class="selector">.layout-grid</span> <span class="prop">{</span>
+    <span class="prop">grid-template-columns</span>: <span class="value">220px 1fr</span>;
+    <span class="prop">grid-template-rows</span>: <span class="value">70px 1fr 60px</span>;
+    <span class="prop">grid-template-areas</span>: <span class="value">
+      "header header"
+      "sidebar main"
+      "footer footer"</span>;
+  <span class="prop">}</span>
+}
+
+<span class="comment">
+/*
+En el playground usamos data-size="small|large" para simular estos cambios
+cuando el ancho del contenedor pasa de un umbral a otro.
+*/
+</span>
+      </div>
+    </aside>
+  </section>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Toggle sin/con media queries
+    const groups = document.querySelectorAll('.toggle-group');
+    groups.forEach(group => {
+      const sectionKey = group.dataset.section;
+      const sectionEl = document.getElementById(
+        sectionKey === 'products' ? 'section-products' : 'section-layout'
+      );
+
+      group.addEventListener('click', (e) => {
+        const btn = e.target.closest('.toggle-btn');
+        if (!btn) return;
+
+        const mode = btn.dataset.mode; // "no-mq" o "with-mq"
+
+        // Actualizar clases en la sección
+        sectionEl.classList.remove('no-mq', 'with-mq');
+        sectionEl.classList.add(mode);
+
+        // Actualizar aspecto botones
+        group.querySelectorAll('.toggle-btn').forEach(b => {
+          b.classList.toggle('is-active', b === btn);
+        });
+      });
+    });
+
+    // Sliders para ancho del contenedor + simulación de breakpoints
+    function setupWidthSlider(sliderId, labelId, wrapperId, onChange) {
+      const slider = document.getElementById(sliderId);
+      const label  = document.getElementById(labelId);
+      const wrapper = document.getElementById(wrapperId);
+      if (!slider || !label || !wrapper) return;
+
+      const update = () => {
+        const num = parseInt(slider.value, 10);
+        const value = num + 'px';
+        wrapper.style.width = value;
+        label.textContent = value;
+        if (onChange) onChange(num);
+      };
+
+      slider.addEventListener('input', update);
+      update();
+    }
+
+    // Sección productos: simulamos breakpoints 640 y 960
+    setupWidthSlider(
+      'widthSliderProducts',
+      'widthLabelProducts',
+      'productsDemoWrapper',
+      (w) => {
+        const grid = document.querySelector('#section-products .product-grid');
+        if (!grid) return;
+        let size = 'large';
+        if (w < 640) size = 'small';
+        else if (w < 960) size = 'medium';
+        grid.dataset.size = size;
+      }
+    );
+
+    // Sección layout: simulamos breakpoint 800
+    setupWidthSlider(
+      'widthSliderLayout',
+      'widthLabelLayout',
+      'layoutDemoWrapper',
+      (w) => {
+        const grid = document.querySelector('#section-layout .layout-grid');
+        if (!grid) return;
+        const size = w < 800 ? 'small' : 'large';
+        grid.dataset.size = size;
+      }
+    );
+  });
+</script>
+</body>
+</html>
