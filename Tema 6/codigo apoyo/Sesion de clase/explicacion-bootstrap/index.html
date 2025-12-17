@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bootstrap Grid — Playground didáctico</title>
+
+  <!-- Bootstrap 5 (layout exterior) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{ --demoW: 1200px; }
+
+    body { background:#f7f7fb; }
+    .page { max-width: 1600px; }
+
+    .headerCard {
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 16px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .sectionCard{
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .sectionHead{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      background: linear-gradient(180deg, rgba(13,110,253,.08), transparent);
+    }
+
+    .sectionBody{
+      display: grid;
+      grid-template-columns: 2.1fr .9fr;
+      gap: 0;
+      min-height: 0;
+    }
+
+    @media (max-width: 1100px){
+      .sectionBody{ grid-template-columns: 1fr; }
+    }
+
+    .demoPane{ padding: 22px; }
+
+    .demoContainer{
+      width: var(--demoW);
+      max-width: 100%;
+      margin: 0 auto;
+
+      resize: horizontal;
+      overflow: auto;
+
+      border: 2px solid rgba(13,110,253,.22);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(15,23,42,.06);
+      position: relative;
+    }
+
+    .demoContainer::after{
+      content:"";
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      width:14px;
+      height:14px;
+      border-right:2px solid rgba(13,110,253,.35);
+      border-bottom:2px solid rgba(13,110,253,.35);
+      border-radius:2px;
+      pointer-events:none;
+      z-index: 20;
+    }
+
+    .vpBar{
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid rgba(15,23,42,.10);
+      backdrop-filter: blur(6px);
+    }
+
+    .vpBadge{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 12px;
+      color: rgba(15,23,42,.70);
+      border: 1px solid rgba(15,23,42,.12);
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: rgba(255,255,255,.95);
+      white-space: nowrap;
+    }
+    .vpBadge b{ color: rgba(15,23,42,.92); }
+
+    .miniBtn{
+      border: 1px solid rgba(0,0,0,.12);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 12px;
+      color: rgba(15,23,42,.85);
+    }
+    .miniBtn:hover{ background: rgba(0,0,0,.03); }
+
+    .demoFrame{
+      width: 100%;
+      height: 520px;
+      border: 0;
+      display:block;
+      background:#fff;
+    }
+
+    .codePane{
+      background: #0b0f19;
+      color: rgba(255,255,255,.92);
+      border-left: 1px solid rgba(0,0,0,.08);
+      display:flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    @media (max-width: 1100px){
+      .codePane{ border-left: 0; border-top: 1px solid rgba(0,0,0,.08); }
+    }
+
+    .codeTop{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .codeTop .label{ font-weight: 800; font-size: .85rem; color: rgba(255,255,255,.85); }
+
+    .copyBtn{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: .85rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .copyBtn:hover{ background: rgba(255,255,255,.10); }
+
+    pre.code{
+      margin: 0;
+      padding: 12px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12.8px;
+      line-height: 1.45;
+      white-space: pre;
+    }
+
+    .hint {
+      color: rgba(0,0,0,.65);
+      font-size: .95rem;
+    }
+  </style>
+</head>
+
+<body>
+<main class="container-fluid py-4">
+  <div class="page mx-auto">
+
+    <div class="headerCard mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+        <div>
+          <h1 class="h3 mb-2">Bootstrap Grid — Playground didáctico</h1>
+          <p class="mb-0 hint">
+            Ahora SÍ: el slider cambia el <strong>viewport real</strong> de cada ejemplo (iframe),
+            así verás cómo se recolocan <code>col-sm</code>, <code>col-md</code>, etc. sin código suelto ni descoloque.
+          </p>
+        </div>
+
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <div class="form-check form-switch m-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="toggleOverlay">
+            <label class="form-check-label" for="toggleOverlay">Overlay 12 columnas</label>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <label for="demoWidth" class="form-label m-0" style="font-weight:800;">Ancho demo</label>
+            <input id="demoWidth" type="range" min="360" max="1500" value="1200" style="width:260px;">
+            <span id="demoWidthLabel" class="small text-muted" style="min-width:70px;">1200px</span>
+          </div>
+
+          <button class="miniBtn" type="button" id="resetAll">Reset todo</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="examples"></div>
+
+  </div>
+</main>
+
+<script>
+  const BOOTSTRAP_CSS = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css";
+
+  function bpLabel(w){
+    if (w >= 1400) return "xxl (≥1400)";
+    if (w >= 1200) return "xl (≥1200)";
+    if (w >= 992)  return "lg (≥992)";
+    if (w >= 768)  return "md (≥768)";
+    if (w >= 576)  return "sm (≥576)";
+    return "xs (<576)";
+  }
+
+  function makeSrcdoc(innerHtml, overlayOn){
+    const demoCss = `
+      body{ margin:0; background:#fff; }
+      .demoBox{
+        background: rgba(13,110,253,.10);
+        border: 2px solid rgba(13,110,253,.55);
+        border-radius: 14px;
+        padding: 22px;
+        font-weight: 900;
+        text-align:center;
+        min-height: 110px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 1.05rem;
+      }
+      .demoBox small{ font-weight: 700; opacity: .75; }
+    `;
+
+    const overlayCss = `
+      .bs-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+      .bs-overlay .grid12{
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--bs-gutter-x, 1.5rem);
+        padding-left: calc(var(--bs-gutter-x) * .5);
+        padding-right: calc(var(--bs-gutter-x) * .5);
+      }
+      .bs-overlay .colLine{
+        border: 1px dashed rgba(220,38,38,.35);
+        background: rgba(220,38,38,.06);
+        border-radius: 10px;
+      }
+    `;
+
+    // ✅ SIN backticks anidados (esto evita el “Unexpected end of input”)
+    const lines = Array.from({length:12}).map(() => '<div class="colLine"></div>').join("");
+
+    const overlayHtml = overlayOn ? `
+      <div class="bs-overlay">
+        <div class="container-fluid h-100">
+          <div class="grid12">
+            ${lines}
+          </div>
+        </div>
+      </div>
+    ` : "";
+
+    return `<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="${BOOTSTRAP_CSS}">
+  <style>${demoCss}${overlayCss}</style>
+</head>
+<body>
+  ${innerHtml}
+  ${overlayHtml}
+</body>
+</html>`.trim();
+  }
+
+  const EXAMPLES = [
+    {
+      title: "Ejemplo 1 — 12 columnas (col-12)",
+      desc: "col-12 = ocupa 12/12 → 100% del ancho (una caja por fila).",
+      code: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-12">
+      <div class="demoBox">col-12 <small>Ocupa toda la fila</small></div>
+    </div>
+  </div>
+</div>`,
+      demo: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-12">
+      <div class="demoBox">col-12 <small>Ocupa toda la fila</small></div>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      title: "Ejemplo 2 — 2 columnas iguales (col-6 + col-6)",
+      desc: "col-6 = ocupa 6/12 → 50%. Dos cajas encajan perfectas.",
+      code: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-6"><div class="demoBox">col-6 <small>50%</small></div></div>
+    <div class="col-6"><div class="demoBox">col-6 <small>50%</small></div></div>
+  </div>
+</div>`,
+      demo: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-6"><div class="demoBox">col-6 <small>50%</small></div></div>
+    <div class="col-6"><div class="demoBox">col-6 <small>50%</small></div></div>
+  </div>
+</div>`
+    },
+    {
+      title: "Ejemplo 3 — Responsive (móvil 1 por fila, desktop 3 por fila)",
+      desc: "col-12 col-md-4: móvil 1 por fila; desde md (≥768px) 3 por fila.",
+      code: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-12 col-md-4"><div class="demoBox">Producto A <small>col-12 col-md-4</small></div></div>
+    <div class="col-12 col-md-4"><div class="demoBox">Producto B <small>col-12 col-md-4</small></div></div>
+    <div class="col-12 col-md-4"><div class="demoBox">Producto C <small>col-12 col-md-4</small></div></div>
+  </div>
+</div>`,
+      demo: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-12 col-md-4"><div class="demoBox">Producto A <small>col-12 col-md-4</small></div></div>
+    <div class="col-12 col-md-4"><div class="demoBox">Producto B <small>col-12 col-md-4</small></div></div>
+    <div class="col-12 col-md-4"><div class="demoBox">Producto C <small>col-12 col-md-4</small></div></div>
+  </div>
+</div>`
+    },
+    {
+      title: "Ejemplo 4 — E-commerce real (1→2→3→4→6 por fila)",
+      desc: "col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2",
+      code: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2"><div class="demoBox">Producto</div></div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2"><div class="demoBox">Producto</div></div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2"><div class="demoBox">Producto</div></div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2"><div class="demoBox">Producto</div></div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2"><div class="demoBox">Producto</div></div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2"><div class="demoBox">Producto</div></div>
+  </div>
+</div>`,
+      demo: `<div class="container-fluid py-3">
+  <div class="row g-3">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+      <div class="border rounded-4 overflow-hidden bg-white h-100">
+        <div style="height:120px;background:linear-gradient(135deg,rgba(37,99,235,.25),rgba(16,185,129,.18))"></div>
+        <div class="p-3">
+          <div class="fw-bold">Auriculares</div>
+          <div class="text-muted small">Cancelación de ruido</div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="fw-bold">79,99€</div>
+            <button class="btn btn-sm btn-primary">Ver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+      <div class="border rounded-4 overflow-hidden bg-white h-100">
+        <div style="height:120px;background:linear-gradient(135deg,rgba(245,158,11,.22),rgba(99,102,241,.18))"></div>
+        <div class="p-3">
+          <div class="fw-bold">Monitor 27''</div>
+          <div class="text-muted small">144Hz · IPS</div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="fw-bold">189,90€</div>
+            <button class="btn btn-sm btn-primary">Ver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+      <div class="border rounded-4 overflow-hidden bg-white h-100">
+        <div style="height:120px;background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(59,130,246,.18))"></div>
+        <div class="p-3">
+          <div class="fw-bold">Teclado mecánico</div>
+          <div class="text-muted small">RGB · Switch</div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="fw-bold">59,00€</div>
+            <button class="btn btn-sm btn-primary">Ver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+      <div class="border rounded-4 overflow-hidden bg-white h-100">
+        <div style="height:120px;background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(2,132,199,.18))"></div>
+        <div class="p-3">
+          <div class="fw-bold">Ratón gaming</div>
+          <div class="text-muted small">18K DPI</div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="fw-bold">29,95€</div>
+            <button class="btn btn-sm btn-primary">Ver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+      <div class="border rounded-4 overflow-hidden bg-white h-100">
+        <div style="height:120px;background:linear-gradient(135deg,rgba(14,165,233,.18),rgba(168,85,247,.18))"></div>
+        <div class="p-3">
+          <div class="fw-bold">SSD 1TB</div>
+          <div class="text-muted small">NVMe Gen4</div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="fw-bold">74,90€</div>
+            <button class="btn btn-sm btn-primary">Ver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+      <div class="border rounded-4 overflow-hidden bg-white h-100">
+        <div style="height:120px;background:linear-gradient(135deg,rgba(244,63,94,.16),rgba(34,197,94,.16))"></div>
+        <div class="p-3">
+          <div class="fw-bold">Hub USB-C</div>
+          <div class="text-muted small">HDMI · USB</div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="fw-bold">24,90€</div>
+            <button class="btn btn-sm btn-primary">Ver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`
+    }
+  ];
+
+  const examplesRoot = document.getElementById("examples");
+  const overlayToggle = document.getElementById("toggleOverlay");
+  const demoWidth = document.getElementById("demoWidth");
+  const demoWidthLabel = document.getElementById("demoWidthLabel");
+  const resetAll = document.getElementById("resetAll");
+
+  function render(){
+    examplesRoot.innerHTML = "";
+    const overlayOn = overlayToggle.checked;
+
+    EXAMPLES.forEach((ex) => {
+      const section = document.createElement("section");
+      section.className = "sectionCard mb-4";
+
+      const head = document.createElement("div");
+      head.className = "sectionHead";
+      head.innerHTML = `
+        <h2 class="h5 mb-1">${ex.title}</h2>
+        <div class="hint">${ex.desc}</div>
+      `;
+
+      const body = document.createElement("div");
+      body.className = "sectionBody";
+
+      const demoPane = document.createElement("div");
+      demoPane.className = "demoPane";
+
+      const demoBox = document.createElement("div");
+      demoBox.className = "demoContainer";
+
+      const vpBar = document.createElement("div");
+      vpBar.className = "vpBar";
+
+      const badge = document.createElement("div");
+      badge.className = "vpBadge";
+      badge.innerHTML = `Viewport: <b class="vpW">—</b> · <span class="vpBp">—</span>`;
+
+      const resetBtn = document.createElement("button");
+      resetBtn.className = "miniBtn";
+      resetBtn.type = "button";
+      resetBtn.textContent = "Reset";
+      resetBtn.addEventListener("click", () => {
+        const px = parseInt(demoWidth.value, 10);
+        demoBox.style.width = px + "px";
+      });
+
+      vpBar.appendChild(badge);
+      vpBar.appendChild(resetBtn);
+
+      const iframe = document.createElement("iframe");
+      iframe.className = "demoFrame";
+      iframe.title = ex.title;
+      iframe.srcdoc = makeSrcdoc(ex.demo, overlayOn);
+
+      demoBox.appendChild(vpBar);
+      demoBox.appendChild(iframe);
+      demoPane.appendChild(demoBox);
+
+      const codePane = document.createElement("div");
+      codePane.className = "codePane";
+
+      const codeTop = document.createElement("div");
+      codeTop.className = "codeTop";
+
+      const label = document.createElement("div");
+      label.className = "label";
+      label.textContent = "Código";
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "copyBtn";
+      copyBtn.type = "button";
+      copyBtn.textContent = "Copiar";
+      copyBtn.addEventListener("click", async () => {
+        try{
+          await navigator.clipboard.writeText(ex.code);
+          const old = copyBtn.textContent;
+          copyBtn.textContent = "¡Copiado!";
+          setTimeout(()=>copyBtn.textContent = old, 900);
+        }catch(e){
+          alert("No se pudo copiar. Selecciona el texto manualmente.");
+        }
+      });
+
+      codeTop.appendChild(label);
+      codeTop.appendChild(copyBtn);
+
+      const pre = document.createElement("pre");
+      pre.className = "code";
+      pre.textContent = ex.code;
+
+      codePane.appendChild(codeTop);
+      codePane.appendChild(pre);
+
+      body.appendChild(demoPane);
+      body.appendChild(codePane);
+
+      section.appendChild(head);
+      section.appendChild(body);
+
+      examplesRoot.appendChild(section);
+
+      const wEl = badge.querySelector(".vpW");
+      const bpEl = badge.querySelector(".vpBp");
+
+      const ro = new ResizeObserver(() => {
+        const w = Math.round(demoBox.getBoundingClientRect().width);
+        wEl.textContent = w + "px";
+        bpEl.textContent = bpLabel(w);
+      });
+      ro.observe(demoBox);
+
+      const px = parseInt(demoWidth.value, 10);
+      demoBox.style.width = px + "px";
+    });
+  }
+
+  function setDemoWidth(px){
+    document.documentElement.style.setProperty("--demoW", px + "px");
+    demoWidthLabel.textContent = px + "px";
+    document.querySelectorAll(".demoContainer").forEach(el => {
+      el.style.width = px + "px";
+    });
+  }
+
+  demoWidth.addEventListener("input", () => {
+    setDemoWidth(parseInt(demoWidth.value, 10));
+  });
+
+  overlayToggle.addEventListener("change", () => {
+    render();
+    setDemoWidth(parseInt(demoWidth.value, 10));
+  });
+
+  resetAll.addEventListener("click", () => {
+    demoWidth.value = "1200";
+    setDemoWidth(1200);
+  });
+
+  render();
+  setDemoWidth(parseInt(demoWidth.value, 10));
+</script>
+</body>
+</html>
