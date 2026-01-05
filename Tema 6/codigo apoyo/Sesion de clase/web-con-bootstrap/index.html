@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Web moderna Bootstrap — Grid/Columnas + Código al lado + Slider + Modo Realista</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* ===============================
+       LOOK & FEEL MODERNO
+    =============================== */
+    :root{
+      --siteW: 1200px;
+
+      --stroke: rgba(15,23,42,.10);
+      --shadow: 0 18px 48px rgba(2,6,23,.18);
+      --shadow2: 0 10px 26px rgba(2,6,23,.10);
+
+      --radius: 18px;
+      --radius2: 22px;
+
+      --text: rgba(15,23,42,.92);
+      --muted: rgba(15,23,42,.70);
+
+      --brandA: rgba(59,130,246,.95);
+      --brandB: rgba(16,185,129,.92);
+      --brandC: rgba(168,85,247,.92);
+    }
+
+    html, body { height: 100%; }
+
+    body{
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(59,130,246,.22), transparent 55%),
+        radial-gradient(900px 520px at 88% 12%, rgba(16,185,129,.18), transparent 55%),
+        radial-gradient(1100px 700px at 55% 90%, rgba(168,85,247,.14), transparent 55%),
+        linear-gradient(180deg, #f7f8ff, #f3f6ff 40%, #eef3ff);
+      color: var(--text);
+    }
+
+    /* Barra superior */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      background: rgba(255,255,255,.70);
+      border-bottom: 1px solid var(--stroke);
+      backdrop-filter: blur(12px);
+    }
+
+    .brandPill{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      background: rgba(59,130,246,.10);
+      border: 1px solid rgba(59,130,246,.18);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .brandDot{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--brandA), var(--brandB));
+      box-shadow: 0 6px 18px rgba(59,130,246,.25);
+    }
+
+    /* Contenedor/viewport controlado por slider */
+    .viewportShell{ padding: 18px 12px 28px; }
+
+    .siteViewport{
+      width: var(--siteW);
+      max-width: 100%;
+      margin: 0 auto;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(59,130,246,.22);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: auto;
+    }
+
+    .siteViewport::after{
+      content:"";
+      position:absolute;
+      right:12px;
+      bottom:12px;
+      width:14px;
+      height:14px;
+      border-right:2px solid rgba(59,130,246,.38);
+      border-bottom:2px solid rgba(59,130,246,.38);
+      border-radius:2px;
+      pointer-events:none;
+      z-index: 20;
+    }
+
+    /* IMPORTANTE:
+       El contenido dentro del "viewport" tenía sensación de irse a la izquierda.
+       Aquí añadimos padding global a la web (NO a la navbar interior).
+       Además usamos un "max-width" cómodo dentro del viewport.
+    */
+    .pagePad{
+      padding: 18px 18px 26px;
+    }
+
+    /* Este wrapper centra y da aire lateral a TODO el contenido (excepto navbar interna) */
+    .contentWrap{
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* Ajuste de aire lateral responsive (para que nunca quede pegado) */
+    @media (max-width: 576px){
+      .pagePad{ padding: 14px 14px 22px; }
+    }
+
+    /* Overlay 12 columnas dentro del viewport */
+    .bs-overlay{
+      position:absolute;
+      inset: 0;
+      z-index: 50;
+      pointer-events:none;
+      display:none;
+      mix-blend-mode: multiply;
+    }
+    .bs-overlay.is-on{ display:block; }
+    .bs-overlay .grid12{
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--bs-gutter-x, 1.5rem);
+      padding-left: calc(var(--bs-gutter-x) * .5);
+      padding-right: calc(var(--bs-gutter-x) * .5);
+    }
+    .bs-overlay .colLine{
+      border: 1px dashed rgba(239,68,68,.35);
+      background: rgba(239,68,68,.06);
+      border-radius: 12px;
+    }
+
+    /* Secciones didácticas */
+    .sectionCard{
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius2);
+      overflow: hidden;
+      background: rgba(255,255,255,.88);
+      box-shadow: var(--shadow2);
+    }
+    .sectionHead{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--stroke);
+      background:
+        radial-gradient(800px 220px at 10% 0%, rgba(59,130,246,.16), transparent 60%),
+        radial-gradient(800px 220px at 90% 0%, rgba(16,185,129,.12), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.70));
+    }
+
+    .muted{ color: var(--muted); }
+
+    /* Panel de código */
+    .codeCard{
+      background: rgba(11,15,25,.96);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(2,6,23,.22);
+    }
+    .codeTop{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .codeTop .label{
+      font-weight: 800;
+      font-size: .9rem;
+      color: rgba(255,255,255,.86);
+    }
+    .copyBtn{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: .85rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .copyBtn:hover{ background: rgba(255,255,255,.10); }
+
+    pre.code{
+      margin: 0;
+      padding: 12px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12.8px;
+      line-height: 1.5;
+      white-space: pre;
+      color: rgba(255,255,255,.92);
+    }
+
+    @media (min-width: 992px){
+      .stickyAside{ position: sticky; top: 76px; }
+    }
+
+    /* Hero moderno */
+    .hero{
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background:
+        radial-gradient(1200px 620px at 10% 0%, rgba(59,130,246,.22), transparent 55%),
+        radial-gradient(900px 520px at 90% 10%, rgba(16,185,129,.18), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76));
+      border: 1px solid rgba(15,23,42,.08);
+      box-shadow: 0 14px 36px rgba(2,6,23,.10);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(800px 240px at 50% 0%, rgba(168,85,247,.10), transparent 60%);
+      pointer-events:none;
+    }
+
+    .glass{
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: 18px;
+      box-shadow: 0 14px 36px rgba(2,6,23,.12);
+    }
+
+    .softHr{ border-top: 1px solid rgba(15,23,42,.08); }
+
+    /* ====== MODO REALISTA ====== */
+    .realMode .teach,
+    .realMode .teach-inline,
+    .realMode .teachWrap{ display:none !important; }
+
+    .realMode .sectionCard{
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+    .realMode .sectionHead{ display:none; }
+
+    /* En modo realista: que todo se sienta “landing premium” */
+    .realMode .pagePad{ padding-top: 22px; }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR CONTROLES -->
+  <div class="topbar">
+    <div class="container-fluid py-2">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <span class="brandPill"><span class="brandDot"></span> Bootstrap Grid Lab</span>
+          <span class="small muted">Slider = ancho “viewport” | Overlay = 12 columnas | Modo realista = demo final</span>
+        </div>
+
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <div class="d-flex align-items-center gap-2">
+            <label for="siteW" class="form-label m-0 small muted" style="font-weight:800;">Ancho web</label>
+            <input id="siteW" type="range" min="360" max="1500" value="1200" style="width:260px;">
+            <span id="siteWLabel" class="small text-muted" style="min-width:72px;">1200px</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <span class="small muted">Breakpoint:</span>
+            <span class="badge text-bg-secondary" id="bpLabel">—</span>
+          </div>
+
+          <div class="form-check form-switch m-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="toggleOverlay">
+            <label class="form-check-label" for="toggleOverlay">Overlay 12 columnas</label>
+          </div>
+
+          <button class="btn btn-sm btn-outline-secondary" type="button" id="toggleReal">
+            Modo realista (ocultar explicaciones)
+          </button>
+
+          <button class="btn btn-sm btn-outline-primary" type="button" id="resetAll">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEWPORT CONTROLADO -->
+  <div class="viewportShell">
+    <div class="siteViewport" id="siteViewport">
+
+      <!-- OVERLAY dentro del viewport -->
+      <div class="bs-overlay" id="overlay">
+        <div class="container-fluid h-100">
+          <div class="grid12" id="grid12"></div>
+        </div>
+      </div>
+
+      <!-- CONTENIDO -->
+      <div class="siteContent pagePad" id="siteContent">
+
+        <!-- NAVBAR (NO debe verse pegada; se mantiene con container de Bootstrap) -->
+        <div class="mb-4">
+          <header class="glass p-2">
+            <nav class="navbar navbar-expand-lg">
+              <div class="container">
+                <a class="navbar-brand fw-bold" href="#">
+                  <span class="me-2" style="display:inline-block;width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brandA),var(--brandB));"></span>
+                  NexoStudio
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Abrir menú">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navMain">
+                  <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#precios">Precios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <li class="nav-item ms-lg-2">
+                      <a class="btn btn-primary btn-sm" href="#contacto">Pedir presupuesto</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </header>
+        </div>
+
+        <!-- Wrapper que da “aire” y centra TODO el contenido restante -->
+        <div class="contentWrap">
+
+          <!-- HERO -->
+          <section class="hero p-4 p-md-5 mb-4">
+            <div class="row align-items-center g-4">
+              <div class="col-12 col-lg-7">
+                <span class="badge text-bg-success mb-2">Agencia digital</span>
+                <h1 class="display-6 fw-bold mb-2">Una landing moderna usando solo Bootstrap</h1>
+                <p class="lead muted mb-3">
+                  Ahora el contenido tiene <b>más aire lateral</b> y se ve “premium”.
+                  Baja el slider para ver cómo reacciona el grid.
+                </p>
+                <div class="d-flex gap-2 flex-wrap">
+                  <a class="btn btn-primary btn-lg" href="#contacto">Quiero mi web</a>
+                  <a class="btn btn-outline-primary btn-lg" href="#servicios">Ver servicios</a>
+                </div>
+                <div class="mt-3 small muted">
+                  <span class="badge text-bg-secondary">Responsive</span>
+                  <span class="badge text-bg-secondary">Grid 12</span>
+                  <span class="badge text-bg-secondary">Componentes</span>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-5">
+                <div class="glass p-3 p-md-4">
+                  <div class="fw-bold">Panel rápido</div>
+                  <div class="small muted mb-3">Grid interno dentro de la card</div>
+
+                  <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                      <div class="p-3 border rounded-4 bg-white">
+                        <div class="small muted">Tiempo</div>
+                        <div class="h4 fw-bold mb-0">7-10d</div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="p-3 border rounded-4 bg-white">
+                        <div class="small muted">SEO</div>
+                        <div class="h4 fw-bold mb-0">Base</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="p-3 border rounded-4 bg-white">
+                        <div class="small muted">Responsive</div>
+                        <div class="fw-bold">100%</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 alert alert-info mb-0 teach-inline">
+                    Aquí hay <b>dos grids</b>: exterior <code>col-lg-7/5</code> e interior <code>col-md-6</code>.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel didáctico HERO (a la derecha en desktop) -->
+              <div class="col-12 teachWrap">
+                <div class="row g-4 mt-2">
+                  <div class="col-12 col-lg-7 teach-inline">
+                    <div class="alert alert-light border mb-0">
+                      <b>Gutters</b> = el espacio entre columnas/filas. Con <code>g-4</code> o <code>g-3</code> haces que los bloques respiren.
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-5">
+                    <div class="stickyAside teach">
+                      <div class="codeCard mb-3">
+                        <div class="codeTop">
+                          <div class="label">Código (Hero)</div>
+                          <button class="copyBtn" type="button" data-copy="codeHero">Copiar</button>
+                        </div>
+                        <pre class="code" id="codeHero">&lt;div class="row g-4"&gt;
+  &lt;div class="col-12 col-lg-7"&gt;...texto...&lt;/div&gt;
+  &lt;div class="col-12 col-lg-5"&gt;...panel...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row g-3"&gt;
+  &lt;div class="col-12 col-md-6"&gt;...&lt;/div&gt;
+  &lt;div class="col-12 col-md-6"&gt;...&lt;/div&gt;
+  &lt;div class="col-12"&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+                      </div>
+
+                      <div class="alert alert-light border mb-0">
+                        <div class="fw-bold mb-2">Qué consigues exactamente</div>
+                        <ul class="list-group">
+                          <li class="list-group-item"><span class="badge text-bg-secondary me-2">g-4 / g-3</span> Más/menos “aire” entre bloques (gutters).</li>
+                          <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-lg-7</span> Desde lg: ocupa 7/12 ≈ 58% → bloque principal.</li>
+                          <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-lg-5</span> Desde lg: ocupa 5/12 ≈ 42% → panel secundario.</li>
+                          <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-md-6</span> Desde md: 6/12 → 2 tarjetas por fila dentro del panel.</li>
+                          <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-12</span> En móvil: 12/12 → 1 bloque por fila (máxima legibilidad).</li>
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- SERVICIOS -->
+          <section class="sectionCard mb-4" id="servicios">
+            <div class="sectionHead">
+              <h2 class="h5 mb-1">Sección — Servicios</h2>
+              <div class="small muted">1 → 2 → 3 columnas según breakpoint.</div>
+            </div>
+
+            <div class="p-4 p-md-5">
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                    <div>
+                      <h3 class="h4 fw-bold mb-1">Servicios</h3>
+                      <div class="muted">Tarjetas con grid responsive.</div>
+                    </div>
+                    <a class="btn btn-outline-primary" href="#contacto">Hablemos</a>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <div class="glass p-3 h-100">
+                        <div class="fw-bold">UI/UX</div>
+                        <div class="small muted">Diseño, sistema visual</div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <div class="glass p-3 h-100">
+                        <div class="fw-bold">Frontend</div>
+                        <div class="small muted">Componentes y performance</div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <div class="glass p-3 h-100">
+                        <div class="fw-bold">SEO</div>
+                        <div class="small muted">Estructura y tracking</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 alert alert-info mb-0 teach-inline">
+                    <b>Gutters</b> (<code>g-3</code>) separan tarjetas. Y <code>col-lg-4</code> = 4/12 → <b>3 por fila</b>.
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-5 teachWrap">
+                  <div class="stickyAside teach">
+                    <div class="codeCard mb-3">
+                      <div class="codeTop">
+                        <div class="label">Código (Servicios)</div>
+                        <button class="copyBtn" type="button" data-copy="codeServices">Copiar</button>
+                      </div>
+                      <pre class="code" id="codeServices">&lt;div class="row g-3"&gt;
+  &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+  &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+  &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+
+                    <div class="alert alert-light border mb-0">
+                      <div class="fw-bold mb-2">Qué pasa al aplicar cada col-*</div>
+                      <ul class="list-group">
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">g-3</span> Gutters: separación horizontal y vertical entre tarjetas.</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-12</span> 12/12 → 1 tarjeta por fila.</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-md-6</span> 6/12 → 2 tarjetas por fila (desde 768px).</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-lg-4</span> 4/12 → 3 tarjetas por fila (desde 992px).</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- PRECIOS -->
+          <section class="sectionCard mb-4" id="precios">
+            <div class="sectionHead">
+              <h2 class="h5 mb-1">Sección — Precios</h2>
+              <div class="small muted">Fila centrada + columnas responsive.</div>
+            </div>
+
+            <div class="p-4 p-md-5">
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <div class="text-center mb-4">
+                    <h3 class="h4 fw-bold mb-1">Precios</h3>
+                    <div class="muted">Planes típicos de SaaS</div>
+                  </div>
+
+                  <div class="row g-3 justify-content-center">
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <div class="glass p-3 h-100">
+                        <div class="fw-bold">Starter</div>
+                        <div class="h3 fw-bold mb-0">299€</div>
+                        <div class="small muted">Landing</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <div class="glass p-3 h-100" style="border:1px solid rgba(59,130,246,.30);">
+                        <span class="badge text-bg-primary">Top</span>
+                        <div class="fw-bold mt-2">Pro</div>
+                        <div class="h3 fw-bold mb-0">699€</div>
+                        <div class="small muted">Web completa</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                      <div class="glass p-3 h-100">
+                        <div class="fw-bold">Business</div>
+                        <div class="h3 fw-bold mb-0">1299€</div>
+                        <div class="small muted">Multi-página</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 alert alert-info mb-0 teach-inline">
+                    <code>justify-content-center</code> centra el grupo; los anchos vienen de las <code>col-*</code>.
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-5 teachWrap">
+                  <div class="stickyAside teach">
+                    <div class="codeCard mb-3">
+                      <div class="codeTop">
+                        <div class="label">Código (Precios)</div>
+                        <button class="copyBtn" type="button" data-copy="codePricing">Copiar</button>
+                      </div>
+                      <pre class="code" id="codePricing">&lt;div class="row g-3 justify-content-center"&gt;
+  &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+  &lt;div class="col-12 col-md-6 col-lg-4"&gt;...&lt;/div&gt;
+  &lt;div class="col-12 col-lg-4"&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+
+                    <div class="alert alert-light border mb-0">
+                      <div class="fw-bold mb-2">Qué consigues exactamente</div>
+                      <ul class="list-group">
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">g-3</span> Gutters: separación entre planes.</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-md-6</span> 6/12 → 2 planes por fila (md).</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-lg-4</span> 4/12 → 3 planes por fila (lg).</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-12</span> 12/12 → 1 plan por fila (móvil).</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- CONTACTO -->
+          <section class="sectionCard mb-4" id="contacto">
+            <div class="sectionHead">
+              <h2 class="h5 mb-1">Sección — Contacto</h2>
+              <div class="small muted">Inputs 2 columnas desde md.</div>
+            </div>
+
+            <div class="p-4 p-md-5">
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <div class="glass p-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                      <div>
+                        <h3 class="h4 fw-bold mb-1">Contacto</h3>
+                        <div class="muted">Formulario responsive con grid interno.</div>
+                      </div>
+                      <span class="badge text-bg-secondary">Demo</span>
+                    </div>
+
+                    <form>
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                          <label class="form-label" for="name">Nombre</label>
+                          <input class="form-control" id="name" placeholder="Tu nombre" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label class="form-label" for="email">Email</label>
+                          <input class="form-control" id="email" type="email" placeholder="tu@email.com" />
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label" for="msg">Mensaje</label>
+                          <textarea class="form-control" id="msg" rows="4" placeholder="Cuéntanos qué necesitas..."></textarea>
+                        </div>
+                        <div class="col-12">
+                          <button type="button" class="btn btn-primary w-100">Enviar</button>
+                          <div class="small muted mt-2">Demo UI (no envía).</div>
+                        </div>
+                      </div>
+                    </form>
+
+                    <div class="mt-3 alert alert-info mb-0 teach-inline">
+                      <code>col-md-6</code> = 6/12 → <b>2 inputs por fila</b> desde 768px.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-5 teachWrap">
+                  <div class="stickyAside teach">
+                    <div class="codeCard mb-3">
+                      <div class="codeTop">
+                        <div class="label">Código (Contacto)</div>
+                        <button class="copyBtn" type="button" data-copy="codeContact">Copiar</button>
+                      </div>
+                      <pre class="code" id="codeContact">&lt;div class="row g-3"&gt;
+  &lt;div class="col-12 col-md-6"&gt;...Nombre...&lt;/div&gt;
+  &lt;div class="col-12 col-md-6"&gt;...Email...&lt;/div&gt;
+  &lt;div class="col-12"&gt;...Mensaje...&lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+
+                    <div class="alert alert-light border mb-0">
+                      <div class="fw-bold mb-2">Gutters y columnas</div>
+                      <ul class="list-group">
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">g-3</span> Gutters: separan campos (evita que queden pegados).</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-12</span> 12/12 → 1 campo por fila.</li>
+                        <li class="list-group-item"><span class="badge text-bg-secondary me-2">col-md-6</span> 6/12 → 2 campos por fila (md).</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <div class="softHr"></div>
+
+          <!-- FOOTER -->
+          <footer class="py-4" style="background: rgba(2,6,23,.92); color: rgba(255,255,255,.92); border-radius: 18px; overflow: hidden;">
+            <div class="p-4 p-md-4">
+              <div class="row g-3 align-items-center">
+                <div class="col-12 col-md-6">
+                  <div class="fw-bold">NexoStudio</div>
+                  <div class="small" style="color:rgba(255,255,255,.62);">© <span id="year"></span> · Demo Bootstrap</div>
+                </div>
+                <div class="col-12 col-md-6 text-md-end">
+                  <a class="text-decoration-none me-3" style="color:rgba(255,255,255,.78);" href="#servicios">Servicios</a>
+                  <a class="text-decoration-none me-3" style="color:rgba(255,255,255,.78);" href="#precios">Precios</a>
+                  <a class="text-decoration-none" style="color:rgba(255,255,255,.78);" href="#contacto">Contacto</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+        </div><!-- /contentWrap -->
+      </div><!-- /siteContent -->
+    </div><!-- /siteViewport -->
+  </div><!-- /viewportShell -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Overlay 12 cols
+    (function buildOverlay(){
+      const grid = document.getElementById("grid12");
+      const lines = [];
+      for(let i=0;i<12;i++) lines.push('<div class="colLine"></div>');
+      grid.innerHTML = lines.join("");
+    })();
+
+    // Breakpoints por ancho del viewport simulado
+    function bpLabel(w){
+      if (w >= 1400) return "xxl (≥1400)";
+      if (w >= 1200) return "xl (≥1200)";
+      if (w >= 992)  return "lg (≥992)";
+      if (w >= 768)  return "md (≥768)";
+      if (w >= 576)  return "sm (≥576)";
+      return "xs (<576)";
+    }
+
+    // Slider ancho
+    const siteW = document.getElementById("siteW");
+    const siteWLabel = document.getElementById("siteWLabel");
+    const bpEl = document.getElementById("bpLabel");
+
+    function setSiteWidth(px){
+      document.documentElement.style.setProperty("--siteW", px + "px");
+      siteWLabel.textContent = px + "px";
+      bpEl.textContent = bpLabel(px);
+    }
+
+    siteW.addEventListener("input", () => setSiteWidth(parseInt(siteW.value, 10)));
+
+    // Reset
+    document.getElementById("resetAll").addEventListener("click", () => {
+      siteW.value = "1200";
+      setSiteWidth(1200);
+    });
+
+    // Toggle overlay
+    const overlay = document.getElementById("overlay");
+    document.getElementById("toggleOverlay").addEventListener("change", (e) => {
+      overlay.classList.toggle("is-on", e.target.checked);
+    });
+
+    // Modo realista
+    const content = document.getElementById("siteContent");
+    const toggleRealBtn = document.getElementById("toggleReal");
+    let realMode = false;
+
+    toggleRealBtn.addEventListener("click", () => {
+      realMode = !realMode;
+      content.classList.toggle("realMode", realMode);
+      toggleRealBtn.textContent = realMode
+        ? "Salir de modo realista (mostrar explicaciones)"
+        : "Modo realista (ocultar explicaciones)";
+    });
+
+    // Copiar código
+    document.querySelectorAll("[data-copy]").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const id = btn.getAttribute("data-copy");
+        const el = document.getElementById(id);
+        if(!el) return;
+        try{
+          await navigator.clipboard.writeText(el.textContent);
+          const old = btn.textContent;
+          btn.textContent = "¡Copiado!";
+          setTimeout(()=>btn.textContent = old, 900);
+        }catch(e){
+          alert("No se pudo copiar. Selecciona el texto manualmente.");
+        }
+      });
+    });
+
+    // Año
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Init
+    setSiteWidth(parseInt(siteW.value, 10));
+  </script>
+</body>
+</html>
