@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tailwind CSS — Guía Completa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { ui: ["ui-sans-serif", "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial"] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; white-space: pre-wrap; word-break: break-word; overflow: auto; }
+    .side-by-side { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 768px) { .side-by-side { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="font-ui bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
+  <header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/70">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center"><span class="text-white font-bold text-sm">TW</span></div>
+        <div>
+          <h1 class="text-lg font-semibold">Tailwind CSS — Guía Completa</h1>
+          <p class="text-sm text-slate-600 dark:text-slate-300">Qué es, cómo funciona y características avanzadas</p>
+        </div>
+      </div>
+      <button id="btnDark" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900">🌙 Oscuro</button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-10 space-y-16">
+    
+    <!-- 1) QUÉ ES TAILWIND -->
+    <section class="space-y-6">
+      <div>
+        <h2 class="text-4xl font-bold mb-2">1) ¿Qué es Tailwind CSS?</h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">Framework utility-first: construye interfaces sin escribir CSS personalizado</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <p class="text-slate-700 dark:text-slate-200 mb-4">
+          Tailwind proporciona clases predefinidas para cada propiedad CSS. En lugar de escribir estilos personalizados, combinas utilidades pequeñas y reutilizables directamente en el HTML.
+        </p>
+
+        <div class="side-by-side">
+          <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <p class="font-semibold text-sm mb-3">❌ CSS Tradicional</p>
+            <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded">
+.card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+            </div>
+          </div>
+
+          <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+            <p class="font-semibold text-sm mb-3">✅ Tailwind</p>
+            <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded">
+&lt;div class="p-6 rounded-lg 
+           bg-white border 
+           border-slate-200"&gt;
+  Card
+&lt;/div&gt;
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
+          <p class="text-sm text-blue-900 dark:text-blue-100">
+            <span class="font-semibold">💡 Utility-First:</span> Clases reutilizables en HTML. Prototipado rápido, consistencia visual, escalable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) VENTAJAS Y DESVENTAJAS -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold">2) Ventajas y Desventajas</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="rounded-2xl border border-green-200 dark:border-green-900/50 bg-green-50 dark:bg-green-900/20 p-6">
+          <h3 class="text-lg font-semibold text-green-900 dark:text-green-100 mb-3">✅ Ventajas</h3>
+          <ul class="space-y-2 text-green-900 dark:text-green-100 text-sm">
+            <li>• Prototipado rápido sin escribir CSS</li>
+            <li>• Consistencia visual con tokens compartidos</li>
+            <li>• Responsive: md:, lg: sin media queries</li>
+            <li>• Estados incorporados: hover:, focus:, dark:</li>
+            <li>• Purging automático elimina CSS no usado</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-900/20 p-6">
+          <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-3">⚠️ Desventajas</h3>
+          <ul class="space-y-2 text-amber-900 dark:text-amber-100 text-sm">
+            <li>• HTML con muchas clases</li>
+            <li>• Curva de aprendizaje</li>
+            <li>• Requiere build (PostCSS, Vite, Next.js)</li>
+            <li>• CSS no está separado del HTML</li>
+            <li>• Usa @apply cuando repites clases</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) CONCEPTOS CLAVE -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold">3) Conceptos Clave</h2>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Escala de Espaciado (Spacing Scale)</h3>
+        <p class="text-slate-700 dark:text-slate-200 mb-4">Cada paso = 0.25rem (4px). Ritmo visual consistente:</p>
+        <div class="side-by-side">
+          <div>
+            <div class="space-y-2 bg-slate-100 dark:bg-slate-800 p-3 rounded font-mono text-xs">
+              <div>p-1 = 4px</div>
+              <div>p-2 = 8px</div>
+              <div>p-4 = 16px</div>
+              <div>p-6 = 24px</div>
+              <div>p-8 = 32px</div>
+            </div>
+          </div>
+          <div>
+            <div class="flex gap-2 items-center">
+              <div class="bg-indigo-500 text-white text-xs font-semibold p-1 rounded">p-1</div>
+              <div class="bg-indigo-500 text-white text-xs font-semibold p-2 rounded">p-2</div>
+              <div class="bg-indigo-500 text-white text-xs font-semibold p-4 rounded">p-4</div>
+              <div class="bg-indigo-500 text-white text-xs font-semibold p-6 rounded">p-6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Paleta de Colores</h3>
+        <p class="text-slate-700 dark:text-slate-200 mb-4">11 tonos por color. Ejemplo Indigo:</p>
+        <div class="side-by-side">
+          <div>
+            <div class="space-y-1">
+              <div class="h-6 bg-indigo-50 border border-slate-200 dark:border-slate-700 rounded text-xs px-2 flex items-center">indigo-50</div>
+              <div class="h-6 bg-indigo-100 border border-slate-200 dark:border-slate-700 rounded text-xs px-2 flex items-center">indigo-100</div>
+              <div class="h-6 bg-indigo-300 border border-slate-200 dark:border-slate-700 rounded text-xs px-2 flex items-center">indigo-300</div>
+              <div class="h-6 bg-indigo-500 text-white border border-slate-200 dark:border-slate-700 rounded text-xs px-2 flex items-center">indigo-500</div>
+              <div class="h-6 bg-indigo-700 text-white border border-slate-200 dark:border-slate-700 rounded text-xs px-2 flex items-center">indigo-700</div>
+              <div class="h-6 bg-indigo-900 text-white border border-slate-200 dark:border-slate-700 rounded text-xs px-2 flex items-center">indigo-900</div>
+            </div>
+          </div>
+          <div class="bg-slate-100 dark:bg-slate-800 p-4 rounded-lg">
+            <div class="space-y-1 font-mono text-xs text-slate-700 dark:text-slate-300">
+              <div>bg-indigo-500</div>
+              <div>text-indigo-700</div>
+              <div>border-indigo-200</div>
+              <div>hover:bg-indigo-600</div>
+              <div>dark:text-indigo-100</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Breakpoints (Responsive)</h3>
+        <p class="text-slate-700 dark:text-slate-200 mb-4">Prefijos para diferentes tamaños:</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-slate-100 dark:bg-slate-800 p-3 rounded-lg space-y-1 font-mono text-sm">
+            <div class="flex justify-between"><span>sm:</span> <span>640px</span></div>
+            <div class="flex justify-between"><span>md:</span> <span>768px (tablet)</span></div>
+            <div class="flex justify-between"><span>lg:</span> <span>1024px (desktop)</span></div>
+            <div class="flex justify-between"><span>xl:</span> <span>1280px</span></div>
+          </div>
+          <div class="code text-xs bg-slate-100 dark:bg-slate-800 p-3 rounded">
+&lt;div class="grid-cols-1 
+           md:grid-cols-2 
+           lg:grid-cols-3"&gt;
+  1 col mobile
+  2 cols tablet
+  3 cols desktop
+&lt;/div&gt;
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) EJEMPLOS PRÁCTICOS -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold">4) Ejemplos Prácticos</h2>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Card</h3>
+        <div class="side-by-side">
+          <div>
+            <p class="text-sm font-semibold mb-2">Código</p>
+            <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded">
+&lt;article class="rounded-xl border 
+           border-slate-200 bg-white p-6 
+           shadow-sm hover:shadow-md"&gt;
+  &lt;h3&gt;Título&lt;/h3&gt;
+  &lt;p&gt;Descripción&lt;/p&gt;
+  &lt;button class="bg-indigo-600 
+           text-white"&gt;
+    Ver más
+  &lt;/button&gt;
+&lt;/article&gt;
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-2">Resultado</p>
+            <article class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition dark:bg-slate-900 dark:border-slate-700">
+              <h3 class="text-lg font-semibold mb-2 text-slate-900 dark:text-white">Título</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Descripción con contenido.</p>
+              <button class="bg-indigo-600 text-white rounded-lg px-4 py-2 font-semibold hover:bg-indigo-700 transition">Ver más</button>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Grid Responsivo</h3>
+        <div class="side-by-side">
+          <div>
+            <p class="text-sm font-semibold mb-2">Código</p>
+            <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded">
+&lt;div class="grid grid-cols-1 
+           md:grid-cols-2 
+           lg:grid-cols-3 
+           gap-4"&gt;
+  &lt;div class="bg-blue-500"&gt;&lt;/div&gt;
+  &lt;div class="bg-purple-500"&gt;&lt;/div&gt;
+  &lt;div class="bg-pink-500"&gt;&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-2">Resultado</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="bg-blue-500 h-24 rounded shadow"></div>
+              <div class="bg-purple-500 h-24 rounded shadow"></div>
+              <div class="bg-pink-500 h-24 rounded shadow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Flexbox</h3>
+        <div class="side-by-side">
+          <div>
+            <p class="text-sm font-semibold mb-2">Código</p>
+            <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded">
+&lt;div class="flex items-center 
+           justify-between gap-3 p-4"&gt;
+  &lt;div&gt;Izquierda&lt;/div&gt;
+  &lt;div&gt;Centro&lt;/div&gt;
+  &lt;div&gt;Derecha&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-2">Resultado</p>
+            <div class="flex items-center justify-between gap-3 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg">
+              <div class="font-semibold text-slate-700 dark:text-slate-200">Izquierda</div>
+              <div class="text-slate-600 dark:text-slate-300">Centro</div>
+              <div class="text-slate-600 dark:text-slate-300">Derecha</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) DIRECTIVAS -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold">5) Directivas</h2>
+      <p class="text-lg text-slate-600 dark:text-slate-300">Las directivas son instrucciones especiales que le dicen a Tailwind qué hacer. Son como "comandos mágicos" para organizar y reutilizar estilos.</p>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">@apply — "Guarda estas clases en una regla"</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          <span class="font-semibold">¿Qué es?</span> Es como crear un atajo. Si repites las mismas clases en muchos lugares, las guardas en una regla CSS reutilizable.
+        </p>
+
+        <div class="side-by-side mb-4">
+          <div>
+            <p class="text-xs font-semibold mb-2 text-red-600">❌ Sin @apply (Repetición)</p>
+            <div class="code text-xs bg-red-50 dark:bg-red-950/30 p-3 border border-red-200 dark:border-red-900 rounded">
+&lt;button class="px-4 py-2 
+           rounded-lg bg-indigo-600 
+           text-white font-semibold"&gt;
+  Click 1
+&lt;/button&gt;
+
+&lt;button class="px-4 py-2 
+           rounded-lg bg-indigo-600 
+           text-white font-semibold"&gt;
+  Click 2
+&lt;/button&gt;
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-semibold mb-2 text-green-600">✅ Con @apply (Limpio)</p>
+            <div class="code text-xs bg-green-50 dark:bg-green-950/30 p-3 border border-green-200 dark:border-green-900 rounded">
+/* Archivo CSS */
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg 
+           bg-indigo-600 text-white 
+           font-semibold;
+  }
+}
+
+/* Archivo HTML */
+&lt;button class="btn-primary"&gt;
+  Click 1
+&lt;/button&gt;
+&lt;button class="btn-primary"&gt;
+  Click 2
+&lt;/button&gt;
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3">
+          <p class="text-sm text-blue-900 dark:text-blue-100"><span class="font-semibold">💡 Resumen:</span> @apply = "Crea una clase CSS usando utilidades de Tailwind"</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">@layer — "Organiza los estilos en carpetas"</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          <span class="font-semibold">¿Qué es?</span> Los estilos CSS tienen un orden de importancia. @layer te ayuda a decirle a Tailwind dónde colocar tus reglas para evitar conflictos.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="rounded-lg bg-slate-100 dark:bg-slate-800 p-4">
+            <p class="font-mono font-semibold text-indigo-600 dark:text-indigo-400 mb-2">base</p>
+            <p class="text-xs text-slate-700 dark:text-slate-300">Estilos fundamentales (h1, p, body)</p>
+          </div>
+          <div class="rounded-lg bg-slate-100 dark:bg-slate-800 p-4">
+            <p class="font-mono font-semibold text-purple-600 dark:text-purple-400 mb-2">components</p>
+            <p class="text-xs text-slate-700 dark:text-slate-300">Componentes reutilizables (botones, cards)</p>
+          </div>
+          <div class="rounded-lg bg-slate-100 dark:bg-slate-800 p-4">
+            <p class="font-mono font-semibold text-cyan-600 dark:text-cyan-400 mb-2">utilities</p>
+            <p class="text-xs text-slate-700 dark:text-slate-300">Utilidades pequeñas (p-4, text-lg)</p>
+          </div>
+        </div>
+
+        <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded mt-4">
+@layer base {
+  h1 { @apply text-4xl font-bold mb-4; }
+  p { @apply text-base leading-relaxed; }
+}
+
+@layer components {
+  .btn { @apply px-4 py-2 rounded-lg; }
+  .card { @apply border rounded-xl p-6; }
+}
+
+@layer utilities {
+  .flex-center { @apply flex items-center justify-center; }
+}
+        </div>
+
+        <div class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3 mt-4">
+          <p class="text-sm text-blue-900 dark:text-blue-100"><span class="font-semibold">💡 Resumen:</span> @layer = "Agrupa tus estilos en base, components o utilities"</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">@tailwind — "Inyecta los estilos de Tailwind"</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          <span class="font-semibold">¿Qué es?</span> Este comando le dice a tu archivo CSS dónde insertar todos los estilos de Tailwind. Va al inicio de tu archivo CSS.
+        </p>
+
+        <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 border border-slate-200 dark:border-slate-700 rounded mb-4">
+/* En tu archivo input.css */
+
+@tailwind base;        /* Estilos base */
+@tailwind components;  /* Componentes */
+@tailwind utilities;   /* Utilidades (lo más grande) */
+        </div>
+
+        <div class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3">
+          <p class="text-sm text-blue-900 dark:text-blue-100"><span class="font-semibold">💡 Resumen:</span> @tailwind = "Carga los estilos de Tailwind en tu CSS"</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6) VARIANTS -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold">6) Variants</h2>
+      <p class="text-lg text-slate-600 dark:text-slate-300">Los variants son prefijos que aplican estilos según una condición: cuando pasas el ratón, en pantallas grandes, en modo oscuro... Es como decir "si ocurre X, entonces aplica este estilo".</p>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Variants de Interacción (Cosas que hace el usuario)</h3>
+
+        <div class="space-y-4">
+          <div class="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 border border-blue-200 dark:border-blue-800">
+            <p class="font-semibold text-blue-900 dark:text-blue-100 mb-2">🖱️ hover: — "Cuando pasas el ratón"</p>
+            <p class="text-sm text-blue-900 dark:text-blue-100 mb-3">Cambia el estilo cuando el usuario pasa el ratón sobre algo.</p>
+            <div class="side-by-side">
+              <div class="code text-xs bg-blue-50 dark:bg-blue-950 p-2 rounded">
+&lt;button class="bg-indigo-600 
+           hover:bg-indigo-700"&gt;
+  Hover sobre mí
+&lt;/button&gt;
+              </div>
+              <button class="px-3 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition w-full">Pasa el ratón aquí</button>
+            </div>
+          </div>
+
+          <div class="rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 border border-green-200 dark:border-green-800">
+            <p class="font-semibold text-green-900 dark:text-green-100 mb-2">⌨️ focus: — "Cuando tiene foco (clickeado)"</p>
+            <p class="text-sm text-green-900 dark:text-green-100 mb-3">Cambia el estilo cuando el usuario hace click o tab en un input.</p>
+            <div class="side-by-side">
+              <div class="code text-xs bg-green-50 dark:bg-green-950 p-2 rounded">
+&lt;input class="border 
+           focus:ring-2 
+           focus:ring-green-400" /&gt;
+              </div>
+              <input type="text" class="px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent w-full" placeholder="Click aquí"/>
+            </div>
+          </div>
+
+          <div class="rounded-lg bg-gradient-to-r from-purple-50 to-fuchsia-50 dark:from-purple-900/20 dark:to-fuchsia-900/20 p-4 border border-purple-200 dark:border-purple-800">
+            <p class="font-semibold text-purple-900 dark:text-purple-100 mb-2">🔥 active: — "Mientras está siendo pulsado"</p>
+            <p class="text-sm text-purple-900 dark:text-purple-100 mb-3">Cambia el estilo mientras el usuario tiene pulsado el botón.</p>
+            <div class="side-by-side">
+              <div class="code text-xs bg-purple-50 dark:bg-purple-950 p-2 rounded">
+&lt;button class="bg-purple-600 
+           active:scale-95"&gt;
+  Presiona
+&lt;/button&gt;
+              </div>
+              <button class="px-3 py-2 bg-purple-600 text-white rounded-lg font-semibold active:scale-95 transition w-full">Presiona aquí</button>
+            </div>
+          </div>
+
+          <div class="rounded-lg bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 p-4 border border-red-200 dark:border-red-800">
+            <p class="font-semibold text-red-900 dark:text-red-100 mb-2">🚫 disabled: — "Cuando está deshabilitado"</p>
+            <p class="text-sm text-red-900 dark:text-red-100 mb-3">Aplica un estilo a los botones o inputs deshabilitados.</p>
+            <div class="side-by-side">
+              <div class="code text-xs bg-red-50 dark:bg-red-950 p-2 rounded">
+&lt;button disabled 
+        class="disabled:opacity-50"&gt;
+  No disponible
+&lt;/button&gt;
+              </div>
+              <button disabled class="px-3 py-2 bg-red-600 text-white rounded-lg font-semibold disabled:opacity-50 w-full">Deshabilitado</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">Variants Responsive (Tamaños de pantalla)</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          Prefijai el nombre con <span class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">sm:, md:, lg:</span> para aplicar estilos solo en ciertos tamaños de pantalla.
+        </p>
+
+        <div class="side-by-side mb-4">
+          <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 rounded">
+&lt;div class="grid-cols-1 
+           md:grid-cols-2 
+           lg:grid-cols-3"&gt;
+  &lt;div&gt;Box 1&lt;/div&gt;
+  &lt;div&gt;Box 2&lt;/div&gt;
+  &lt;div&gt;Box 3&lt;/div&gt;
+&lt;/div&gt;
+          </div>
+          <div>
+            <p class="text-xs font-semibold mb-2">Resultado:</p>
+            <div class="space-y-2">
+              <p class="text-xs text-slate-600 dark:text-slate-300">📱 Móvil: 1 columna</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300">🖥️ Tablet (md): 2 columnas</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300">💻 Desktop (lg): 3 columnas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
+          <div class="bg-blue-500 h-16 rounded-lg flex items-center justify-center text-white font-semibold text-sm">Box 1</div>
+          <div class="bg-purple-500 h-16 rounded-lg flex items-center justify-center text-white font-semibold text-sm">Box 2</div>
+          <div class="bg-pink-500 h-16 rounded-lg flex items-center justify-center text-white font-semibold text-sm hidden lg:flex">Box 3</div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h3 class="text-xl font-semibold mb-4">dark: — Modo Oscuro</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          Prefija con <span class="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">dark:</span> para cambiar estilos cuando está en modo oscuro.
+        </p>
+
+        <div class="side-by-side">
+          <div class="code text-xs bg-slate-50 dark:bg-slate-950 p-3 rounded">
+&lt;div class="bg-white 
+           dark:bg-slate-800
+           text-slate-900 
+           dark:text-white"&gt;
+  Texto adaptado al tema
+&lt;/div&gt;
+          </div>
+          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 text-slate-900 dark:text-white">
+            Mira cómo cambio con el botón 🌙
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-900/20 p-6">
+        <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-3">📋 Resumen de Variants</h3>
+        <div class="grid md:grid-cols-2 gap-3 text-sm">
+          <div class="text-amber-900 dark:text-amber-100">
+            <p class="font-semibold">De Interacción:</p>
+            <ul class="text-xs space-y-1 mt-1">
+              <li>• <span class="font-mono">hover:</span> = al pasar ratón</li>
+              <li>• <span class="font-mono">focus:</span> = cuando tiene foco</li>
+              <li>• <span class="font-mono">active:</span> = mientras se pulsa</li>
+              <li>• <span class="font-mono">disabled:</span> = deshabilitado</li>
+            </ul>
+          </div>
+          <div class="text-amber-900 dark:text-amber-100">
+            <p class="font-semibold">De Pantalla & Tema:</p>
+            <ul class="text-xs space-y-1 mt-1">
+              <li>• <span class="font-mono">sm:, md:, lg:</span> = breakpoints</li>
+              <li>• <span class="font-mono">dark:</span> = modo oscuro</li>
+              <li>• <span class="font-mono">portrait:, landscape:</span> = orientación</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-8 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500 dark:text-slate-400">
+      <p>🚀 Hecho para aprender — ¡Inspecciona y experimenta sin miedo!</p>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('btnDark').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>

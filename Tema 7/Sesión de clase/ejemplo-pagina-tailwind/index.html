@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tailwind — Página moderna + código por sección</title>
+
+  <!-- Tailwind por CDN para que el archivo sea 100% autocontenido para demo.
+       OJO: @apply/@layer/@variants requieren build (PostCSS). Aquí te lo muestro como “cómo quedaría” en tu proyecto real. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            ui: ["ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Apple Color Emoji","Segoe UI Emoji"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Solo para que los <pre> se vean bien (no es Tailwind) */
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      white-space: pre;
+      overflow: auto;
+      tab-size: 2;
+    }
+  </style>
+</head>
+
+<body class="font-ui bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
+  <!-- Topbar -->
+  <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/70">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-cyan-400"></div>
+        <div class="leading-tight">
+          <p class="text-sm font-semibold">Tailwind Showcase</p>
+          <p class="text-xs text-slate-600 dark:text-slate-300">Página moderna + código de cada sección a la derecha</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="btnDark"
+          class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium shadow-sm hover:bg-slate-50 active:scale-[0.98]
+                 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+          🌙 Modo oscuro
+        </button>
+        <a href="#setup"
+          class="rounded-xl bg-slate-900 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+          Ver setup (config)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-10 space-y-10">
+    <!-- Intro -->
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight">Una landing moderna hecha con Tailwind</h1>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
+            A la izquierda ves el resultado visual. A la derecha, el código de esa sección.
+            Además, abajo tienes cómo quedaría <span class="font-mono">tailwind.config.js</span> y un ejemplo de CSS con
+            <span class="font-mono">@layer</span>, <span class="font-mono">@apply</span> y <span class="font-mono">@variants</span>.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button data-collapse="all"
+            class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium shadow-sm hover:bg-slate-50 active:scale-[0.98]
+                   dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+            Contraer todo
+          </button>
+          <button data-expand="all"
+            class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium shadow-sm hover:bg-slate-50 active:scale-[0.98]
+                   dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+            Expandir todo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Navbar -->
+    <section class="section rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden" data-open="true">
+      <div class="flex items-center justify-between border-b border-slate-200/70 px-5 py-3 dark:border-slate-800/70">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800/60">Sección</span>
+          <h2 class="font-semibold">Navbar</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="copyBtn rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                         dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                  data-copy="#code-navbar">Copiar código</button>
+          <button class="toggleBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold hover:bg-slate-50 active:scale-[0.98]
+                         dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">Ocultar</button>
+        </div>
+      </div>
+
+      <div class="content grid gap-0 lg:grid-cols-2">
+        <!-- Preview -->
+        <div class="p-5 bg-slate-50 dark:bg-slate-950/40">
+          <nav class="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-400"></div>
+                <div class="leading-tight">
+                  <p class="text-sm font-semibold">Nebula</p>
+                  <p class="text-xs text-slate-600 dark:text-slate-300">UI kit</p>
+                </div>
+              </div>
+
+              <div class="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300">
+                <a class="hover:text-slate-900 dark:hover:text-white" href="#features">Features</a>
+                <a class="hover:text-slate-900 dark:hover:text-white" href="#pricing">Pricing</a>
+                <a class="hover:text-slate-900 dark:hover:text-white" href="#faq">FAQ</a>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-50 active:scale-[0.98]
+                               dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  Sign in
+                </button>
+                <button class="rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                               dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+                  Get started
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <!-- Code -->
+        <div class="p-5">
+          <pre id="code-navbar" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">&lt;nav class="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm
+            dark:border-slate-800 dark:bg-slate-900"&gt;
+  &lt;div class="flex items-center justify-between gap-3"&gt;
+    &lt;div class="flex items-center gap-3"&gt;
+      &lt;div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-400"&gt;&lt;/div&gt;
+      &lt;div class="leading-tight"&gt;
+        &lt;p class="text-sm font-semibold"&gt;Nebula&lt;/p&gt;
+        &lt;p class="text-xs text-slate-600 dark:text-slate-300"&gt;UI kit&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="hidden md:flex items-center gap-6 text-sm text-slate-600 dark:text-slate-300"&gt;
+      &lt;a class="hover:text-slate-900 dark:hover:text-white" href="#features"&gt;Features&lt;/a&gt;
+      &lt;a class="hover:text-slate-900 dark:hover:text-white" href="#pricing"&gt;Pricing&lt;/a&gt;
+      &lt;a class="hover:text-slate-900 dark:hover:text-white" href="#faq"&gt;FAQ&lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;div class="flex items-center gap-2"&gt;
+      &lt;button class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium
+                     hover:bg-slate-50 active:scale-[0.98]
+                     dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800"&gt;
+        Sign in
+      &lt;/button&gt;
+      &lt;button class="rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm
+                     hover:bg-slate-800 active:scale-[0.98]
+                     dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"&gt;
+        Get started
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Hero -->
+    <section class="section rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden" data-open="true">
+      <div class="flex items-center justify-between border-b border-slate-200/70 px-5 py-3 dark:border-slate-800/70">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800/60">Sección</span>
+          <h2 class="font-semibold">Hero</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="copyBtn rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                         dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                  data-copy="#code-hero">Copiar código</button>
+          <button class="toggleBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold hover:bg-slate-50 active:scale-[0.98]
+                         dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">Ocultar</button>
+        </div>
+      </div>
+
+      <div class="content grid lg:grid-cols-2">
+        <!-- Preview -->
+        <div class="p-5 bg-slate-50 dark:bg-slate-950/40">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-200">
+              <span class="h-2 w-2 rounded-full bg-indigo-500"></span>
+              Nuevo: plantillas premium
+            </div>
+
+            <div class="mt-4 grid gap-6 md:grid-cols-2 md:items-center">
+              <div>
+                <h3 class="text-2xl font-bold tracking-tight">Construye una UI impecable en horas, no días.</h3>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  Componentes modernos con Tailwind, estados y responsive listos.
+                </p>
+
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <button class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                                 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+                    Empezar
+                  </button>
+                  <button class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50 active:scale-[0.98]
+                                 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+                    Ver demo
+                  </button>
+                </div>
+
+                <div class="mt-4 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                  <span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Sin dependencias raras</span>
+                  <span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span>Accesible</span>
+                </div>
+              </div>
+
+              <div class="rounded-2xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-cyan-400 p-[1px]">
+                <div class="rounded-2xl bg-white p-4 dark:bg-slate-950">
+                  <div class="flex items-center justify-between">
+                    <p class="text-sm font-semibold">Actividad</p>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Hoy</span>
+                  </div>
+
+                  <div class="mt-3 space-y-2">
+                    <div class="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+                      <p class="text-sm font-medium">Landing publicada</p>
+                      <p class="text-xs text-slate-600 dark:text-slate-300">+24% conversión</p>
+                    </div>
+                    <div class="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+                      <p class="text-sm font-medium">Sistema de diseño</p>
+                      <p class="text-xs text-slate-600 dark:text-slate-300">Tokens + componentes</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800/60">
+                    <div class="h-2 w-2/3 rounded-full bg-slate-900 dark:bg-white"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code -->
+        <div class="p-5">
+          <pre id="code-hero" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">&lt;section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm
+                dark:border-slate-800 dark:bg-slate-900"&gt;
+
+  &lt;div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1
+              text-sm font-medium text-indigo-700
+              dark:bg-indigo-950/50 dark:text-indigo-200"&gt;
+    &lt;span class="h-2 w-2 rounded-full bg-indigo-500"&gt;&lt;/span&gt;
+    Nuevo: plantillas premium
+  &lt;/div&gt;
+
+  &lt;div class="mt-4 grid gap-6 md:grid-cols-2 md:items-center"&gt;
+    &lt;div&gt;
+      &lt;h1 class="text-2xl font-bold tracking-tight"&gt;...&lt;/h1&gt;
+      &lt;p class="mt-2 text-sm text-slate-600 dark:text-slate-300"&gt;...&lt;/p&gt;
+
+      &lt;div class="mt-4 flex flex-wrap gap-2"&gt;
+        &lt;button class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm
+                       hover:bg-slate-800 active:scale-[0.98]
+                       dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"&gt;
+          Empezar
+        &lt;/button&gt;
+
+        &lt;button class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium
+                       hover:bg-slate-50 active:scale-[0.98]
+                       dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800"&gt;
+          Ver demo
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Card “dashboard” con borde gradiente --&gt;
+    &lt;div class="rounded-2xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-cyan-400 p-[1px]"&gt;
+      &lt;div class="rounded-2xl bg-white p-4 dark:bg-slate-950"&gt;...&lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Features -->
+    <section id="features" class="section rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden" data-open="true">
+      <div class="flex items-center justify-between border-b border-slate-200/70 px-5 py-3 dark:border-slate-800/70">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800/60">Sección</span>
+          <h2 class="font-semibold">Features</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="copyBtn rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                         dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                  data-copy="#code-features">Copiar código</button>
+          <button class="toggleBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold hover:bg-slate-50 active:scale-[0.98]
+                         dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">Ocultar</button>
+        </div>
+      </div>
+
+      <div class="content grid lg:grid-cols-2">
+        <!-- Preview -->
+        <div class="p-5 bg-slate-50 dark:bg-slate-950/40">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h3 class="text-xl font-bold tracking-tight">Todo lo necesario para shippear rápido</h3>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Patrones reales, accesibles y consistentes.</p>
+              </div>
+              <span class="text-xs text-slate-500 dark:text-slate-400">v1.0</span>
+            </div>
+
+            <div class="mt-5 grid gap-3 md:grid-cols-2">
+              <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                <div class="h-10 w-10 rounded-2xl bg-indigo-50 flex items-center justify-center dark:bg-indigo-950/50">
+                  <span class="h-2.5 w-2.5 rounded-full bg-indigo-500"></span>
+                </div>
+                <p class="mt-3 font-semibold">Componentes</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Cards, modales, navbars, pricing…</p>
+              </div>
+
+              <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                <div class="h-10 w-10 rounded-2xl bg-cyan-50 flex items-center justify-center dark:bg-cyan-950/50">
+                  <span class="h-2.5 w-2.5 rounded-full bg-cyan-500"></span>
+                </div>
+                <p class="mt-3 font-semibold">Estados</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">hover, focus, dark, disabled…</p>
+              </div>
+
+              <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                <div class="h-10 w-10 rounded-2xl bg-emerald-50 flex items-center justify-center dark:bg-emerald-950/50">
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                </div>
+                <p class="mt-3 font-semibold">Responsive</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">sm/md/lg listo con grid/flex.</p>
+              </div>
+
+              <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                <div class="h-10 w-10 rounded-2xl bg-rose-50 flex items-center justify-center dark:bg-rose-950/50">
+                  <span class="h-2.5 w-2.5 rounded-full bg-rose-500"></span>
+                </div>
+                <p class="mt-3 font-semibold">DX</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Consistencia con tokens y @apply.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code -->
+        <div class="p-5">
+          <pre id="code-features" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">&lt;section class="rounded-3xl border border-slate-200 bg-white p-6
+                dark:border-slate-800 dark:bg-slate-900"&gt;
+
+  &lt;div class="flex items-start justify-between gap-4"&gt;
+    &lt;div&gt;
+      &lt;h2 class="text-xl font-bold tracking-tight"&gt;...&lt;/h2&gt;
+      &lt;p class="mt-2 text-sm text-slate-600 dark:text-slate-300"&gt;...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span class="text-xs text-slate-500 dark:text-slate-400"&gt;v1.0&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class="mt-5 grid gap-3 md:grid-cols-2"&gt;
+    &lt;article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm
+                    dark:border-slate-800 dark:bg-slate-950"&gt;...&lt;/article&gt;
+    &lt;article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm
+                    dark:border-slate-800 dark:bg-slate-950"&gt;...&lt;/article&gt;
+    &lt;!-- ... --&gt;
+  &lt;/div&gt;
+
+&lt;/section&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Pricing -->
+    <section id="pricing" class="section rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden" data-open="true">
+      <div class="flex items-center justify-between border-b border-slate-200/70 px-5 py-3 dark:border-slate-800/70">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800/60">Sección</span>
+          <h2 class="font-semibold">Pricing</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="copyBtn rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                         dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                  data-copy="#code-pricing">Copiar código</button>
+          <button class="toggleBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold hover:bg-slate-50 active:scale-[0.98]
+                         dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">Ocultar</button>
+        </div>
+      </div>
+
+      <div class="content grid lg:grid-cols-2">
+        <!-- Preview -->
+        <div class="p-5 bg-slate-50 dark:bg-slate-950/40">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="text-xl font-bold tracking-tight">Planes simples</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Sin letra pequeña. Cancela cuando quieras.</p>
+
+            <div class="mt-5 grid gap-3 md:grid-cols-2">
+              <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                <p class="text-sm font-semibold">Starter</p>
+                <p class="mt-2 text-3xl font-bold">0€</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Para probar.</p>
+                <ul class="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+                  <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Componentes básicos</li>
+                  <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Modo oscuro</li>
+                  <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Responsive</li>
+                </ul>
+                <button class="mt-5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50 active:scale-[0.98]
+                               dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+                  Empezar
+                </button>
+              </div>
+
+              <div class="rounded-2xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-cyan-400 p-[1px]">
+                <div class="rounded-2xl bg-white p-5 shadow-sm dark:bg-slate-950">
+                  <div class="flex items-center justify-between">
+                    <p class="text-sm font-semibold">Pro</p>
+                    <span class="text-xs font-semibold rounded-full bg-indigo-50 px-3 py-1 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-200">Popular</span>
+                  </div>
+                  <p class="mt-2 text-3xl font-bold">19€<span class="text-sm font-semibold text-slate-500 dark:text-slate-400">/mes</span></p>
+                  <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Para equipos.</p>
+                  <ul class="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+                    <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Todo en Starter</li>
+                    <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Plantillas premium</li>
+                    <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Tokens + @apply</li>
+                  </ul>
+                  <button class="mt-5 w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                                 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+                    Comprar Pro
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Code -->
+        <div class="p-5">
+          <pre id="code-pricing" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">&lt;section class="rounded-3xl border border-slate-200 bg-white p-6
+                dark:border-slate-800 dark:bg-slate-900"&gt;
+  &lt;h2 class="text-xl font-bold tracking-tight"&gt;Planes simples&lt;/h2&gt;
+  &lt;p class="mt-2 text-sm text-slate-600 dark:text-slate-300"&gt;...&lt;/p&gt;
+
+  &lt;div class="mt-5 grid gap-3 md:grid-cols-2"&gt;
+    &lt;!-- Starter --&gt;
+    &lt;article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm
+                    dark:border-slate-800 dark:bg-slate-950"&gt;
+      &lt;p class="text-sm font-semibold"&gt;Starter&lt;/p&gt;
+      &lt;p class="mt-2 text-3xl font-bold"&gt;0€&lt;/p&gt;
+      &lt;ul class="mt-4 space-y-2 text-sm"&gt;...&lt;/ul&gt;
+      &lt;button class="mt-5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold
+                     hover:bg-slate-50 active:scale-[0.98]
+                     dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800"&gt;
+        Empezar
+      &lt;/button&gt;
+    &lt;/article&gt;
+
+    &lt;!-- Pro con borde gradiente --&gt;
+    &lt;div class="rounded-2xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-cyan-400 p-[1px]"&gt;
+      &lt;article class="rounded-2xl bg-white p-5 shadow-sm dark:bg-slate-950"&gt;...&lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FAQ -->
+    <section id="faq" class="section rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden" data-open="true">
+      <div class="flex items-center justify-between border-b border-slate-200/70 px-5 py-3 dark:border-slate-800/70">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800/60">Sección</span>
+          <h2 class="font-semibold">FAQ</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="copyBtn rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                         dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                  data-copy="#code-faq">Copiar código</button>
+          <button class="toggleBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold hover:bg-slate-50 active:scale-[0.98]
+                         dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">Ocultar</button>
+        </div>
+      </div>
+
+      <div class="content grid lg:grid-cols-2">
+        <!-- Preview -->
+        <div class="p-5 bg-slate-50 dark:bg-slate-950/40">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="text-xl font-bold tracking-tight">Preguntas frecuentes</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Respuestas cortas, claras y sin humo.</p>
+
+            <div class="mt-5 space-y-3">
+              <details class="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm open:shadow-md dark:border-slate-800 dark:bg-slate-950">
+                <summary class="cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span class="font-semibold">¿Necesito CSS extra?</span>
+                  <span class="text-slate-500 group-open:rotate-45 transition dark:text-slate-400">+</span>
+                </summary>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  En la mayoría de casos, no. Si repites patrones, usa <span class="font-mono">@apply</span> dentro de <span class="font-mono">@layer components</span>.
+                </p>
+              </details>
+
+              <details class="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm open:shadow-md dark:border-slate-800 dark:bg-slate-950">
+                <summary class="cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span class="font-semibold">¿Cómo gestiono hover/dark/responsive?</span>
+                  <span class="text-slate-500 group-open:rotate-45 transition dark:text-slate-400">+</span>
+                </summary>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  Con variants: <span class="font-mono">hover:</span>, <span class="font-mono">md:</span>, <span class="font-mono">dark:</span>, <span class="font-mono">group-hover:</span>, etc.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code -->
+        <div class="p-5">
+          <pre id="code-faq" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">&lt;section class="rounded-3xl border border-slate-200 bg-white p-6
+                dark:border-slate-800 dark:bg-slate-900"&gt;
+
+  &lt;div class="mt-5 space-y-3"&gt;
+
+    &lt;details class="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm open:shadow-md
+                    dark:border-slate-800 dark:bg-slate-950"&gt;
+      &lt;summary class="cursor-pointer list-none flex items-center justify-between gap-3"&gt;
+        &lt;span class="font-semibold"&gt;Pregunta&lt;/span&gt;
+        &lt;span class="text-slate-500 group-open:rotate-45 transition dark:text-slate-400"&gt;+&lt;/span&gt;
+      &lt;/summary&gt;
+      &lt;p class="mt-2 text-sm text-slate-600 dark:text-slate-300"&gt;Respuesta...&lt;/p&gt;
+    &lt;/details&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETUP: tailwind.config.js + CSS con @layer/@apply/@variants -->
+    <section id="setup" class="rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+      <div class="flex items-center justify-between border-b border-slate-200/70 px-5 py-3 dark:border-slate-800/70">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800/60">Setup</span>
+          <h2 class="font-semibold">tailwind.config.js + @layer/@apply/@variants</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="copyBtn rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 active:scale-[0.98]
+                         dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+                  data-copy="#code-config">Copiar config</button>
+          <button class="copyBtn rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold hover:bg-slate-50 active:scale-[0.98]
+                         dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800"
+                  data-copy="#code-css">Copiar CSS</button>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2">
+        <!-- Left: explanation -->
+        <div class="p-5 bg-slate-50 dark:bg-slate-950/40 space-y-4">
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-sm font-semibold">Qué estás viendo aquí</p>
+            <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-300 space-y-1">
+              <li><span class="font-mono">@layer</span>: colocas tus estilos en <span class="font-mono">base/components/utilities</span>.</li>
+              <li><span class="font-mono">@apply</span>: compones utilidades en clases tipo <span class="font-mono">.btn</span>, <span class="font-mono">.card</span>.</li>
+              <li><span class="font-mono">@variants</span>: directiva <span class="font-semibold">legacy</span> (v1/v2) para generar variantes de una regla CSS.
+                En Tailwind moderno normalmente usas prefijos (<span class="font-mono">hover:</span>, <span class="font-mono">md:</span>, etc.) o creas variants con plugins / directivas nuevas.</li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-900 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-100">
+            <p class="text-sm leading-relaxed">
+              Nota rápida: <span class="font-mono">@variants</span> aparece en la documentación antigua (Tailwind v1/v2).
+              En proyectos actuales suele sustituirse por <span class="font-mono">variants</span> en config (v2), plugins (v3),
+              o directivas modernas como <span class="font-mono">@custom-variant</span> en v4.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: code -->
+        <div class="p-5 space-y-4">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2">tailwind.config.js (ejemplo típico)</p>
+            <pre id="code-config" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: 'class',
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx,vue}',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        ui: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial'],
+      },
+      // Ejemplo: tokens propios
+      borderRadius: {
+        'xl': '0.9rem',
+        '2xl': '1.25rem',
+      },
+    },
+  },
+  plugins: [
+    // require('@tailwindcss/forms'),
+    // require('@tailwindcss/typography'),
+  ],
+
+  // (LEGACY v2) Configurar variantes que se generan para utilidades concretas:
+  // variants: {
+  //   extend: {
+  //     backgroundColor: ['active'],
+  //     opacity: ['disabled'],
+  //   },
+  // },
+};</pre>
+          </div>
+
+          <div>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2">app.css (cómo usar @layer + @apply + @variants)</p>
+            <pre id="code-css" class="code text-xs rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1) BASE: estilos globales */
+@layer base {
+  html { @apply bg-slate-50 text-slate-900; }
+  html.dark { @apply bg-slate-950 text-slate-50; }
+}
+
+/* 2) COMPONENTS: clases reutilizables con @apply */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+           dark:border-slate-800 dark:bg-slate-900;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2
+           text-sm font-semibold transition active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply btn bg-slate-900 text-white shadow-sm hover:bg-slate-800
+           dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200;
+  }
+
+  .btn-ghost {
+    @apply btn border border-slate-200 bg-white text-slate-900 hover:bg-slate-50
+           dark:border-slate-800 dark:bg-slate-900 dark:text-slate-50 dark:hover:bg-slate-800;
+  }
+}
+
+/* 3) UTILITIES: utilidades custom (si hace falta) */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  /* @variants (LEGACY v1/v2)
+     Genera variantes como hover:.glass, focus:.glass, etc.
+     En Tailwind moderno normalmente prefieres usar prefijos en el HTML o plugins. */
+  @variants hover, focus, dark {
+    .glass {
+      @apply bg-white/70 backdrop-blur border border-white/40;
+    }
+  }
+}
+
+/* Uso en HTML (cuando compilas):
+  <div class="card">...</div>
+  <button class="btn-primary">...</button>
+  <div class="hover:glass dark:glass">...</div>
+*/</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+      Hecho con Tailwind. Consejo: inspecciona elementos y juega con variants (hover:, md:, dark:).
+    </footer>
+  </main>
+
+  <script>
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    // Dark mode
+    $("#btnDark").addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+    });
+
+    // Toggle per section
+    $$(".section").forEach(section => {
+      const toggleBtn = $(".toggleBtn", section);
+      const content = $(".content", section);
+      if (!toggleBtn || !content) return;
+
+      const setOpen = (open) => {
+        section.dataset.open = open ? "true" : "false";
+        content.style.display = open ? "" : "none";
+        toggleBtn.textContent = open ? "Ocultar" : "Mostrar";
+      };
+
+      setOpen(section.dataset.open === "true");
+
+      toggleBtn.addEventListener("click", () => {
+        const open = section.dataset.open !== "true";
+        setOpen(open);
+      });
+    });
+
+    // Expand / collapse all
+    $$("[data-collapse='all']").forEach(btn => {
+      btn.addEventListener("click", () => {
+        $$(".section").forEach(section => {
+          const content = $(".content", section);
+          const toggleBtn = $(".toggleBtn", section);
+          if (!content || !toggleBtn) return;
+          section.dataset.open = "false";
+          content.style.display = "none";
+          toggleBtn.textContent = "Mostrar";
+        });
+      });
+    });
+
+    $$("[data-expand='all']").forEach(btn => {
+      btn.addEventListener("click", () => {
+        $$(".section").forEach(section => {
+          const content = $(".content", section);
+          const toggleBtn = $(".toggleBtn", section);
+          if (!content || !toggleBtn) return;
+          section.dataset.open = "true";
+          content.style.display = "";
+          toggleBtn.textContent = "Ocultar";
+        });
+      });
+    });
+
+    // Copy buttons
+    $$(".copyBtn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const target = btn.getAttribute("data-copy");
+        const el = target ? $(target) : null;
+        if (!el) return;
+
+        const text = el.textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          const prev = btn.textContent;
+          btn.textContent = "✅ Copiado";
+          setTimeout(() => (btn.textContent = prev), 900);
+        } catch {
+          alert("No se pudo copiar automáticamente. Selecciona el texto y copia manualmente.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
