@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa de SASS - Sintaxis, Instalación y Ejemplos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-bottom: 2px solid #667eea;
+            justify-content: center;
+        }
+
+        nav a {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid #667eea;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-example {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .content-example {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .visual-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border-left: 4px solid #764ba2;
+        }
+
+        .code-box code {
+            color: inherit;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .number { color: #bd93f9; }
+        .property { color: #8be9fd; }
+        .value { color: #50fa7b; }
+        .comment { color: #6272a4; }
+
+        .demo {
+            padding: 20px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1565c0;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-color: #ff9800;
+            color: #e65100;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .example-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .example-list li {
+            padding: 10px;
+            margin: 10px 0;
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+        }
+
+        .example-list li strong {
+            color: #667eea;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .color-item {
+            border-radius: 8px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .variable-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .demo-box {
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .nested-demo {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .nested-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nested-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .mixin-example {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 600px) {
+            .mixin-example {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mixin-card {
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .mixin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-primary {
+            background: #667eea;
+        }
+
+        .button-primary:hover {
+            background: #5568d3;
+        }
+
+        .button-secondary {
+            background: #764ba2;
+        }
+
+        .button-secondary:hover {
+            background: #63408a;
+        }
+
+        .button-success {
+            background: #50fa7b;
+            color: #333;
+        }
+
+        .button-success:hover {
+            background: #3fdb67;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #ddd;
+        }
+
+        .installation-steps {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .step {
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 3px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón volver arriba -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🎨 Guía Completa de SASS</h1>
+            <p>Sintaxis, Instalación, Modularización e Integración en Proyectos</p>
+        </header>
+
+        <!-- Navegación -->
+        <nav>
+            <a href="#que-es">¿Qué es SASS?</a>
+            <a href="#instalacion">Instalación</a>
+            <a href="#variables">Variables</a>
+            <a href="#anidamiento">Anidamiento</a>
+            <a href="#mixins">Mixins</a>
+            <a href="#funciones">Funciones</a>
+            <a href="#bucles">Bucles</a>
+            <a href="#condicionales">Condicionales</a>
+            <a href="#modularizacion">Modularización</a>
+        </nav>
+
+        <!-- Contenido principal -->
+        <main>
+            <!-- Sección: ¿Qué es SASS? -->
+            <section id="que-es">
+                <h2>¿Qué es SASS?</h2>
+                <p>SASS (Syntactically Awesome Style Sheets) es un preprocesador CSS que te permite escribir estilos de una manera más organizada, reutilizable y mantenible. SASS extiende CSS con características como variables, anidamiento, mixins, funciones, bucles y condicionales.</p>
+
+                <div class="alert alert-info">
+                    <strong>💡 Información importante:</strong> SASS necesita ser compilado a CSS normal antes de que los navegadores puedan interpretarlo. Los navegadores no entienden SASS directamente.
+                </div>
+
+                <h3>Ventajas de usar SASS:</h3>
+                <ul class="example-list">
+                    <li><strong>Variables:</strong> Define valores una sola vez y úsalos en todo tu proyecto</li>
+                    <li><strong>Anidamiento:</strong> Estructura tu código de forma jerárquica, refleja la estructura HTML</li>
+                    <li><strong>Reutilización:</strong> Crea mixins para bloques de código reutilizable</li>
+                    <li><strong>Funciones:</strong> Realiza cálculos y transformaciones en tu CSS</li>
+                    <li><strong>Modularización:</strong> Divide tu CSS en múltiples archivos organizados</li>
+                    <li><strong>Bucles y condicionales:</strong> Automatiza la generación de estilos</li>
+                    <li><strong>Herencia:</strong> Comparte propiedades entre selectores</li>
+                </ul>
+            </section>
+
+            <!-- Sección: Instalación -->
+            <section id="instalacion">
+                <h2>⚙️ Instalación y Configuración</h2>
+
+                <h3>Paso 1: Instalar SASS</h3>
+                <p>En tu terminal, ejecuta el siguiente comando:</p>
+                <div class="code-box">
+<code>npm install -g sass</code>
+                </div>
+
+                <h3>Paso 2: Crear tu estructura de carpetas</h3>
+                <p>Organiza tu proyecto así:</p>
+                <div class="code-box">
+<code>mi-proyecto/
+├── scss/
+│   └── main.scss
+├── css/
+│   └── main.css
+└── index.html</code>
+                </div>
+
+                <h3>Paso 3: Compilar SASS a CSS</h3>
+                
+                <h4>📌 Compilación Única</h4>
+                <p>Ejecutas el comando una sola vez. SASS convierte tu archivo <code>.scss</code> a <code>.css</code> en ese momento. Si cambias el archivo SCSS después, tienes que ejecutar el comando de nuevo.</p>
+                <div class="code-box">
+<code>sass scss/main.scss css/main.css</code>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><strong>Ideal para:</strong> Compilar una sola vez al finalizar, o cuando prefieres compilar manualmente.</p>
+
+                <h4>📌 Compilación Monitorizada (Modo Watch)</h4>
+                <p>El comando se mantiene <strong>escuchando cambios</strong> en tu carpeta SCSS. Cada vez que modifiques un archivo <code>.scss</code>, SASS <strong>automáticamente</strong> recompila a CSS sin que tengas que ejecutar el comando de nuevo.</p>
+                <div class="code-box">
+<code>sass --watch scss:css</code>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;"><strong>Ideal para:</strong> Desarrollo. Deja este comando activo en una terminal y trabaja sin preocuparte por compilar.</p>
+
+                <div class="alert alert-info">
+                    <strong>💡 Consejo:</strong> Durante el desarrollo, usa el modo <strong>watch</strong> en una terminal. Cuando termines, presiona <code>Ctrl + C</code> para detenerlo.
+                </div>
+
+                <h3>Paso 4: Enlazar el CSS en tu HTML</h3>
+                <div class="code-box">
+<code><span class="keyword">&lt;</span><span class="property">head</span><span class="keyword">&gt;</span>
+  <span class="keyword">&lt;</span><span class="property">link</span>
+    <span class="property">rel</span><span class="string">="stylesheet"</span>
+    <span class="property">href</span><span class="string">="css/main.css"</span><span class="keyword">&gt;</span>
+<span class="keyword">&lt;/</span><span class="property">head</span><span class="keyword">&gt;</span></code>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✅ Listo:</strong> Ahora escribe SASS en archivos .scss y se compilarán automáticamente a CSS que los navegadores puedan entender.
+                </div>
+            </section>
+
+            <!-- Sección: Variables -->
+            <section id="variables">
+                <h2>📦 Variables en SASS</h2>
+                <p>Las variables te permiten almacenar valores (colores, tamaños, fuentes, etc.) y reutilizarlos en todo tu proyecto. Esto facilita mantener consistencia y hacer cambios globales rápidamente.</p>
+
+                <div class="content-example">
+                    <div class="visual-box">
+                        <h4>Ejemplo Visual</h4>
+                        <div class="variable-demo">
+                            <div class="demo-box" style="background: #667eea;">
+                                Color Primario
+                            </div>
+                            <div class="demo-box" style="background: #764ba2;">
+                                Color Secundario
+                            </div>
+                            <div class="demo-box" style="background: #50fa7b; color: #333;">
+                                Color Éxito
+                            </div>
+                            <div class="demo-box" style="background: #ff6b6b;">
+                                Color Error
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.9em; color: #666;">Estos colores están definidos como variables que se reutilizan en todo el proyecto</p>
+                    </div>
+
+                    <div class="code-box">
+<code><span class="comment">// _variables.scss</span>
+
+<span class="comment">// Definir variables</span>
+<span class="property">$color-primario</span>: #667eea;
+<span class="property">$color-secundario</span>: #764ba2;
+<span class="property">$color-exito</span>: #50fa7b;
+<span class="property">$color-error</span>: #ff6b6b;
+
+<span class="property">$font-principal</span>: 'Segoe UI', sans-serif;
+<span class="property">$font-size-base</span>: 16px;
+
+<span class="property">$espaciado</span>: 20px;
+<span class="property">$radio-borde</span>: 8px;</code>
+                    </div>
+
+                    <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// main.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'variables'</span>;
+
+<span class="keyword">body</span> {
+  <span class="property">font-family</span>: <span class="value">$font-principal</span>;
+  <span class="property">font-size</span>: <span class="value">$font-size-base</span>;
+  <span class="property">background</span>: <span class="value">$color-primario</span>;
+}
+
+<span class="keyword">.boton</span> {
+  <span class="property">background</span>: <span class="value">$color-primario</span>;
+  <span class="property">padding</span>: <span class="value">$espaciado</span>;
+  <span class="property">border-radius</span>: <span class="value">$radio-borde</span>;
+}</code>
+                    </div>
+                </div>
+
+                <h3>Ventajas de las Variables</h3>
+                <ul class="example-list">
+                    <li><strong>Mantenibilidad:</strong> Cambia un color en un lugar y afecta todo el proyecto</li>
+                    <li><strong>Consistencia:</strong> Asegura que los valores se repitan en todo el código</li>
+                    <li><strong>Escalabilidad:</strong> Facilita crecer tu proyecto sin duplicar valores</li>
+                    <li><strong>Cálculos:</strong> Puedes hacer operaciones matemáticas con variables</li>
+                </ul>
+            </section>
+
+            <!-- Sección: Anidamiento -->
+            <section id="anidamiento">
+                <h2>🏗️ Anidamiento (Nesting)</h2>
+                <p>El anidamiento permite escribir selectores CSS de forma jerárquica, reflejando la estructura de tu HTML. Esto reduce la repetición de código y lo hace más legible.</p>
+
+                <div class="content-example">
+                    <div class="visual-box">
+                        <h4>Ejemplo Visual</h4>
+                        <div class="nested-demo">
+                            <div class="nested-item">
+                                🏠 Header
+                                <div style="margin-top: 10px; opacity: 0.7; font-size: 0.9em;">Logo • Navegación • Botón Login</div>
+                            </div>
+                            <div class="nested-item">
+                                📄 Sección
+                                <div style="margin-top: 10px; opacity: 0.7; font-size: 0.9em;">Título • Párrafos • Botones</div>
+                            </div>
+                            <div class="nested-item">
+                                🔗 Navegación
+                                <div style="margin-top: 10px; opacity: 0.7; font-size: 0.9em;">Enlaces activos • Enlaces hover</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-box">
+<code><span class="comment">// componentes/_header.scss</span>
+
+<span class="keyword">header</span> {
+  <span class="property">background</span>:
+    blue;
+  <span class="property">padding</span>:
+    20px;
+  
+  <span class="keyword">nav</span> {
+    <span class="property">display</span>:
+      flex;
+    <span class="property">gap</span>:
+      30px;
+    
+    <span class="keyword">a</span> {
+      <span class="property">color</span>:
+        white;
+      <span class="property">text-decoration</span>:
+        none;
+      <span class="property">transition</span>:
+        all
+        0.3s;
+      
+      <span class="keyword">&:hover</span> {
+        <span class="property">color</span>:
+          yellow;
+        <span class="property">transform</span>:
+          translateY(-2px);
+      }
+    }
+  }
+}</code>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ Nota importante:</strong> El símbolo <code>&</code> representa el selector padre. En el ejemplo anterior, <code>&:hover</code> se convierte en <code>header nav a:hover</code>.
+                </div>
+
+                <h3>Casos de uso comunes:</h3>
+                <ul class="example-list">
+                    <li><strong>Pseudoclases:</strong> :hover, :focus, :active, :nth-child()</li>
+                    <li><strong>Pseudoelementos:</strong> ::before, ::after</li>
+                    <li><strong>Media queries:</strong> Resonsivo dentro del elemento</li>
+                    <li><strong>Clases relacionadas:</strong> .elemento--modificador</li>
+                </ul>
+            </section>
+
+            <!-- Sección: Mixins -->
+            <section id="mixins">
+                <h2>🔧 Mixins y @include</h2>
+                <p>Los mixins son bloques de código reutilizable que puedes incluir en múltiples lugares. Son perfectos para estilos repetitivos como transiciones, flexbox, gradientes, etc.</p>
+
+                <div class="content-example">
+                    <div class="visual-box">
+                        <h4>Ejemplo Visual - Botones con Mixins</h4>
+                        <div class="mixin-example">
+                            <div class="mixin-card button-primary">
+                                Botón Primario
+                            </div>
+                            <div class="mixin-card button-secondary">
+                                Botón Secundario
+                            </div>
+                            <div class="mixin-card button-success">
+                                Botón Éxito
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.9em; color: #666;">Todos usan el mismo mixin de botón base con parámetros diferentes</p>
+                    </div>
+
+                    <div class="code-box">
+<code><span class="comment">// _mixins.scss</span>
+
+<span class="keyword">@mixin</span> <span class="property">boton-base</span> {
+  <span class="property">padding</span>:
+    12px
+    25px;
+  <span class="property">border-radius</span>:
+    5px;
+  <span class="property">border</span>:
+    none;
+  <span class="property">cursor</span>:
+    pointer;
+  <span class="property">font-weight</span>:
+    600;
+  <span class="property">transition</span>:
+    all
+    0.3s;
+}
+
+<span class="keyword">@mixin</span> <span class="property">boton-color</span>(<span class="property">$bg</span>, <span class="property">$hover</span>) {
+  <span class="keyword">@include</span> <span class="property">boton-base</span>;
+  <span class="property">background</span>:
+    <span class="value">$bg</span>;
+  <span class="property">color</span>:
+    white;
+  
+  <span class="keyword">&:hover</span> {
+    <span class="property">background</span>:
+      <span class="value">$hover</span>;
+    <span class="property">transform</span>:
+      translateY(-2px);
+  }
+}</code>
+                    </div>
+
+                    <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// componentes/_botones.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_mixins'</span>;
+
+<span class="keyword">.btn-primario</span> {
+  <span class="keyword">@include</span> <span class="property">boton-color</span>(#667eea, #5568d3);
+}
+
+<span class="keyword">.btn-secundario</span> {
+  <span class="keyword">@include</span> <span class="property">boton-color</span>(#764ba2, #63408a);
+}
+
+<span class="keyword">.btn-exito</span> {
+  <span class="keyword">@include</span> <span class="property">boton-color</span>(#50fa7b, #3fdb67);
+}</code>
+                    </div>
+                </div>
+
+                <h3>Mixins comunes en proyectos reales:</h3>
+                <div class="code-box">
+<code><span class="comment">// Flexbox centrado</span>
+<span class="keyword">@mixin</span> <span class="property">flex-center</span> {
+  <span class="property">display</span>: flex;
+  <span class="property">justify-content</span>: center;
+  <span class="property">align-items</span>: center;
+}
+
+<span class="comment">// Responsive</span>
+<span class="keyword">@mixin</span> <span class="property">tablet</span> {
+  <span class="keyword">@media</span> (max-width: 768px) {
+    <span class="keyword">@content</span>;
+  }
+}
+
+<span class="comment">// Sombra con parámetro</span>
+<span class="keyword">@mixin</span> <span class="property">sombra</span>(<span class="property">$intensidad</span>: 0.2) {
+  <span class="property">box-shadow</span>: 0 4px 10px rgba(0, 0, 0, <span class="value">$intensidad</span>);
+}</code>
+                </div>
+
+                <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// componentes/_card.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_mixins'</span>;
+
+<span class="keyword">.header</span> {
+  <span class="keyword">@include</span> <span class="property">flex-center</span>;
+  <span class="keyword">@include</span> <span class="property">sombra</span>(0.15);
+  <span class="property">padding</span>: 20px;
+}
+
+<span class="keyword">.card</span> {
+  <span class="keyword">@include</span> <span class="property">sombra</span>(0.3);
+  <span class="property">padding</span>: 20px;
+  <span class="property">border-radius</span>: 8px;
+  
+  <span class="keyword">@include</span> <span class="property">tablet</span> {
+    <span class="property">padding</span>: 10px;
+  }
+}</code>
+                </div>
+            </section>
+
+            <!-- Sección: Funciones -->
+            <section id="funciones">
+                <h2>⚙️ Funciones en SASS</h2>
+                <p>Las funciones en SASS permiten realizar cálculos y transformaciones. Retornan un valor que puede usarse en propiedades CSS.</p>
+
+                <div class="content-example">
+                    <div class="visual-box">
+                        <h4>Ejemplo Visual - Escala de Colores</h4>
+                        <div class="color-palette">
+                            <div class="color-item" style="background: #667eea;">
+                                Color Base<br>
+                                <span style="font-size: 0.8em;">darken(base, 0%)</span>
+                            </div>
+                            <div class="color-item" style="background: #5568d3;">
+                                Oscuro<br>
+                                <span style="font-size: 0.8em;">darken(base, 10%)</span>
+                            </div>
+                            <div class="color-item" style="background: #3f4ca0;">
+                                Más Oscuro<br>
+                                <span style="font-size: 0.8em;">darken(base, 25%)</span>
+                            </div>
+                            <div class="color-item" style="background: #8fa3f5; color: #333;">
+                                Claro<br>
+                                <span style="font-size: 0.8em;">lighten(base, 10%)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-box">
+<code><span class="comment">// _variables.scss</span>
+
+<span class="property">$color-base</span>: #667eea;</code>
+                    </div>
+
+                    <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// base/_colores.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_variables'</span>;
+
+<span class="keyword">.elemento</span> {
+  <span class="property">background</span>: <span class="value">$color-base</span>;
+  <span class="property">border</span>: 2px solid <span class="value">darken($color-base, 10%)</span>;
+}
+
+<span class="keyword">.elemento-hover</span> {
+  <span class="property">background</span>: <span class="value">lighten($color-base, 5%)</span>;
+}
+
+<span class="keyword">.elemento-disabled</span> {
+  <span class="property">background</span>: <span class="value">desaturate($color-base, 50%)</span>;
+  <span class="property">opacity</span>: 0.5;
+}</code>
+                    </div>
+
+                    <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// _funciones.scss</span>
+
+<span class="keyword">@function</span> <span class="property">rem</span>(<span class="property">$px</span>) {
+  <span class="keyword">@return</span> (<span class="value">$px</span> / 16) * 1rem;
+}</code>
+                    </div>
+
+                    <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// base/_tipografia.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_funciones'</span>;
+
+<span class="keyword">.titulo</span> {
+  <span class="property">font-size</span>:
+    <span class="value">rem(32)</span>;
+  <span class="property">margin</span>:
+    <span class="value">rem(20)</span>
+    <span class="value">rem(10)</span>;
+}</code>
+                    </div>
+                </div>
+
+                <h3>Funciones integradas en SASS:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Función</th>
+                            <th>Descripción</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>darken($color, $amount)</code></td>
+                            <td>Oscurece un color</td>
+                            <td><code>darken(#667eea, 10%)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>lighten($color, $amount)</code></td>
+                            <td>Aclara un color</td>
+                            <td><code>lighten(#667eea, 10%)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>saturate($color, $amount)</code></td>
+                            <td>Aumenta la saturación</td>
+                            <td><code>saturate(#667eea, 20%)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>desaturate($color, $amount)</code></td>
+                            <td>Reduce la saturación</td>
+                            <td><code>desaturate(#667eea, 50%)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>rgba($color, $alpha)</code></td>
+                            <td>Añade transparencia</td>
+                            <td><code>rgba(#667eea, 0.5)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>length($list)</code></td>
+                            <td>Longitud de una lista</td>
+                            <td><code>length(1px 2px 3px)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>round($number)</code></td>
+                            <td>Redondea un número</td>
+                            <td><code>round(3.5)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>str-length($string)</code></td>
+                            <td>Longitud de un string</td>
+                            <td><code>str-length("hello")</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Creando funciones personalizadas:</h3>
+                <div class="code-box">
+<code><span class="comment">// Función para calcular tamaño responsive</span>
+<span class="keyword">@function</span> <span class="property">responsive-size</span>(
+  <span class="property">$mobile</span>, 
+  <span class="property">$desktop</span>
+) {
+  <span class="keyword">@return</span>
+    <span class="value">$mobile</span>;
+}
+
+<span class="comment">// Función para generar paleta de colores</span>
+<span class="keyword">@function</span> <span class="property">shade</span>(<span class="property">$color</span>, <span class="property">$level</span>) {
+  <span class="keyword">@if</span> <span class="value">$level</span> == <span class="string">'light'</span> {
+    <span class="keyword">@return</span>
+      <span class="value">lighten($color, 15%)</span>;
+  } <span class="keyword">@else</span> <span class="keyword">if</span> <span class="value">$level</span> == <span class="string">'dark'</span> {
+    <span class="keyword">@return</span>
+      <span class="value">darken($color, 15%)</span>;
+  } <span class="keyword">@else</span> {
+    <span class="keyword">@return</span>
+      <span class="value">$color</span>;
+  }
+}</code>
+                </div>
+            </section>
+
+            <!-- Sección: Bucles -->
+            <section id="bucles">
+                <h2>🔄 Bucles en SASS</h2>
+                <p>Los bucles permiten generar CSS automáticamente. SASS soporta @for, @each y @while para iterar y crear múltiples reglas.</p>
+
+                <div class="content-example">
+                    <div class="visual-box">
+                        <h4>Ejemplo Visual - Sistema de Espaciado</h4>
+                        <div style="background: #f0f4ff; padding: 15px; border-radius: 8px;">
+                            <div style="margin-bottom: 8px;"><strong>Margin Classes:</strong></div>
+                            <div style="background: white; padding: 5px 10px; margin-bottom: 5px; font-size: 0.9em;">.m-1 { margin: 5px; }</div>
+                            <div style="background: white; padding: 5px 10px; margin-bottom: 5px; font-size: 0.9em;">.m-2 { margin: 10px; }</div>
+                            <div style="background: white; padding: 5px 10px; margin-bottom: 5px; font-size: 0.9em;">.m-3 { margin: 15px; }</div>
+                            <div style="background: white; padding: 5px 10px; margin-bottom: 5px; font-size: 0.9em;">.m-4 { margin: 20px; }</div>
+                            <div style="background: white; padding: 5px 10px; margin-bottom: 5px; font-size: 0.9em;">.m-5 { margin: 25px; }</div>
+                            <div style="background: #f9f9f9; padding: 5px 10px; font-size: 0.9em; color: #666;">... Generadas automáticamente con un bucle</div>
+                        </div>
+                    </div>
+
+                    <div class="code-box">
+<code><span class="comment">// utilidades/_espaciado.scss</span>
+
+<span class="comment">// Generar clases de margin y padding</span>
+<span class="keyword">@for</span> <span class="property">$i</span> <span class="keyword">from</span> 1 <span class="keyword">through</span> 5 {
+  <span class="keyword">.m-#{</span><span class="property">$i</span><span class="keyword">}</span> {
+    <span class="property">margin</span>: <span class="value">($i * 5px)</span>;
+  }
+  
+  <span class="keyword">.p-#{</span><span class="property">$i</span><span class="keyword">}</span> {
+    <span class="property">padding</span>: <span class="value">($i * 5px)</span>;
+  }
+}
+
+<span class="comment">// Resultado compilado:</span>
+<span class="comment">// .m-1 { margin: 5px; }</span>
+<span class="comment">// .m-2 { margin: 10px; }</span>
+<span class="comment">// .m-3 { margin: 15px; }</span>
+<span class="comment">// ...</span></code>
+                    </div>
+                </div>
+
+                <h3>Bucle @each para listas:</h3>
+                <div class="code-box">
+<code><span class="comment">// utilidades/_temas.scss</span>
+
+<span class="property">$colores</span>: (
+  primario: #667eea,
+  secundario: #764ba2,
+  exito: #50fa7b
+);
+
+<span class="keyword">@each</span> <span class="property">$nombre, $valor</span> <span class="keyword">in</span> <span class="value">$colores</span> {
+  <span class="keyword">.bg-#{</span><span class="property">$nombre</span><span class="keyword">}</span> {
+    <span class="property">background</span>:
+      <span class="value">$valor</span>;
+    <span class="property">color</span>:
+      white;
+    <span class="property">padding</span>:
+      10px
+      20px;
+  }
+}
+
+<span class="comment">// Resultado compilado:</span>
+<span class="comment">// .bg-primario { background: #667eea; }</span>
+<span class="comment">// .bg-secundario { background: #764ba2; }</span>
+<span class="comment">// .bg-exito { background: #50fa7b; }</span></code>
+                </div>
+
+                <h3>Bucle @while:</h3>
+                <div class="code-box">
+<code><span class="comment">// utilidades/_grid.scss</span>
+
+<span class="property">$contador</span>: 1;
+
+<span class="keyword">@while</span> <span class="value">$contador</span> &lt;= 3 {
+  <span class="keyword">.columna-#{</span><span class="property">$contador</span><span class="keyword">}</span> {
+    <span class="property">width</span>:
+      <span class="value">(100% / $contador)</span>;
+  }
+  <span class="property">$contador</span>:
+    <span class="value">$contador + 1</span>;
+}</code>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✅ Caso de uso real:</strong> Los bucles son perfectos para generar clases de utilidad (Bootstrap, Tailwind), sistemas de espaciado y breakpoints responsive.
+                </div>
+            </section>
+
+            <!-- Sección: Condicionales -->
+            <section id="condicionales">
+                <h2>⚡ Condicionales en SASS</h2>
+                <p>Los condicionales (@if, @else if, @else) permiten aplicar estilos de manera condicional basándose en variables.</p>
+
+                <div class="content-example">
+                    <div class="visual-box">
+                        <h4>Ejemplo Visual - Tema Claro/Oscuro</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #667eea; text-align: center;">
+                                <strong style="color: #333;">Tema Claro</strong>
+                                <p style="color: #666; margin-top: 10px;">Fondo blanco<br>Texto oscuro</p>
+                            </div>
+                            <div style="background: #333; padding: 20px; border-radius: 8px; border: 2px solid #667eea; text-align: center; color: white;">
+                                <strong>Tema Oscuro</strong>
+                                <p style="margin-top: 10px;">Fondo oscuro<br>Texto claro</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-box">
+<code><span class="comment">// _variables.scss</span>
+
+<span class="property">$tema</span>: <span class="string">dark</span>;
+<span class="property">$tamaño-pantalla</span>: mobile;</code>
+                    </div>
+
+                    <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// base/_layout.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_variables'</span>;
+
+<span class="keyword">@if</span> <span class="value">$tema</span> == <span class="string">dark</span> {
+  <span class="keyword">body</span> {
+    <span class="property">background</span>: #333;
+    <span class="property">color</span>: #fff;
+  }
+} <span class="keyword">@else</span> {
+  <span class="keyword">body</span> {
+    <span class="property">background</span>: white;
+    <span class="property">color</span>: #333;
+  }
+}
+
+<span class="keyword">@if</span> <span class="value">$tamaño-pantalla</span> == <span class="string">mobile</span> {
+  <span class="keyword">.container</span> { <span class="property">width</span>: 100%; }
+} <span class="keyword">@else</span> <span class="keyword">if</span> <span class="value">$tamaño-pantalla</span> == <span class="string">tablet</span> {
+  <span class="keyword">.container</span> { <span class="property">width</span>: 768px; }
+} <span class="keyword">@else</span> {
+  <span class="keyword">.container</span> { <span class="property">width</span>: 1200px; }
+}</code>
+                    </div>
+                </div>
+
+                <h3>Condicionales en Mixins:</h3>
+                <div class="code-box">
+<code><span class="comment">// _mixins.scss</span>
+
+<span class="keyword">@mixin</span> <span class="property">boton</span>(<span class="property">$tipo</span>) {
+  <span class="property">padding</span>: 12px 25px;
+  <span class="property">border-radius</span>: 5px;
+  <span class="property">border</span>: none;
+  <span class="property">cursor</span>: pointer;
+  <span class="property">transition</span>: all 0.3s;
+  
+  <span class="keyword">@if</span> <span class="value">$tipo</span> == <span class="string">primary</span> {
+    <span class="property">background</span>: #667eea;
+    <span class="property">color</span>: white;
+    <span class="keyword\">&:hover</span> { <span class=\"property\">background</span>: #5568d3; }
+  } <span class=\"keyword\">@else</span> <span class=\"keyword\">if</span> <span class=\"value\">$tipo</span> == <span class=\"string\">outline</span> {
+    <span class=\"property\">background</span>: transparent;
+    <span class=\"property\">border</span>: 2px solid #667eea;
+    <span class=\"property\">color</span>: #667eea;
+    <span class=\"keyword\">&:hover</span> {
+      <span class=\"property\">background</span>: #667eea;
+      <span class=\"property\">color</span>: white;
+    }
+  } <span class=\"keyword\">@else</span> <span class=\"keyword\">if</span> <span class=\"value\">$tipo</span> == <span class=\"string\">disabled</span> {
+    <span class=\"property\">background</span>: #ccc;
+    <span class=\"property\">color</span>: #999;
+    <span class=\"property\">cursor</span>: not-allowed;
+  }
+}</code>
+                </div>
+
+                <div class="code-box" style="margin-top: 15px;">
+<code><span class="comment">// componentes/_botones.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_mixins'</span>;
+
+<span class="keyword\">.btn-primary</span> {
+  <span class=\"keyword\">@include</span> <span class=\"property\">boton</span>(primary);
+}
+
+<span class=\"keyword\">.btn-outline</span> {
+  <span class=\"keyword\">@include</span> <span class=\"property\">boton</span>(outline);
+}
+
+<span class=\"keyword\">.btn-disabled</span> {
+  <span class=\"keyword\">@include</span> <span class=\"property\">boton</span>(disabled);
+}</code>
+                </div>
+
+                <h3>Operadores en condicionales:</h3>
+                <ul class="example-list">
+                    <li><strong>==</strong> - Igualdad</li>
+                    <li><strong>!=</strong> - Desigualdad</li>
+                    <li><strong>&lt;, &gt;, &lt;=, &gt;=</strong> - Comparación numérica</li>
+                    <li><strong>and</strong> - Y lógico</li>
+                    <li><strong>or</strong> - O lógico</li>
+                    <li><strong>not</strong> - Negación</li>
+                </ul>
+            </section>
+
+            <!-- Sección: Modularización -->
+            <section id="modularizacion">
+                <h2>📁 Modularización e Integración en Proyectos</h2>
+                <p>La modularización permite dividir tu código SASS en archivos más pequeños y manejables, mejorando la organización y mantenibilidad del proyecto.</p>
+
+                <h3>Estructura recomendada de carpetas:</h3>
+                <div class="code-box">
+<code>proyecto/
+│
+├── scss/
+│   ├── main.scss              <span class="comment"># Archivo principal</span>
+│   ├── _variables.scss         <span class="comment"># Variables globales</span>
+│   ├── _mixins.scss            <span class="comment"># Mixins reutilizables</span>
+│   ├── _funciones.scss         <span class="comment"># Funciones personalizadas</span>
+│   ├── _reset.scss             <span class="comment"># Reset/Normalize</span>
+│   │
+│   ├── base/
+│   │   ├── _tipografia.scss
+│   │   ├── _colores.scss
+│   │   └── _layout.scss
+│   │
+│   ├── componentes/
+│   │   ├── _botones.scss
+│   │   ├── _tarjetas.scss
+│   │   ├── _header.scss
+│   │   └── _footer.scss
+│   │
+│   └── utilidades/
+│       ├── _espaciado.scss
+│       └── _responsive.scss
+│
+├── css/
+│   └── main.css              <span class="comment"># CSS compilado</span>
+│
+└── index.html</code>
+                </div>
+
+                <h3>Archivo principal (main.scss):</h3>
+                <div class="code-box">
+<code><span class="comment">// main.scss</span>
+
+<span class="comment">// 1. Configuración global</span>
+<span class="keyword">@import</span> <span class="string">'variables'</span>;
+<span class="keyword">@import</span> <span class="string">'funciones'</span>;
+<span class="keyword">@import</span> <span class="string">'mixins'</span>;
+
+<span class="comment">// 2. Estilos base</span>
+<span class="keyword">@import</span> <span class="string">'reset'</span>;
+<span class="keyword">@import</span> <span class="string">'base/tipografia'</span>;
+<span class="keyword">@import</span> <span class="string">'base/colores'</span>;
+<span class="keyword">@import</span> <span class="string">'base/layout'</span>;
+
+<span class="comment">// 3. Componentes</span>
+<span class="keyword">@import</span> <span class="string">'componentes/botones'</span>;
+<span class="keyword">@import</span> <span class="string">'componentes/tarjetas'</span>;
+<span class="keyword">@import</span> <span class="string">'componentes/header'</span>;
+<span class="keyword">@import</span> <span class="string">'componentes/footer'</span>;
+
+<span class="comment">// 4. Utilidades</span>
+<span class="keyword">@import</span> <span class="string">'utilidades/espaciado'</span>;
+<span class="keyword">@import</span> <span class="string">'utilidades/responsive'</span>;</code>
+                </div>
+
+                <h3>Ejemplo: _variables.scss</h3>
+                <div class="code-box">
+<code><span class="comment">// _variables.scss</span>
+
+<span class="comment">// Colores</span>
+<span class="property">$color-primario</span>: #667eea;
+<span class="property">$color-secundario</span>: #764ba2;
+<span class="property">$color-exito</span>: #50fa7b;
+<span class="property">$color-error</span>: #ff6b6b;
+<span class="property">$color-fondo</span>: #f5f5f5;
+<span class="property">$color-texto</span>: #333;
+
+<span class="comment">// Tipografía</span>
+<span class="property">$font-principal</span>: 'Segoe UI', sans-serif;
+<span class="property">$font-secundaria</span>: 'Georgia', serif;
+<span class="property">$font-size-base</span>: 16px;
+<span class="property">$font-size-sm</span>: 14px;
+<span class="property">$font-size-lg</span>: 18px;
+
+<span class="comment">// Espaciado</span>
+<span class="property">$espaciado-xs</span>: 5px;
+<span class="property">$espaciado-sm</span>: 10px;
+<span class="property">$espaciado-md</span>: 20px;
+<span class="property">$espaciado-lg</span>: 30px;
+
+<span class="comment">// Breakpoints</span>
+<span class="property">$mobile</span>: 480px;
+<span class="property">$tablet</span>: 768px;
+<span class="property">$desktop</span>: 1024px;</code>
+                </div>
+
+                <h3>Ejemplo: _mixins.scss</h3>
+                <div class="code-box">
+<code><span class="comment">// _mixins.scss</span>
+
+<span class="comment">// Responsive</span>
+<span class="keyword">@mixin</span> <span class="property">mobile</span> {
+  <span class="keyword">@media</span> (max-width: <span class="value">$mobile</span>) {
+    <span class="keyword">@content</span>;
+  }
+}
+
+<span class="keyword">@mixin</span> <span class="property">tablet</span> {
+  <span class="keyword">@media</span> (max-width: <span class="value">$tablet</span>) {
+    <span class="keyword">@content</span>;
+  }
+}
+
+<span class="comment">// Utilidades comunes</span>
+<span class="keyword">@mixin</span> <span class="property">flex-center</span> {
+  <span class="property">display</span>: flex;
+  <span class="property">justify-content</span>: center;
+  <span class="property">align-items</span>: center;
+}
+
+<span class="keyword">@mixin</span> <span class="property">transition</span>(<span class="property">$prop: all</span>, <span class="property">$duracion: 0.3s</span>) {
+  <span class="property">transition</span>:
+    <span class="value">$prop</span>
+    <span class="value">$duracion</span>
+    ease;
+}</code>
+                </div>
+
+                <h3>Ejemplo: componentes/_botones.scss</h3>
+                <div class="code-box">
+<code><span class="comment">// componentes/_botones.scss</span>
+
+<span class="keyword">@import</span> <span class="string">'../_variables'</span>;
+<span class="keyword">@import</span> <span class="string">'../_mixins'</span>;
+
+<span class="comment">// Estilos base para botones</span>
+<span class="keyword">%boton-base</span> {
+  <span class="property">padding</span>:
+    <span class="value">$espaciado-sm</span>
+    <span class="value">$espaciado-md</span>;
+  <span class="property">border</span>: none;
+  <span class="property">border-radius</span>: 5px;
+  <span class="property">cursor</span>: pointer;
+  <span class="property">font-weight</span>: 600;
+  <span class="keyword">@include</span> <span class="property">transition</span>;
+}
+
+<span class="keyword\">.btn</span> {
+  <span class=\"keyword\">@extend</span> %boton-base;
+  <span class=\"property\">background</span>: <span class=\"value\">$color-primario</span>;
+  <span class=\"property\">color</span>: white;
+  
+  <span class=\"keyword\">&:hover</span> {
+    <span class=\"property\">background</span>: <span class=\"value\">darken($color-primario, 10%)</span>;
+    <span class=\"property\">transform</span>: translateY(-2px);
+  }
+  
+  <span class=\"keyword\">@include</span> <span class=\"property\">tablet</span> {
+    <span class=\"property\">padding</span>: <span class=\"value\">$espaciado-xs $espaciado-sm</span>;
+  }
+}</code>
+                </div>
+
+                <h3>Cómo usar en HTML:</h3>
+                <div class="code-box">
+<code><span class="keyword">&lt;</span><span class="property">head</span><span class="keyword">&gt;</span>
+  <span class="keyword">&lt;</span><span class="property">link</span>
+    <span class="property">rel</span><span class="string">="stylesheet"</span>
+    <span class="property">href</span><span class="string">="css/main.css"</span><span class="keyword">&gt;</span>
+<span class="keyword">&lt;/</span><span class="property">head</span><span class="keyword">&gt;</span>
+
+<span class="keyword">&lt;</span><span class="property">body</span><span class="keyword">&gt;</span>
+  <span class="keyword">&lt;</span><span class="property">button</span>
+    <span class="property">class</span><span class="string">="btn"</span><span class="keyword">&gt;</span>
+    Botón Primario
+  <span class="keyword">&lt;/</span><span class="property">button</span><span class="keyword">&gt;</span>
+<span class="keyword">&lt;/</span><span class="property">body</span><span class="keyword">&gt;</span></code>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>💡 Ventajas de la modularización:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li>Código más organizado y fácil de mantener</li>
+                        <li>Facilita el trabajo en equipo</li>
+                        <li>Reutilización de código</li>
+                        <li>Reducción del CSS final compilado</li>
+                        <li>Mejor rendimiento del proyecto</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Resumen Final -->
+            <section style="background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <h2>📚 Resumen - Checklist SASS</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Descripción</th>
+                            <th>Cuándo usarlo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Variables</strong></td>
+                            <td>Almacenar valores reutilizables</td>
+                            <td>Colores, fuentes, tamaños, espaciado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anidamiento</strong></td>
+                            <td>Anidar selectores jerárquicamente</td>
+                            <td>Reflejar estructura HTML, pseudoclases</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixins</strong></td>
+                            <td>Bloques de código reutilizable</td>
+                            <td>Estilos repetitivos, flexbox, transiciones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Funciones</strong></td>
+                            <td>Cálculos y transformaciones</td>
+                            <td>Manipular colores, unidades, generación dinámica</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bucles</strong></td>
+                            <td>Generar código repetitivo automáticamente</td>
+                            <td>Clases de utilidad, sistemas de grid, espaciado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Condicionales</strong></td>
+                            <td>Aplicar estilos condicionalmente</td>
+                            <td>Temas, responsivos, variaciones de componentes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Modularización</strong></td>
+                            <td>Dividir código en múltiples archivos</td>
+                            <td>Proyectos medianos y grandes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Conclusión -->
+            <section>
+                <h2>🎓 Conclusión</h2>
+                <p>SASS es una herramienta poderosa que mejora significativamente la experiencia de escritura de CSS. Permite crear código más mantenible, reutilizable y escalable.</p>
+
+                <div class="alert alert-success">
+                    <strong>✅ Próximos pasos:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li>Practica con ejemplos simples: variables y anidamiento</li>
+                        <li>Crea mixins para tus estilos más comunes</li>
+                        <li>Implementa un sistema de modularización en tu proyecto</li>
+                        <li>Experimenta con bucles para generar clases de utilidad</li>
+                        <li>Explora frameworks como Bootstrap o Tailwind que usan SASS</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 - Guía Didáctica de SASS | Desarrollo Web Responsivo</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Creado con 💜 para aprender SASS de forma interactiva</p>
+        </footer>
+    </div>
+
+    <script>
+        // Botón volver arriba
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll para enlaces de navegación
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
