@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playground de Repaso - DWR</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrapper">
+    <header class="page-header">
+      <h1>Repaso final</h1>
+    </header>
+
+    <!-- ======================================================
+         TEMA 1: UNIDADES DE LONGITUD
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 1</span>
+        <h2>Unidades de Longitud: <code>px</code> vs <code>rem</code> vs <code>em</code></h2>
+      </div>
+      <p class="explanation">
+        Las unidades relativas (<code>rem</code> y <code>em</code>) son fundamentales para la <strong>accesibilidad</strong>.
+        Permiten que el usuario ajuste el tamaño de fuente global y todo escale proporcionalmente.
+      </p>
+
+      <div class="values">
+        <p class="values-title">📍 🔑 LA DIFERENCIA FUNDAMENTAL:</p>
+        
+        <!-- REM vs EM Visual Tree -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; align-items: start;">
+          <!-- REM Column -->
+          <div style="background: #e7f3ff; border: 3px solid #0d6efd; border-radius: 8px; padding: 1.5rem;">
+            <h4 style="margin-top: 0; color: #0d6efd; display: flex; align-items: center; gap: 0.5rem;">
+              ⭐ REM = "Root" (RAÍZ)
+            </h4>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; color: #333;">
+              <strong>SIEMPRE pregunta:</strong> ¿Cuál es el tamaño del <code>&lt;html&gt;</code>?
+            </p>
+            
+            <!-- Visual Tree for REM -->
+            <div style="background: white; padding: 1rem; border-radius: 4px; margin: 0.5rem 0; font-family: monospace; font-size: 0.85rem; text-align: center;">
+              <div style="background: #0d6efd; color: white; padding: 0.75rem; border-radius: 4px; font-weight: bold; margin-bottom: 1rem;">
+                &lt;html&gt; = 16px
+              </div>
+              <div style="margin: 0.5rem 0;">↓ (REM siempre mira aquí)</div>
+              <div style="background: #e7f3ff; border: 2px dashed #0d6efd; padding: 0.5rem; border-radius: 4px; margin: 0.5rem 0;">
+                .card { 1.2rem }
+              </div>
+              <div style="margin: 0.5rem 0;">↓</div>
+              <div style="background: #e7f3ff; border: 2px dashed #0d6efd; padding: 0.5rem; border-radius: 4px;">
+                .button { 1rem }
+              </div>
+            </div>
+            
+            <p style="margin: 0.5rem 0; font-size: 0.85rem; background: #fff2cc; padding: 0.5rem; border-radius: 4px;">
+              ✅ <strong>1rem = 16px</strong><br/>
+              ✅ <strong>1.2rem = 19.2px</strong><br/>
+              ✅ No importa dónde esté el elemento
+            </p>
+          </div>
+
+          <!-- EM Column -->
+          <div style="background: #ffe7e7; border: 3px solid #dc3545; border-radius: 8px; padding: 1.5rem;">
+            <h4 style="margin-top: 0; color: #dc3545; display: flex; align-items: center; gap: 0.5rem;">
+              🎯 EM = "Element" (PADRE)
+            </h4>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; color: #333;">
+              <strong>SIEMPRE pregunta:</strong> ¿Cuál es el tamaño de mi <code>PADRE</code>?
+            </p>
+            
+            <!-- Visual Tree for EM -->
+            <div style="background: white; padding: 1rem; border-radius: 4px; margin: 0.5rem 0; font-family: monospace; font-size: 0.85rem;">
+              <div style="background: #dc3545; color: white; padding: 0.75rem; border-radius: 4px; font-weight: bold; margin-bottom: 0.5rem;">
+                &lt;html&gt; = 16px
+              </div>
+              <div style="margin: 0.5rem 0; text-align: center;">↓</div>
+              <div style="background: #ffe7e7; border: 2px solid #dc3545; padding: 0.5rem; border-radius: 4px; margin: 0.5rem 0;">
+                <strong>.card { 1.2rem = 19.2px }</strong><br/>
+                <div style="font-size: 0.75rem; margin-top: 0.25rem; color: #666;">(padre de button)</div>
+              </div>
+              <div style="margin: 0.5rem 0; text-align: center;">↓</div>
+              <div style="background: #fff0f0; border: 2px dashed #dc3545; padding: 0.5rem; border-radius: 4px;">
+                <strong style="color: #dc3545;">.button { 1em = 19.2px }</strong><br/>
+                <div style="font-size: 0.75rem; margin-top: 0.25rem; color: #666;">(1em aquí = padre 19.2px)</div>
+              </div>
+            </div>
+            
+            <p style="margin: 0.5rem 0; font-size: 0.85rem; background: #ffd9d9; padding: 0.5rem; border-radius: 4px;">
+              ⚠️ <strong>1em = padre</strong><br/>
+              ⚠️ <strong>1em en button = 19.2px</strong><br/>
+              ⚠️ Depende del contexto
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <div class="control-group">
+              <label for="html-font-size">Tamaño base del HTML:</label>
+              <input type="range" min="10" max="28" value="16" id="html-font-size" />
+              <span id="html-font-size-label">16px</span>
+            </div>
+            <button id="reset-font-size" class="btn-reset">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 2: MEDIA QUERIES & RESPONSIVE
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 2</span>
+        <h2>Media Queries: Ejercicio Responsive</h2>
+      </div>
+      <p class="explanation">
+        Las <strong>media queries</strong> permiten adaptar el diseño a diferentes tamaños de pantalla.
+        El enfoque <strong>mobile-first</strong> (usar <code>min-width</code>) es más mantenible y eficiente.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Breakpoints típicos:</p>
+        <ul>
+          <li><strong>Mobile:</strong> 0 – 767px</li>
+          <li><strong>Tablet:</strong> 768px – 1023px</li>
+          <li><strong>Desktop:</strong> 1024px+</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              Ancho de pantalla simulado:
+              <input 
+                type="range" 
+                min="320" 
+                max="1400" 
+                value="768" 
+                id="viewport-width"
+                class="viewport-slider"
+              />
+              <span id="viewport-width-label">768px</span>
+            </label>
+          </div>
+
+          <div id="demo-responsive" class="demo-box responsive-demo">
+            <div class="response-container">
+              <div class="column column-1">Columna 1</div>
+              <div class="column column-2">Columna 2</div>
+              <div class="column column-3">Columna 3</div>
+            </div>
+          </div>
+          <small class="hint">
+            <strong>Mobile (&lt;768px):</strong> 1 columna · 
+            <strong>Tablet (768–1023px):</strong> 2 columnas · 
+            <strong>Desktop (≥1024px):</strong> 3 columnas
+          </small>
+        </div>
+
+        <pre class="code-block"><code>/* Mobile First */
+.column { width: 100%; }
+
+@media (min-width: 768px) {
+  .column { width: 50%; }
+}
+
+@media (min-width: 1024px) {
+  .column { width: 33.333%; }
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 3: FLEXBOX - CONTENEDOR
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 3</span>
+        <h2>Flexbox: Propiedades del Contenedor</h2>
+      </div>
+      <p class="explanation">
+        <strong>Flexbox</strong> es el layout 1D más especificado. Controla cómo se distribuyen los ítems
+        en una dimensión (fila o columna) y cómo se alinean.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Propiedades clave del contenedor:</p>
+        <ul>
+          <li><code>display: flex</code> → activa el modelo flexible.</li>
+          <li><code>flex-direction</code> → dirección del eje principal (row, column).</li>
+          <li><code>justify-content</code> → alineación en el eje principal.</li>
+          <li><code>align-items</code> → alineación en el eje cruzado.</li>
+          <li><code>flex-wrap</code> → salto de línea cuando no hay espacio.</li>
+          <li><code>gap</code> → espacio entre ítems.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <div class="control-group">
+              <label>
+                flex-direction:
+                <select id="flex-direction" data-target="pg-flex-container" data-prop="flex-direction">
+                  <option value="row" selected>row</option>
+                  <option value="row-reverse">row-reverse</option>
+                  <option value="column">column</option>
+                  <option value="column-reverse">column-reverse</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label>
+                justify-content:
+                <select id="justify-content" data-target="pg-flex-container" data-prop="justify-content">
+                  <option value="flex-start" selected>flex-start</option>
+                  <option value="center">center</option>
+                  <option value="flex-end">flex-end</option>
+                  <option value="space-between">space-between</option>
+                  <option value="space-around">space-around</option>
+                  <option value="space-evenly">space-evenly</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label>
+                align-items:
+                <select id="align-items" data-target="pg-flex-container" data-prop="align-items">
+                  <option value="flex-start">flex-start</option>
+                  <option value="center" selected>center</option>
+                  <option value="flex-end">flex-end</option>
+                  <option value="stretch">stretch</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label>
+                flex-wrap:
+                <select id="flex-wrap" data-target="pg-flex-container" data-prop="flex-wrap">
+                  <option value="nowrap" selected>nowrap</option>
+                  <option value="wrap">wrap</option>
+                  <option value="wrap-reverse">wrap-reverse</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label>
+                gap:
+                <input type="range" min="0" max="40" value="10" id="flex-gap" data-target="pg-flex-container" data-prop="gap" />
+                <span id="flex-gap-label">10px</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="pg-flex-container" class="demo-box flex-demo" style="gap: 10px;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+            <div class="flex-item">4</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 4: GRID - PROPIEDADES CLAVE
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 4</span>
+        <h2>CSS Grid: Introducción</h2>
+      </div>
+      <p class="explanation">
+        <strong>CSS Grid</strong> es el layout 2D más potente. Controla ambas dimensiones
+        (filas y columnas) simultáneamente, ideal para layouts complejos.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Propiedades clave:</p>
+        <ul>
+          <li><code>display: grid</code> → activa el modelo grid.</li>
+          <li><code>grid-template-columns</code> → define columnas (200px, 1fr, auto, etc.).</li>
+          <li><code>grid-template-rows</code> → define filas.</li>
+          <li><code>gap</code> → espacio entre filas y columnas.</li>
+          <li><code>grid-auto-flow</code> → cómo se colocan los ítems (row o column).</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <div class="control-group">
+              <label>
+                grid-template-columns:
+                <select id="grid-columns">
+                  <option value="1fr 1fr 1fr" selected>1fr 1fr 1fr</option>
+                  <option value="2fr 1fr 1fr">2fr 1fr 1fr</option>
+                  <option value="200px 1fr 200px">200px 1fr 200px</option>
+                  <option value="repeat(4, 1fr)">repeat(4, 1fr)</option>
+                  <option value="1fr 2fr">1fr 2fr</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="control-group">
+              <label>
+                gap:
+                <input type="range" min="0" max="30" value="10" id="grid-gap" />
+                <span id="grid-gap-label">10px</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="pg-grid-container" class="demo-box grid-demo" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+/* Grid vs Flexbox:
+   - Flexbox: layout 1D (fila O columna)
+   - Grid: layout 2D (fila Y columna) */</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 5: LAYOUT RESPONSIVE CON GRID
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 5</span>
+        <h2>Grid + Media Queries: Layout Adaptativo</h2>
+      </div>
+      <p class="explanation">
+        <strong>Combinar Grid con media queries</strong> permite layouts sofisticados que
+        se adapten a cualquier dispositivo, manteniendo el orden del contenido.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Ejemplo: diseño de gimnasio</p>
+        <ul>
+          <li><strong>Mobile:</strong> 1 columna (header, nav, main, footer apilados).</li>
+          <li><strong>Tablet:</strong> 2 columnas (nav lateral + contenido).</li>
+          <li><strong>Desktop:</strong> Header a todo ancho, nav+main en paralelo, footer a todo ancho.</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              Simular tamaño de pantalla:
+              <input 
+                type="range" 
+                min="320" 
+                max="1200" 
+                value="800" 
+                id="grid-responsive-width"
+                class="viewport-slider"
+              />
+              <span id="grid-responsive-width-label">800px</span>
+            </label>
+          </div>
+
+          <div id="demo-grid-responsive" class="demo-box grid-responsive-demo">
+            <header class="layout-header">Header (Gimnasio ActivaFit)</header>
+            <nav class="layout-nav">Nav</nav>
+            <main class="layout-main">Main Content</main>
+            <footer class="layout-footer">Footer © 2025</footer>
+          </div>
+          <small class="hint">
+            <strong>Mobile (&lt;768px):</strong> 1 col · 
+            <strong>Tablet (768–1023px):</strong> nav + main · 
+            <strong>Desktop (≥1024px):</strong> Layout clásico
+          </small>
+        </div>
+
+        <pre class="code-block"><code>/* Mobile-first */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 200px 1fr;
+  }
+  .layout-header { grid-column: 1/-1; }
+  .layout-footer { grid-column: 1/-1; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 60px 1fr 60px;
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 9-10: ACCESIBILIDAD - ESTRUCTURA SEMÁNTICA
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 9-10</span>
+        <h2>Accesibilidad: Estructura Semántica & ARIA</h2>
+      </div>
+      <p class="explanation">
+        La <strong>accesibilidad</strong> es crucial para que todo el mundo pueda usar tu web.
+        Usa etiquetas semánticas (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>)
+        y atributos ARIA cuando sea necesario.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Checklist de accesibilidad:</p>
+        <ul>
+          <li>✅ Usa etiquetas semánticas: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>.</li>
+          <li>✅ Todo formulario debe tener <code>&lt;label&gt;</code> asociada con <code>for</code> o anidada.</li>
+          <li>✅ Imágenes requieren <code>alt</code> descripción.</li>
+          <li>✅ Contraste de color: mínimo 4.5:1 para texto normal.</li>
+          <li>✅ Usa unidades relativas (<code>rem</code>): permite que usuarios amplíen texto.</li>
+          <li>✅ ARIA (<code>role</code>, <code>aria-label</code>, <code>aria-hidden</code>) solo cuando la semántica HTML no es suficiente.</li>
+          <li>✅ Testea con lectores de pantalla (NVDA, JAWS, VoiceOver).</li>
+        </ul>
+
+        <!-- Atributos de accesibilidad explicados -->
+        <div style="background: #f8f9fa; border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem;">
+          <p style="margin-top: 0; font-weight: bold; color: #333; font-size: 0.95rem;">📌 Atributos de accesibilidad en formularios:</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.9rem;">
+            
+            <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 3px solid #0d6efd;">
+              <code style="color: #0d6efd; font-weight: bold;">for + id</code>
+              <p style="margin: 0.5rem 0 0 0; color: #666;">Vincula label con input. Lectores leen la label al enfocar input.</p>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 3px solid #28a745;">
+              <code style="color: #28a745; font-weight: bold;">aria-required="true"</code>
+              <p style="margin: 0.5rem 0 0 0; color: #666;">Indica a lectores que campo es obligatorio (complementa required).</p>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 3px solid #9c27b0;">
+              <code style="color: #9c27b0; font-weight: bold;">aria-describedby</code>
+              <p style="margin: 0.5rem 0 0 0; color: #666;">Vincula texto de ayuda al input. Lectores lo leen después del label.</p>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 3px solid #ff9800;">
+              <code style="color: #ff9800; font-weight: bold;">&lt;fieldset&gt; + &lt;legend&gt;</code>
+              <p style="margin: 0.5rem 0 0 0; color: #666;">Agrupa checkbox/radio y describe el grupo. Essential para accesibilidad.</p>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 3px solid #e74c3c;">
+              <code style="color: #e74c3c; font-weight: bold;">aria-label</code>
+              <p style="margin: 0.5rem 0 0 0; color: #666;">Describe elementos sin etiqueta visible. Ej: formulario, botones icon.</p>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 4px; border-left: 3px solid #3498db;">
+              <code style="color: #3498db; font-weight: bold;">type="date"</code>
+              <p style="margin: 0.5rem 0 0 0; color: #666;">Nativo HTML semántico. Mobile y lectores lo entienden mejor que input text.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <h3 class="access-subtitle">Ejemplo accesible: Formulario de Reserva</h3>
+          
+          <form class="accessible-form" aria-label="Formulario de reserva de clase">
+            <div class="form-group">
+              <label for="name">Nombre completo <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                required
+                aria-required="true"
+                aria-describedby="name-help"
+              />
+              <small id="name-help">Escribe tu nombre y apellido</small>
+            </div>
+
+            <div class="form-group">
+              <label for="activity">Actividad <span class="required">*</span></label>
+              <select id="activity" name="activity" required aria-required="true">
+                <option value="">-- Selecciona una actividad --</option>
+                <option value="spinning">Spinning</option>
+                <option value="yoga">Yoga</option>
+                <option value="crossfit">Crossfit</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="date">Fecha preferida <span class="required">*</span></label>
+              <input 
+                type="date" 
+                id="date" 
+                name="date" 
+                required
+                aria-required="true"
+              />
+            </div>
+
+            <div class="form-group checkbox-group">
+              <fieldset>
+                <legend>¿Necesitas equipo? (opcional)</legend>
+                <div>
+                  <input type="checkbox" id="mat" name="equipment" value="mat" />
+                  <label for="mat">Tapete de yoga</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="weights" name="equipment" value="weights" />
+                  <label for="weights">Pesas</label>
+                </div>
+              </fieldset>
+            </div>
+
+            <button type="submit" class="btn-submit">Reservar clase</button>
+          </form>
+        </div>
+
+        <!-- Explicación de elementos accesibles usados -->
+        <div style="background: white; padding: 2rem; border-radius: 8px;">
+          <h4 style="margin-top: 0; color: #333; margin-bottom: 1.5rem;">✅ Elementos accesibles utilizados:</h4>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <!-- 1 -->
+            <div style="border-top: 4px solid #0d6efd; padding-top: 1rem;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #0d6efd;">
+                <code>&lt;label for&gt; + &lt;input id&gt;</code>
+              </p>
+              <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                Vincula la etiqueta con el input. Cuando usas un lector de pantalla, al enfocar el input, escuchas la label.
+              </p>
+            </div>
+
+            <!-- 2 -->
+            <div style="border-top: 4px solid #28a745; padding-top: 1rem;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #28a745;">
+                <code>aria-required="true"</code>
+              </p>
+              <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                Comunica a los lectores de pantalla que el campo es obligatorio. Complementa el atributo <code>required</code>.
+              </p>
+            </div>
+
+            <!-- 3 -->
+            <div style="border-top: 4px solid #9c27b0; padding-top: 1rem;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #9c27b0;">
+                <code>aria-describedby</code>
+              </p>
+              <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                Vincula texto de ayuda al input. El lector lee la label, luego el texto de ayuda, para mayor claridad.
+              </p>
+            </div>
+
+            <!-- 4 -->
+            <div style="border-top: 4px solid #ff9800; padding-top: 1rem;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #ff9800;">
+                <code>&lt;fieldset&gt; + &lt;legend&gt;</code>
+              </p>
+              <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                Agrupa checkbox o radio buttons. La leyenda describe el grupo. Essential para accesibilidad con múltiples opciones.
+              </p>
+            </div>
+
+            <!-- 5 -->
+            <div style="border-top: 4px solid #e74c3c; padding-top: 1rem;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #e74c3c;">
+                <code>aria-label="..."</code> en form
+              </p>
+              <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                Describe el propósito del formulario. Útil cuando no hay texto visible que lo describa.
+              </p>
+            </div>
+
+            <!-- 6 -->
+            <div style="border-top: 4px solid #3498db; padding-top: 1rem;">
+              <p style="margin: 0 0 0.5rem 0; font-weight: bold; color: #3498db;">
+                <code>type="date"</code>
+              </p>
+              <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                Tipo semántico nativo. Móviles muestran datepicker, lectores lo entienden mejor que input text.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>&lt;form aria-label="Formulario de reserva de clase"&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;label for="name"&gt;Nombre completo 
+      &lt;span class="required"&gt;*&lt;/span&gt;
+    &lt;/label&gt;
+    
+    &lt;input 
+      type="text" 
+      id="name" 
+      name="name" 
+      required
+      aria-required="true"
+      aria-describedby="name-help"
+    /&gt;
+    
+    &lt;small id="name-help"&gt;Escribe tu nombre y apellido&lt;/small&gt;
+  &lt;/div&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;label for="activity"&gt;Actividad 
+      &lt;span class="required"&gt;*&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;select id="activity" name="activity" required aria-required="true"&gt;
+      &lt;option value=""&gt;-- Selecciona una actividad --&lt;/option&gt;
+      &lt;option value="spinning"&gt;Spinning&lt;/option&gt;
+      &lt;option value="yoga"&gt;Yoga&lt;/option&gt;
+      &lt;option value="crossfit"&gt;Crossfit&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;label for="date"&gt;Fecha preferida 
+      &lt;span class="required"&gt;*&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;input type="date" id="date" name="date" required aria-required="true" /&gt;
+  &lt;/div&gt;
+
+  &lt;fieldset&gt;
+    &lt;legend&gt;¿Necesitas equipo? (opcional)&lt;/legend&gt;
+    &lt;input type="checkbox" id="mat" name="equipment" value="mat" /&gt;
+    &lt;label for="mat"&gt;Tapete de yoga&lt;/label&gt;
+    
+    &lt;input type="checkbox" id="weights" name="equipment" value="weights" /&gt;
+    &lt;label for="weights"&gt;Pesas&lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;button type="submit"&gt;Reservar clase&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
