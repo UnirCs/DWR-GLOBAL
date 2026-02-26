@@ -431,7 +431,385 @@
     </section>
 
     <!-- ======================================================
-         TEMA 9-10: ACCESIBILIDAD - ESTRUCTURA SEMÁNTICA
+         TEMA 6: BOOTSTRAP - FRAMEWORK COMPLETO
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 6</span>
+        <h2>Bootstrap: Framework CSS Completo</h2>
+      </div>
+      <p class="explanation">
+        <strong>Bootstrap</strong> es un framework con componentes pre-diseñados (botones, cards, modales, navbars...).
+        Incluye estilos completos, Grid system y JavaScript. Perfecto para proyectos rápidos.
+      </p>
+
+      <div class="values">
+        <p class="values-title">🚀 Características principales:</p>
+        <ul>
+          <li>📐 <strong>Grid system:</strong> 12 columnas, responsive automático</li>
+          <li>🎨 <strong>Componentes:</strong> botones, cards, formularios, navbars, modales</li>
+          <li>🎯 <strong>Utilidades:</strong> márgenes, padding, flexbox, displays</li>
+          <li>⚙️ <strong>JavaScript:</strong> dropdowns, modales, carruseles interactivos</li>
+          <li>📦 <strong>Temas:</strong> personalización fácil con variables SCSS</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <h3 class="access-subtitle">✅ Ejemplo 1: Grid y Cards con Bootstrap</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Muestra:</strong> Sistema de 12 columnas, responsive automático</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+            <div style="border: 2px solid #dc3545; border-radius: 4px; padding: 1rem; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">💪</div>
+              <strong>Crossfit</strong>
+              <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">Alta intensidad</p>
+              <button style="background: #dc3545; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.85rem;">🔴 btn-danger</button>
+            </div>
+            <div style="border: 2px solid #28a745; border-radius: 4px; padding: 1rem; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧘</div>
+              <strong>Yoga</strong>
+              <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">Flexibilidad</p>
+              <button style="background: #28a745; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.85rem;">🟢 btn-success</button>
+            </div>
+            <div style="border: 2px solid #0d6efd; border-radius: 4px; padding: 1rem; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚴</div>
+              <strong>Spinning</strong>
+              <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">Resistencia</p>
+              <button style="background: #0d6efd; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.85rem;">🔵 btn-primary</button>
+            </div>
+          </div>
+
+          <h3 class="access-subtitle" style="margin-top: 2rem;">✅ Ejemplo 2: Navbar + Colores Bootstrap</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Muestra:</strong> Navegación con colores predefinidos (dark, success, warning, info)</p>
+          <div style="background: #212529; color: white; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <span style="font-weight: bold;">Mi Gimnasio</span>
+              <div style="display: flex; gap: 1rem; font-size: 0.9rem;">
+                <span>Inicio</span>
+                <span>Clases</span>
+                <span>Contacto</span>
+              </div>
+            </div>
+            <small style="opacity: 0.7;">bg-dark (fondo oscuro predefinido)</small>
+          </div>
+
+          <h3 class="access-subtitle">✅ Ejemplo 3: Variantes de Botones</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Muestra:</strong> Bootstrap incluye 8 variantes de botones semánticamente</p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+            <button style="background: #0d6efd; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Primary</button>
+            <button style="background: #6c757d; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Secondary</button>
+            <button style="background: #28a745; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Success</button>
+            <button style="background: #ffc107; color: black; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Warning</button>
+            <button style="background: #dc3545; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Danger</button>
+            <button style="background: #17a2b8; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Info</button>
+            <button style="background: white; color: #333; padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Light</button>
+            <button style="background: #212529; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Dark</button>
+          </div>
+          <small style="color: #666; display: block; margin-top: 0.5rem;">Cada botón tiene semántica: primary, success, danger, info, etc.</small>
+
+          <h3 class="access-subtitle" style="margin-top: 2rem;">✅ Ejemplo 4: Sistema de Columnas (Grid 12) - Interactivo</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Muestra:</strong> Mueve el slider para ver cómo col-12, col-md-6, col-lg-4 se adaptan al ancho</p>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <label style="min-width: 120px; font-weight: 600;">Ancho:</label>
+              <input type="range" id="bootstrapGridSlider" min="280" max="1000" value="600" style="flex: 1; cursor: pointer;">
+              <span id="bootstrapWidthDisplay" style="min-width: 80px; text-align: right; font-weight: 600; color: #0d6efd;">600px</span>
+            </div>
+            <button onclick="document.getElementById('bootstrapGridSlider').value = 600; updateBootstrapGrid();" style="background: #6c757d; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Reiniciar</button>
+          </div>
+
+          <div id="bootstrapGridContainer" style="width: 600px; border: 2px dashed #0d6efd; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; background: #f8f9fa;">
+            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 0.5rem;">
+              <!-- Ejemplo de col-12 (siempre fullwidth) -->
+              <div class="bootstrap-col-12" style="grid-column: span 12; background: #0d6efd; color: white; padding: 1rem; border-radius: 4px; text-align: center;">
+                <small><strong>col-12</strong><br>Siempre fullwidth</small>
+              </div>
+              
+              <!-- Ejemplo de col-md-6 (2 columnas en tablet+) -->
+              <div class="bootstrap-col-md-6" style="grid-column: span 12; background: #28a745; color: white; padding: 1rem; border-radius: 4px;">
+                <small><strong>col-md-6</strong> (≥768px)</small><br>
+                <small>12 columnas en móvil, 6 en tablet+</small>
+              </div>
+              <div class="bootstrap-col-md-6" style="grid-column: span 12; background: #28a745; color: white; padding: 1rem; border-radius: 4px;">
+                <small><strong>col-md-6</strong> (≥768px)</small><br>
+                <small>12 columnas en móvil, 6 en tablet+</small>
+              </div>
+              
+              <!-- Ejemplo de col-lg-4 (3 columnas en desktop) -->
+              <div class="bootstrap-col-lg-4" style="grid-column: span 12; background: #ffc107; color: black; padding: 1rem; border-radius: 4px;">
+                <small><strong>col-lg-4</strong> (≥992px)</small><br>
+                <small>12 en móvil, 6 en tablet, 4 en desktop</small>
+              </div>
+              <div class="bootstrap-col-lg-4" style="grid-column: span 12; background: #ffc107; color: black; padding: 1rem; border-radius: 4px;">
+                <small><strong>col-lg-4</strong> (≥992px)</small><br>
+                <small>12 en móvil, 6 en tablet, 4 en desktop</small>
+              </div>
+              <div class="bootstrap-col-lg-4" style="grid-column: span 12; background: #ffc107; color: black; padding: 1rem; border-radius: 4px;">
+                <small><strong>col-lg-4</strong> (≥992px)</small><br>
+                <small>12 en móvil, 6 en tablet, 4 en desktop</small>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px; border-left: 4px solid #0d6efd;">
+            <small><strong>📊 Breakpoints responsivos:</strong></small>
+            <small style="display: block; margin-top: 0.5rem;">
+              🔹 <strong>Móvil</strong> (&lt;576px): col-12 = fullwidth<br>
+              🟢 <strong>Tablet</strong> (768px+): col-md-6 = 50%<br>
+              🟡 <strong>Desktop</strong> (992px+): col-lg-4 = 33.33%<br>
+              🔵 <strong>Desktop XL</strong> (1200px+): Mismo comportamiento
+            </small>
+          </div>
+
+        <pre class="code-block"><code>&lt;!-- Grid con Bootstrap: 12 columnas --&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;!-- Responsive: 12 cols mobile, 6 tablets, 4 desktop --&gt;
+    &lt;div class="col-12 col-md-6 col-lg-4"&gt;
+      &lt;div class="card"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Crossfit&lt;/h5&gt;
+          &lt;p class="card-text"&gt;Alta intensidad&lt;/p&gt;
+          &lt;button class="btn btn-danger"&gt;Más info&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Componentes Bootstrap --&gt;
+&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+  &lt;a class="navbar-brand" href="#"&gt;Mi Gimnasio&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;div class="modal fade" id="miModal"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;Confirmar reserva&lt;/h5&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 7: TAILWIND CSS - UTILITY-FIRST
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 7</span>
+        <h2>Tailwind CSS: Enfoque Utility-First</h2>
+      </div>
+      <p class="explanation">
+        <strong>Tailwind</strong> es un framework CSS basado en utilidades (utility-first). 
+        En lugar de escribir CSS, combinas clases predefinidas en el HTML. El archivo final se optimiza automáticamente.
+      </p>
+
+      <div class="values">
+        <p class="values-title">🎨 Cómo funciona Tailwind:</p>
+        <ul>
+          <li>🏷️ <strong>Clases de utilidad:</strong> <code>bg-blue-500</code>, <code>text-white</code>, <code>p-4</code></li>
+          <li>⚡ <strong>Velocidad:</strong> no escribes CSS manual</li>
+          <li>📏 <strong>Consistencia:</strong> espacios, colores, tipografía predefinidos</li>
+          <li>🎯 <strong>Responsive:</strong> <code>md:text-2xl lg:flex</code></li>
+          <li>🔧 <strong>Customizable:</strong> personaliza colores y tamaños en <code>tailwind.config.js</code></li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <h3 class="access-subtitle">✅ Ejemplo 1: Card Básica</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Clases:</strong> bg-white, border, rounded-lg, p-6, max-w-sm, shadow</p>
+          <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; max-width: 300px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h4 style="margin-top: 0; margin-bottom: 0.5rem; font-weight: 600;">Clase de Yoga</h4>
+            <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.9rem;">Lunes a viernes, 18:00</p>
+            <button style="background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-weight: 500;">Reservar ahora</button>
+          </div>
+          <pre class="code-block"><code>&lt;div class="bg-white border border-gray-200 rounded-lg p-6 max-w-sm shadow"&gt;
+  &lt;h4 class="text-lg font-bold mb-2"&gt;Clase de Yoga&lt;/h4&gt;
+  &lt;p class="text-gray-500 mb-4"&gt;Lunes a viernes, 18:00&lt;/p&gt;
+  &lt;button class="w-full bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600"&gt;
+    Reservar ahora
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+          <h3 class="access-subtitle" style="margin-top: 2rem;">✅ Ejemplo 2: Grid Responsive - Interactivo</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Clases:</strong> grid, grid-cols-1, md:grid-cols-2, lg:grid-cols-3, gap-4</p>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Muestra:</strong> Mueve el slider para ver cómo grid-cols-1 → md:grid-cols-2 → lg:grid-cols-3 se adaptan</p>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <label style="min-width: 120px; font-weight: 600;">Ancho:</label>
+              <input type="range" id="tailwindGridSlider" min="280" max="1000" value="320" style="flex: 1; cursor: pointer;">
+              <span id="tailwindWidthDisplay" style="min-width: 80px; text-align: right; font-weight: 600; color: #3b82f6;">320px</span>
+            </div>
+            <button onclick="document.getElementById('tailwindGridSlider').value = 320; updateTailwindGrid();" style="background: #6c757d; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Reiniciar</button>
+          </div>
+
+          <div id="tailwindGridContainer" style="width: 320px; border: 2px dashed #3b82f6; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; background: #f0f9ff;">
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+              <div class="tailwind-grid-item" style="background: #3b82f6; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; font-weight: 600;">Tarjeta 1</div>
+              <div class="tailwind-grid-item" style="background: #3b82f6; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; font-weight: 600;">Tarjeta 2</div>
+              <div class="tailwind-grid-item" style="background: #10b981; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; font-weight: 600;">Tarjeta 3</div>
+              <div class="tailwind-grid-item" style="background: #10b981; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; font-weight: 600;">Tarjeta 4</div>
+              <div class="tailwind-grid-item" style="background: #10b981; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; font-weight: 600;">Tarjeta 5</div>
+            </div>
+          </div>
+
+          <div style="background: #f0f9ff; padding: 1rem; border-radius: 4px; border-left: 4px solid #3b82f6;">
+            <small><strong>📊 Comportamiento por ancho:</strong></small>
+            <small style="display: block; margin-top: 0.5rem;">
+              🔴 <strong>Móvil</strong> (&lt;768px): 1 columna<br>
+              🟡 <strong>Tablet</strong> (768px-1023px): 2 columnas<br>
+              🟢 <strong>Desktop</strong> (≥1024px): 3 columnas
+            </small>
+          </div>
+          <pre class="code-block"><code>&lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"&gt;
+  &lt;div&gt;Tarjeta 1&lt;/div&gt;
+  &lt;div&gt;Tarjeta 2&lt;/div&gt;
+  &lt;div&gt;Tarjeta 3&lt;/div&gt;
+  &lt;div&gt;Tarjeta 4&lt;/div&gt;
+  &lt;div&gt;Tarjeta 5&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+          <h3 class="access-subtitle" style="margin-top: 2rem;">✅ Ejemplo 3: Alertas con Colores</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Clases:</strong> bg-[color]-50, text-[color]-800, border-l-4, border-[color]-500, p-4</p>
+          <div style="border-left: 4px solid #60a5fa; background: #eff6ff; padding: 1rem; border-radius: 4px; margin-bottom: 0.75rem;">
+            <strong style="color: #1e40af;">ℹ️ Info:</strong> <span style="color: #1e3a8a;">Utiliza clases de información</span>
+          </div>
+          <div style="border-left: 4px solid #34d399; background: #f0fdf4; padding: 1rem; border-radius: 4px; margin-bottom: 0.75rem;">
+            <strong style="color: #065f46;">✓ Success:</strong> <span style="color: #134e4a;">Operación completada correctamente</span>
+          </div>
+          <div style="border-left: 4px solid #f87171; background: #fef2f2; padding: 1rem; border-radius: 4px;">
+            <strong style="color: #991b1b;">✕ Error:</strong> <span style="color: #7f1d1d;">Error en la operación</span>
+          </div>
+          <pre class="code-block"><code>&lt;div class="bg-blue-50 border-l-4 border-blue-500 p-4"&gt;
+  &lt;strong class="text-blue-900"&gt;ℹ️ Info:&lt;/strong&gt;
+  Utiliza clases de información
+&lt;/div&gt;
+
+&lt;div class="bg-green-50 border-l-4 border-green-500 p-4"&gt;
+  &lt;strong class="text-green-900"&gt;✓ Success:&lt;/strong&gt;
+  Operación completada correctamente
+&lt;/div&gt;
+
+&lt;div class="bg-red-50 border-l-4 border-red-500 p-4"&gt;
+  &lt;strong class="text-red-900"&gt;✕ Error:&lt;/strong&gt;
+  Error en la operación
+&lt;/div&gt;</code></pre>
+
+          <h3 class="access-subtitle" style="margin-top: 2rem;">✅ Ejemplo 4: Flexbox con Espaciado</h3>
+          <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Clases:</strong> flex, justify-between, items-center, gap-4, px-6, py-4</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; background: #f9fafb; padding: 1rem 1.5rem; border-radius: 6px; border: 1px solid #e5e7eb;">
+            <div>
+              <small style="color: #666;">Usuario:</small>
+              <p style="margin: 0; font-weight: 600;">Juan Pérez</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+              <button style="background: #3b82f6; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">Editar</button>
+              <button style="background: #ef4444; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">Eliminar</button>
+            </div>
+          </div>
+          <pre class="code-block"><code>&lt;div class="flex justify-between items-center gap-4 px-6 py-4"&gt;
+  &lt;div&gt;
+    &lt;small class="text-gray-600"&gt;Usuario:&lt;/small&gt;
+    &lt;p class="font-bold"&gt;Juan Pérez&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="flex gap-2"&gt;
+    &lt;button class="bg-blue-500 text-white px-4 py-2 rounded"&gt;Editar&lt;/button&gt;
+    &lt;button class="bg-red-500 text-white px-4 py-2 rounded"&gt;Eliminar&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        </div>
+</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 8: SASS - PREPROCESADOR CSS
+    ======================================================= -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 8</span>
+        <h2>SASS: Preprocesador CSS</h2>
+      </div>
+      <p class="explanation">
+        <strong>SASS</strong> (Syntactically Awesome Style Sheets) es un preprocesador que añade características a CSS:
+        variables, anidamiento, mixins, operaciones... El navegador lee CSS, no SASS.
+      </p>
+
+      <div class="values">
+        <p class="values-title">✨ Ventajas principales:</p>
+        <ul>
+          <li>🔹 <strong>Variables:</strong> <code>$color-primary: #0d6efd;</code> → reutilizable</li>
+          <li>📦 <strong>Anidamiento:</strong> estructura jerárquica y legible</li>
+          <li>⚙️ <strong>Mixins:</strong> reutiliza bloques de código CSS</li>
+          <li>➕ <strong>Operaciones:</strong> cálculos con colores y números</li>
+          <li>📂 <strong>Imports:</strong> divide CSS en múltiples archivos</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <h3 class="access-subtitle">Ejemplo: Variables, Mixins y Anidamiento con SASS</h3>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button style="background: #0d6efd; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Botón primario</button>
+            <button style="background: #6c757d; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Botón secundario</button>
+            <button style="background: #28a745; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Botón éxito</button>
+          </div>
+        </div>
+
+        <pre class="code-block"><code>// Variables SASS
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #28a745;
+$padding: 0.75rem 1.5rem;
+$radius: 4px;
+
+// Mixin reutilizable
+@mixin button-base {
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  padding: $padding;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+// Estilos anidados
+button {
+  @include button-base;
+  
+  &.primary {
+    background: $primary;
+    color: white;
+    
+    &:hover {
+      background: darken($primary, 10%);
+    }
+  }
+  
+  &.secondary {
+    background: $secondary;
+    color: white;
+  }
+  
+  &.success {
+    background: $success;
+    color: white;
+  }
+}
+</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 9-10: ACCESIBILIDAD
     ======================================================= -->
     <section class="example-card">
       <div class="card-header">
