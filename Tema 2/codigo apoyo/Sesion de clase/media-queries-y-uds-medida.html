@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidades de medida y Media</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- INICIO DEL CONTENIDO COPIADO -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 1</span>
+        <h2>Unidades de Longitud: <code>px</code> vs <code>rem</code> vs <code>em</code></h2>
+      </div>
+      <p class="explanation">
+        Las unidades relativas (<code>rem</code> y <code>em</code>) son fundamentales para la <strong>accesibilidad</strong>.
+        Permiten que el usuario ajuste el tamaño de fuente global y todo escale proporcionalmente.
+      </p>
+
+      <div class="values">
+        <p class="values-title">📍 🔑 LA DIFERENCIA FUNDAMENTAL:</p>
+        
+        <!-- REM vs EM Visual Tree -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; align-items: start;">
+          <!-- REM Column -->
+          <div style="background: #e7f3ff; border: 3px solid #0d6efd; border-radius: 8px; padding: 1.5rem;">
+            <h4 style="margin-top: 0; color: #0d6efd; display: flex; align-items: center; gap: 0.5rem;">
+              ⭐ REM = "Root" (RAÍZ)
+            </h4>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; color: #333;">
+              <strong>SIEMPRE pregunta:</strong> ¿Cuál es el tamaño del <code>&lt;html&gt;</code>?
+            </p>
+            
+            <!-- Visual Tree for REM -->
+            <div style="background: white; padding: 1rem; border-radius: 4px; margin: 0.5rem 0; font-family: monospace; font-size: 0.85rem; text-align: center;">
+              <div style="background: #0d6efd; color: white; padding: 0.75rem; border-radius: 4px; font-weight: bold; margin-bottom: 1rem;">
+                &lt;html&gt; = 16px
+              </div>
+              <div style="margin: 0.5rem 0;">↓ (REM siempre mira aquí)</div>
+              <div style="background: #e7f3ff; border: 2px dashed #0d6efd; padding: 0.5rem; border-radius: 4px; margin: 0.5rem 0;">
+                .card { 1.2rem }
+              </div>
+              <div style="margin: 0.5rem 0;">↓</div>
+              <div style="background: #e7f3ff; border: 2px dashed #0d6efd; padding: 0.5rem; border-radius: 4px;">
+                .button { 1rem }
+              </div>
+            </div>
+            
+            <p style="margin: 0.5rem 0; font-size: 0.85rem; background: #fff2cc; padding: 0.5rem; border-radius: 4px;">
+              ✅ <strong>1rem = 16px</strong><br/>
+              ✅ <strong>1.2rem = 19.2px</strong><br/>
+              ✅ No importa dónde esté el elemento
+            </p>
+          </div>
+
+          <!-- EM Column -->
+          <div style="background: #ffe7e7; border: 3px solid #dc3545; border-radius: 8px; padding: 1.5rem;">
+            <h4 style="margin-top: 0; color: #dc3545; display: flex; align-items: center; gap: 0.5rem;">
+              🎯 EM = "Element" (PADRE)
+            </h4>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; color: #333;">
+              <strong>SIEMPRE pregunta:</strong> ¿Cuál es el tamaño de mi <code>PADRE</code>?
+            </p>
+            
+            <!-- Visual Tree for EM -->
+            <div style="background: white; padding: 1rem; border-radius: 4px; margin: 0.5rem 0; font-family: monospace; font-size: 0.85rem;">
+              <div style="background: #dc3545; color: white; padding: 0.75rem; border-radius: 4px; font-weight: bold; margin-bottom: 0.5rem;">
+                &lt;html&gt; = 16px
+              </div>
+              <div style="margin: 0.5rem 0; text-align: center;">↓</div>
+              <div style="background: #ffe7e7; border: 2px solid #dc3545; padding: 0.5rem; border-radius: 4px; margin: 0.5rem 0;">
+                <strong>.card { 1.2rem = 19.2px }</strong><br/>
+                <div style="font-size: 0.75rem; margin-top: 0.25rem; color: #666;">(padre de button)</div>
+              </div>
+              <div style="margin: 0.5rem 0; text-align: center;">↓</div>
+              <div style="background: #fff0f0; border: 2px dashed #dc3545; padding: 0.5rem; border-radius: 4px;">
+                <strong style="color: #dc3545;">.button { 1em = 19.2px }</strong><br/>
+                <div style="font-size: 0.75rem; margin-top: 0.25rem; color: #666;">(1em aquí = padre 19.2px)</div>
+              </div>
+            </div>
+            
+            <p style="margin: 0.5rem 0; font-size: 0.85rem; background: #ffd9d9; padding: 0.5rem; border-radius: 4px;">
+              ⚠️ <strong>1em = padre</strong><br/>
+              ⚠️ <strong>1em en button = 19.2px</strong><br/>
+              ⚠️ Depende del contexto
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <div class="control-group">
+              <label for="html-font-size">Tamaño base del HTML:</label>
+              <input type="range" min="10" max="28" value="16" id="html-font-size" />
+              <span id="html-font-size-label">16px</span>
+            </div>
+            <button id="reset-font-size" class="btn-reset">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TEMA 2: MEDIA QUERIES & RESPONSIVE
+    ====================================================== -->
+    <section class="example-card">
+      <div class="card-header">
+        <span class="theme-badge">Tema 2</span>
+        <h2>Media Queries: Ejercicio Responsive</h2>
+      </div>
+      <p class="explanation">
+        Las <strong>media queries</strong> permiten adaptar el diseño a diferentes tamaños de pantalla.
+        El enfoque <strong>mobile-first</strong> (usar <code>min-width</code>) es más mantenible y eficiente.
+      </p>
+
+      <div class="values">
+        <p class="values-title">Breakpoints típicos:</p>
+        <ul>
+          <li><strong>Mobile:</strong> 0 – 767px</li>
+          <li><strong>Tablet:</strong> 768px – 1023px</li>
+          <li><strong>Desktop:</strong> 1024px+</li>
+        </ul>
+      </div>
+
+      <div class="content-row">
+        <div class="demo-area">
+          <div class="playground-controls">
+            <label>
+              Ancho de pantalla simulado:
+              <input 
+                type="range" 
+                min="320" 
+                max="1400" 
+                value="768" 
+                id="viewport-width"
+                class="viewport-slider"
+              />
+              <span id="viewport-width-label">768px</span>
+            </label>
+          </div>
+
+          <div id="demo-responsive" class="demo-box responsive-demo">
+            <div class="response-container">
+              <div class="column column-1">Columna 1</div>
+              <div class="column column-2">Columna 2</div>
+              <div class="column column-3">Columna 3</div>
+            </div>
+          </div>
+          <small class="hint">
+            <strong>Mobile (&lt;768px):</strong> 1 columna · 
+            <strong>Tablet (768–1023px):</strong> 2 columnas · 
+            <strong>Desktop (≥1024px):</strong> 3 columnas
+          </small>
+        </div>
+
+        <pre class="code-block"><code>/* Mobile First */
+.column { width: 100%; }
+
+@media (min-width: 768px) {
+  .column { width: 50%; }
+}
+
+@media (min-width: 1024px) {
+  .column { width: 33.333%; }
+}</code></pre>
+      </div>
+    </section>
+    <!-- FIN DEL CONTENIDO COPIADO -->
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

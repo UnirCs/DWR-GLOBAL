@@ -1,0 +1,330 @@
+/* ===================================
+   RESET Y ESTILOS BASE
+   =================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #2d3748;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+/* ===================================
+   WRAPPER PRINCIPAL
+   =================================== */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ===================================
+   TARJETAS DE EJEMPLO
+   =================================== */
+.example-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================
+   CARD HEADER
+   =================================== */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.theme-badge {
+  display: inline-block;
+  background: #667eea;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+}
+
+.card-header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.75rem;
+  color: #2d3748;
+}
+
+.card-header code {
+  color: #e85d75;
+  background: #fff5f6;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 0.9rem;
+}
+
+/* ===================================
+   EXPLICACIÓN Y VALORES
+   =================================== */
+.explanation {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.explanation strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.values {
+  background: #f9f9f9;
+  border-left: 4px solid #667eea;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.values-title {
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 0.75rem;
+}
+
+.values ul {
+  list-style: none;
+  padding: 0;
+}
+
+.values li {
+  padding: 0.5rem 0;
+  color: #555;
+  line-height: 1.6;
+}
+
+.values code {
+  background: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+  color: #e85d75;
+  font-size: 0.9rem;
+}
+
+/* ===================================
+   CONTENT ROW (DEMO + CODE)
+   =================================== */
+.content-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .content-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===================================
+   DEMO AREA
+   =================================== */
+.demo-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-box {
+  background: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* =============================
+   DEMO COLUMNS
+   El JS controla display/width/background según el breakpoint simulado.
+   Aquí solo definimos los estilos base compartidos.
+   ============================= */
+.responsive-demo {
+  padding: 0;
+  align-items: stretch;
+  transition: width 0.2s ease;
+}
+
+.responsive-demo .response-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 120px;
+}
+
+.responsive-demo .column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  min-height: 120px;
+  transition: background 0.3s, width 0.3s;
+}
+
+/* ===================================
+   HINT
+   =================================== */
+.demo-area .hint {
+  display: block;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* ===================================
+   PLAYGROUND CONTROLS
+   =================================== */
+.playground-controls {
+  background: #f5f5f5;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.control-group label {
+  font-weight: 500;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.control-group select,
+.control-group input[type="range"],
+.control-group input[type="text"],
+.control-group input[type="date"],
+#html-font-size,
+#viewport-width,
+#grid-responsive-width,
+#flex-gap,
+#grid-gap,
+#grid-columns {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.4rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.control-group select,
+.control-group input[type="text"],
+.control-group input[type="date"] {
+  min-width: 150px;
+}
+
+.control-group input[type="range"] {
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.control-group span:last-child {
+  background: #667eea;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  min-width: 45px;
+  text-align: center;
+}
+
+.btn-reset {
+  background: #f5576c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: fit-content;
+}
+
+.btn-reset:hover {
+  background: #e85d75;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
