@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bootstrap Playground — Tema 6</title>
+
+<!-- Bootstrap real para los previews -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+<!-- Tipografía didáctica con carácter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,600&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     Reset y variables propias (NO heredamos de Bootstrap aquí)
+     Encapsulamos los previews en .preview para evitar choques.
+     ========================================================= */
+  :root {
+    --ink: #0f0f1a;
+    --paper: #f4efe6;
+    --paper-2: #ebe4d4;
+    --accent: #6f3fff;        /* púrpura propio, no el azul Bootstrap */
+    --accent-2: #ff6b6b;
+    --accent-3: #2ecc71;
+    --rule: #1a1a2e;
+    --muted: #6c6677;
+    --code-bg: #14141f;
+    --code-fg: #e8e6f0;
+    --shadow: 6px 6px 0 var(--ink);
+  }
+
+  /* Reset agresivo solo dentro de .doc para que Bootstrap no nos pinte la página */
+  html, body { margin: 0; padding: 0; }
+  body.doc {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(111, 63, 255, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.05) 0%, transparent 40%);
+  }
+
+  .doc h1, .doc h2, .doc h3, .doc h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* =====================  HEADER / HERO  ===================== */
+  .topbar {
+    border-bottom: 2px solid var(--ink);
+    padding: 14px 0;
+    background: var(--paper);
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(6px);
+  }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif; font-weight: 800; font-size: 20px;
+  }
+  .brand .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 0 3px var(--ink);
+  }
+  .navlinks { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; font-weight: 500; }
+  .navlinks a { color: var(--ink); text-decoration: none; padding-bottom: 2px; border-bottom: 2px solid transparent; }
+  .navlinks a:hover { border-bottom-color: var(--accent); }
+
+  .hero { padding: 64px 0 48px; position: relative; overflow: hidden; }
+  .hero .tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
+    border: 2px solid var(--accent); padding: 4px 10px; border-radius: 999px; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 104px);
+    font-style: italic;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead {
+    max-width: 640px; font-size: 19px; margin-top: 22px; color: #2a2535;
+  }
+  .hero .meta {
+    margin-top: 32px; display: flex; gap: 28px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .hero .meta span b { color: var(--ink); font-weight: 600; }
+
+  /* Barras decorativas tipo "rejilla 12 col" en el hero */
+  .grid-deco {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px;
+    margin-top: 48px; opacity: 0.85;
+  }
+  .grid-deco span {
+    height: 10px; background: var(--ink); border-radius: 2px;
+    transform-origin: left;
+    animation: growBar 1.2s ease-out backwards;
+  }
+  .grid-deco span:nth-child(1)  { animation-delay: 0.05s; }
+  .grid-deco span:nth-child(2)  { animation-delay: 0.10s; background: var(--accent); }
+  .grid-deco span:nth-child(3)  { animation-delay: 0.15s; }
+  .grid-deco span:nth-child(4)  { animation-delay: 0.20s; }
+  .grid-deco span:nth-child(5)  { animation-delay: 0.25s; background: var(--accent-2); }
+  .grid-deco span:nth-child(6)  { animation-delay: 0.30s; }
+  .grid-deco span:nth-child(7)  { animation-delay: 0.35s; }
+  .grid-deco span:nth-child(8)  { animation-delay: 0.40s; background: var(--accent); }
+  .grid-deco span:nth-child(9)  { animation-delay: 0.45s; }
+  .grid-deco span:nth-child(10) { animation-delay: 0.50s; }
+  .grid-deco span:nth-child(11) { animation-delay: 0.55s; background: var(--accent-3); }
+  .grid-deco span:nth-child(12) { animation-delay: 0.60s; }
+  @keyframes growBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* =====================  SECCIONES  ===================== */
+  section.chapter { padding: 72px 0; border-top: 2px solid var(--ink); }
+  .chapter-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: 0.25em; color: var(--accent); margin-bottom: 12px;
+  }
+  .chapter h2 {
+    font-size: clamp(36px, 5vw, 64px); margin-bottom: 12px;
+  }
+  .chapter .sub {
+    font-size: 18px; color: var(--muted); max-width: 720px; margin-bottom: 40px;
+  }
+
+  /* =====================  CARDS / BLOQUES  ===================== */
+  .card-block {
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease;
+  }
+  .card-block:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  .feature-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--accent); color: #fff; display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-weight: 800; font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .feature-card h4 { font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 8px; }
+  .feature-card p { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0; }
+
+  /* =====================  CÓDIGO  ===================== */
+  pre.code {
+    background: var(--code-bg); color: var(--code-fg);
+    font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.6;
+    padding: 18px 20px; border-radius: 8px; overflow-x: auto;
+    border: 2px solid var(--ink);
+    position: relative;
+    margin: 0;
+  }
+  pre.code .tk-tag    { color: #ff7eb6; }
+  pre.code .tk-attr   { color: #82cfff; }
+  pre.code .tk-str    { color: #c4f0a0; }
+  pre.code .tk-cmt    { color: #6c6c8c; font-style: italic; }
+  pre.code .tk-text   { color: #e8e6f0; }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    background: #fff; color: var(--ink); border: 2px solid var(--ink);
+    padding: 4px 10px; border-radius: 6px; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .copy-btn:hover { background: var(--accent); color: #fff; }
+  .copy-btn.copied { background: var(--accent-3); color: #fff; }
+
+  /* Demo / Preview boxes */
+  .preview {
+    background: #fff;
+    border: 2px dashed var(--ink);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .preview::before {
+    content: 'PREVIEW EN VIVO';
+    position: absolute; top: -10px; left: 14px;
+    background: var(--paper); padding: 0 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; color: var(--muted);
+  }
+
+  /* =====================  PLAYGROUND DE REJILLA  ===================== */
+  .grid-playground {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px;
+  }
+  @media (max-width: 960px) { .grid-playground { grid-template-columns: 1fr; } }
+
+  .controls label {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted);
+    margin-top: 16px; margin-bottom: 6px;
+  }
+  .controls input[type=range] {
+    width: 100%; accent-color: var(--accent);
+  }
+  .col-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+  .col-row .label-mini { width: 70px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); }
+  .col-row input[type=number] {
+    width: 60px; padding: 4px 6px; border: 2px solid var(--ink); border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  button.btn-go {
+    background: var(--ink); color: #fff; border: 2px solid var(--ink);
+    padding: 10px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer;
+    border-radius: 6px; margin-top: 12px;
+  }
+  button.btn-go:hover { background: var(--accent); border-color: var(--accent); }
+
+  /* Mockup de pantalla redimensionable */
+  .device-frame {
+    background: var(--ink);
+    border-radius: 14px; padding: 8px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .device-bar {
+    display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+  }
+  .device-bar span { width: 10px; height: 10px; border-radius: 50%; background: #555; }
+  .device-bar span:nth-child(1) { background: #ff6b6b; }
+  .device-bar span:nth-child(2) { background: #ffd166; }
+  .device-bar span:nth-child(3) { background: #06d6a0; }
+  .device-bar .url {
+    margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #aaa; background: #2a2a3a; padding: 3px 10px; border-radius: 999px;
+  }
+  .device-screen {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 380px;
+    position: relative;
+    transition: max-width .2s ease;
+  }
+  .device-controls {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .device-btn {
+    background: #fff; border: 2px solid var(--ink); padding: 5px 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;
+    border-radius: 6px; font-weight: 600;
+  }
+  .device-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* La rejilla simulada DENTRO del device */
+  .sim-row {
+    display: flex; flex-wrap: wrap; padding: 12px;
+  }
+  .sim-col {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; padding: 14px 8px; text-align: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    transition: width .2s ease;
+  }
+
+  /* =====================  TABLA BREAKPOINTS  ===================== */
+  table.bp {
+    width: 100%; border-collapse: collapse; background: #fff;
+    border: 2px solid var(--ink); border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  table.bp th, table.bp td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #e0d8c8; }
+  table.bp th {
+    background: var(--ink); color: #fff;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  table.bp tr:last-child td { border-bottom: none; }
+  table.bp td:first-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--accent);
+  }
+  table.bp tbody tr:hover { background: var(--paper-2); }
+
+  /* =====================  COMPONENTES INTERACTIVOS  ===================== */
+  .component-tabs {
+    display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: #fff; border: 2px solid var(--ink); padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;
+    border-radius: 6px;
+  }
+  .tab-btn.active { background: var(--ink); color: #fff; }
+  .tab-btn:hover:not(.active) { background: var(--paper-2); }
+
+  .component-pane { display: none; }
+  .component-pane.active { display: block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Selectores rápidos para personalizar componentes */
+  .toggle-row {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+  }
+  .toggle-pill {
+    background: #fff; border: 2px solid var(--ink); padding: 5px 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; cursor: pointer;
+    border-radius: 999px; user-select: none;
+  }
+  .toggle-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .badge-mini {
+    display: inline-block; background: var(--ink); color: #fff;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 3px 8px; border-radius: 999px; letter-spacing: 0.1em;
+    text-transform: uppercase; vertical-align: middle; margin-left: 8px;
+  }
+
+  /* =====================  CALLOUTS  ===================== */
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: #fff;
+    padding: 18px 22px;
+    border-radius: 0 8px 8px 0;
+    margin: 24px 0;
+    border: 2px solid var(--ink);
+    border-left-width: 8px;
+  }
+  .callout strong { font-family: 'Fraunces', serif; font-size: 18px; display: block; margin-bottom: 4px; }
+
+  /* =====================  FOOTER  ===================== */
+  footer {
+    border-top: 2px solid var(--ink); padding: 36px 0; margin-top: 48px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--muted); text-align: center;
+  }
+  footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+  /* IMPORTANTE: aislamos el preview para que Bootstrap solo afecte ahí dentro */
+  /* Bootstrap sí actúa dentro de .preview, que es lo que queremos. */
+
+  /* Pequeñas utilidades de scroll bonitas */
+  html { scroll-behavior: smooth; }
+  ::selection { background: var(--accent); color: #fff; }
+</style>
+</head>
+
+<body class="doc">
+
+<!-- ===================== TOPBAR ===================== -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <span class="dot"></span>
+      <span>Bootstrap · Tema 6</span>
+    </div>
+    <nav class="navlinks">
+      <a href="#que-es">¿Qué es?</a>
+      <a href="#instalacion">Instalación</a>
+      <a href="#rejilla">Rejilla</a>
+      <a href="#breakpoints">Breakpoints</a>
+      <a href="#componentes">Componentes</a>
+      <a href="#personalizar">Personalizar</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <span class="tag">Playground interactivo · 0 → 100</span>
+    <h1>Bootstrap, <em>explicado</em><br>como si fuera tu primer día.</h1>
+    <p class="lead">
+      Un recorrido práctico por el framework de CSS más utilizado del mundo: qué es,
+      cómo se instala, cómo funciona su sistema de rejilla de 12 columnas, qué componentes
+      trae listos para usar y cómo personalizarlos sin pelearte con él.
+    </p>
+    <div class="meta">
+      <span>Pregunta de la semana · <b>¿Cómo crear un diseño responsive con Bootstrap?</b></span>
+    </div>
+    <div class="grid-deco" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 1. ¿QUÉ ES? ===================== -->
+<section class="chapter" id="que-es">
+  <div class="wrap">
+    <div class="chapter-num">01 / Concepto</div>
+    <h2>¿Qué es Bootstrap?</h2>
+    <p class="sub">
+      Imagina que tienes que construir una casa. Podrías cortar cada tabla y forjar cada clavo,
+      o podrías ir a una ferretería donde ya está todo medido, etiquetado y listo para encajar.
+      <strong>Bootstrap es esa ferretería para hacer páginas web.</strong>
+    </p>
+
+    <div class="grid-3">
+      <div class="card-block feature-card">
+        <div class="feature-icon">⌗</div>
+        <h4>Sistema de rejilla potente</h4>
+        <p>Divide la pantalla en 12 columnas para que coloques tu contenido sin pelear con el CSS.</p>
+      </div>
+      <div class="card-block feature-card">
+        <div class="feature-icon">🛠</div>
+        <h4>Utilidades listas</h4>
+        <p>Cientos de clases ya escritas: márgenes, colores, tipografía, sombras… solo las pones en tu HTML.</p>
+      </div>
+      <div class="card-block feature-card">
+        <div class="feature-icon">📱</div>
+        <h4>Compatible en todos lados</h4>
+        <p>Tu web se ve bien en móvil, tablet y ordenador sin que tengas que preocuparte por cada caso.</p>
+      </div>
+      <div class="card-block feature-card">
+        <div class="feature-icon">⚡</div>
+        <h4>Acelera tu desarrollo</h4>
+        <p>En lugar de empezar desde cero, partes con un kit completo: ahorras horas (y dolores de cabeza).</p>
+      </div>
+      <div class="card-block feature-card">
+        <div class="feature-icon">📚</div>
+        <h4>Documentación enorme</h4>
+        <p>Cada componente, ejemplo y variante está documentada con código copiable en su web oficial.</p>
+      </div>
+      <div class="card-block feature-card">
+        <div class="feature-icon">🧩</div>
+        <h4>Componentes plug-and-play</h4>
+        <p>Botones, formularios, alertas, menús, tarjetas… ya hechos. Solo eliges y los usas.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>En una frase</strong>
+      Bootstrap es un <em>framework de CSS</em>: una librería de estilos y componentes prefabricados que pegas en tu HTML para construir páginas modernas y responsivas mucho más rápido.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. INSTALACIÓN ===================== -->
+<section class="chapter" id="instalacion">
+  <div class="wrap">
+    <div class="chapter-num">02 / Instalación</div>
+    <h2>¿Cómo se instala?</h2>
+    <p class="sub">Hay dos caminos. Uno es para empezar en 30 segundos. El otro es para proyectos más serios donde quieres controlar las versiones.</p>
+
+    <div class="grid-2">
+      <!-- CDN -->
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:8px;">Vía CDN <span class="badge-mini">Recomendado para empezar</span></h4>
+        <p style="color:var(--muted);margin-bottom:14px;">Pegas dos líneas en tu HTML y listo. Bootstrap se descarga desde su web oficial.</p>
+
+        <div style="background:var(--paper-2);border-left:4px solid var(--accent);padding:12px 14px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:14px;line-height:1.55;">
+          <strong style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;color:var(--accent);text-transform:uppercase;display:block;margin-bottom:4px;">¿Qué es un CDN?</strong>
+          <span><b>Content Delivery Network</b> (red de distribución de contenido). Un conjunto de servidores repartidos por el mundo que sirven archivos —como Bootstrap— desde el más cercano al usuario, para que carguen rápido. En la práctica: enlazas un fichero alojado en otro servidor, sin tener que descargarlo tú.</span>
+        </div>
+
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt">&lt;!-- Dentro de &lt;head&gt; --&gt;</span>
+<span class="tk-tag">&lt;link</span> <span class="tk-attr">href</span>=<span class="tk-str">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"</span> <span class="tk-attr">rel</span>=<span class="tk-str">"stylesheet"</span><span class="tk-tag">&gt;</span>
+
+<span class="tk-cmt">&lt;!-- Antes de cerrar &lt;/body&gt; --&gt;</span>
+<span class="tk-tag">&lt;script</span> <span class="tk-attr">src</span>=<span class="tk-str">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"</span><span class="tk-tag">&gt;&lt;/script&gt;</span></code></pre>
+      </div>
+
+      <!-- npm -->
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:8px;">Con gestor de paquetes <span class="badge-mini" style="background:var(--accent)">Profesional</span></h4>
+        <p style="color:var(--muted);margin-bottom:16px;">Si usas Node.js, npm o yarn, Bootstrap se instala como una dependencia más.</p>
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt"># Con npm</span>
+<span class="tk-text">npm install bootstrap@5.3.3</span>
+
+<span class="tk-cmt"># Con yarn</span>
+<span class="tk-text">yarn add bootstrap@5.3.3</span></code></pre>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>¿Cuál elijo?</strong>
+      Si estás aprendiendo o haciendo una página rápida, <b>CDN</b>. Si trabajas en un proyecto con build (React, Vue, Vite…) usa <b>npm</b>.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. REJILLA - PLAYGROUND ===================== -->
+<section class="chapter" id="rejilla">
+  <div class="wrap">
+    <div class="chapter-num">03 / Rejilla</div>
+    <h2>El sistema de rejilla.</h2>
+    <p class="sub">
+      Bootstrap parte el ancho de la pantalla en <strong>12 columnas invisibles</strong>.
+      Tu trabajo es decir cuántas columnas ocupa cada bloque de tu contenido.
+      Si todos los bloques de una fila suman 12, ocupan toda la pantalla.
+    </p>
+
+    <!-- Estructura básica -->
+    <div class="grid-2" style="margin-bottom:40px;">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:14px;">La jerarquía oficial</h4>
+        <div style="margin-bottom:12px;">
+          <code style="background:var(--paper-2);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;">.container</code>
+          <span style="color:var(--muted);font-size:14px;"> → caja exterior con márgenes laterales</span>
+        </div>
+        <div style="margin-bottom:12px;padding-left:24px;">
+          <code style="background:var(--paper-2);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;">.row</code>
+          <span style="color:var(--muted);font-size:14px;"> → fila horizontal</span>
+        </div>
+        <div style="padding-left:48px;">
+          <code style="background:var(--paper-2);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;">.col</code>
+          <span style="color:var(--muted);font-size:14px;"> → columna dentro de la fila</span>
+        </div>
+
+        <hr style="border:0;border-top:1px solid #e0d8c8;margin:20px 0;">
+
+        <p style="margin:0 0 8px 0;color:var(--muted);font-size:14px;">Variantes del contenedor:</p>
+        <p style="margin:0;font-size:14px;">
+          <code style="background:var(--paper-2);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;">.container</code>
+          tiene márgenes laterales automáticos. <br>
+          <code style="background:var(--paper-2);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;">.container-fluid</code>
+          ocupa el 100% del ancho.
+        </p>
+      </div>
+
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:14px;">Ejemplo mínimo</h4>
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"container"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"row"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-6"</span><span class="tk-tag">&gt;</span>Mitad izquierda<span class="tk-tag">&lt;/div&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-6"</span><span class="tk-tag">&gt;</span>Mitad derecha<span class="tk-tag">&lt;/div&gt;</span>
+  <span class="tk-tag">&lt;/div&gt;</span>
+<span class="tk-tag">&lt;/div&gt;</span></code></pre>
+        <p style="margin-top:12px;font-size:14px;color:var(--muted);">
+          ¿Por qué <code style="background:var(--paper-2);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;">col-6</code>?
+          Porque 6 + 6 = 12. Cada columna ocupa la mitad.
+        </p>
+      </div>
+    </div>
+
+    <!-- PLAYGROUND INTERACTIVO -->
+    <div class="card-block" style="background:var(--ink);color:#fff;border-color:var(--ink);">
+      <h3 style="color:#fff;font-family:'Fraunces',serif;font-size:28px;margin-bottom:8px;">🛝 Playground · Diseña tu fila</h3>
+      <p style="color:#bbb;margin-bottom:24px;">Cambia los valores y mira cómo se reorganizan las columnas en tiempo real.</p>
+
+      <div class="grid-playground">
+        <!-- Controles -->
+        <div class="controls">
+          <p style="color:#bbb;font-size:13px;margin-bottom:12px;">Define cuántas columnas (de 12) ocupa cada bloque:</p>
+          <div id="col-controls"></div>
+
+          <button class="btn-go" id="btn-add-col" style="background:#fff;color:var(--ink);">+ Añadir columna</button>
+          <button class="btn-go" id="btn-reset-col">↺ Reset</button>
+
+          <div style="margin-top:24px;padding:12px;background:#1f1f30;border-radius:6px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#bbb;">Suma actual: </span>
+            <span id="col-sum" style="font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--accent);font-weight:600;">12</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#bbb;"> / 12</span>
+            <div id="col-warn" style="margin-top:6px;font-size:12px;color:#ff7eb6;display:none;">⚠ Si la suma supera 12, las columnas pasan a la siguiente fila.</div>
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div>
+          <div class="device-frame">
+            <div class="device-bar">
+              <span></span><span></span><span></span>
+              <span class="url">tu-pagina.com</span>
+            </div>
+            <div class="device-screen" id="device-screen">
+              <div class="sim-row" id="sim-row"></div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <p style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#bbb;margin-bottom:6px;">CÓDIGO GENERADO ↓</p>
+            <pre class="code" id="generated-code" style="margin:0;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 4. BREAKPOINTS ===================== -->
+<section class="chapter" id="breakpoints">
+  <div class="wrap">
+    <div class="chapter-num">04 / Responsive</div>
+    <h2>Breakpoints: una web, todas las pantallas.</h2>
+    <p class="sub">
+      Bootstrap usa el enfoque <strong>mobile-first</strong>: primero diseñas para móvil,
+      luego añades reglas para pantallas más grandes. Cada prefijo (<code style="font-family:'JetBrains Mono',monospace;background:var(--paper-2);padding:2px 6px;border-radius:4px;">sm</code>,
+      <code style="font-family:'JetBrains Mono',monospace;background:var(--paper-2);padding:2px 6px;border-radius:4px;">md</code>,
+      <code style="font-family:'JetBrains Mono',monospace;background:var(--paper-2);padding:2px 6px;border-radius:4px;">lg</code>…) activa un comportamiento a partir de cierto ancho.
+    </p>
+
+    <table class="bp">
+      <thead>
+        <tr>
+          <th>Abreviatura</th>
+          <th>Tamaño mínimo</th>
+          <th>Dispositivo</th>
+          <th>Ejemplo de uso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>col-</td><td>0px</td><td>Extra pequeño</td><td>Móviles muy pequeños</td></tr>
+        <tr><td>col-sm-</td><td>576px</td><td>Pequeño</td><td>Móviles en horizontal</td></tr>
+        <tr><td>col-md-</td><td>768px</td><td>Mediano</td><td>Tablets</td></tr>
+        <tr><td>col-lg-</td><td>992px</td><td>Grande</td><td>Portátiles</td></tr>
+        <tr><td>col-xl-</td><td>1200px</td><td>Extra grande</td><td>Monitores estándar</td></tr>
+        <tr><td>col-xxl-</td><td>1400px</td><td>Muy grande</td><td>Pantallas amplias</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-block" style="margin-top:32px;">
+      <h4 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:12px;">¿Cómo se combinan?</h4>
+      <p style="color:var(--muted);margin-bottom:16px;">Puedes apilar varias clases para que un bloque cambie según la pantalla. Mira este caso típico:</p>
+      <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-12 col-md-6 col-lg-4"</span><span class="tk-tag">&gt;...&lt;/div&gt;</span></code></pre>
+      <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="background:var(--paper-2);padding:14px;border-radius:6px;border:2px solid var(--ink);">
+          <strong style="font-family:'Fraunces',serif;">📱 En móvil</strong>
+          <p style="margin:6px 0 0 0;font-size:14px;">ocupa 12/12 (toda la fila)</p>
+        </div>
+        <div style="background:var(--paper-2);padding:14px;border-radius:6px;border:2px solid var(--ink);">
+          <strong style="font-family:'Fraunces',serif;">💻 En tablet</strong>
+          <p style="margin:6px 0 0 0;font-size:14px;">ocupa 6/12 (la mitad)</p>
+        </div>
+        <div style="background:var(--paper-2);padding:14px;border-radius:6px;border:2px solid var(--ink);">
+          <strong style="font-family:'Fraunces',serif;">🖥 En portátil+</strong>
+          <p style="margin:6px 0 0 0;font-size:14px;">ocupa 4/12 (un tercio)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 5. COMPONENTES ===================== -->
+<section class="chapter" id="componentes">
+  <div class="wrap">
+    <div class="chapter-num">05 / Componentes</div>
+    <h2>Bloques reutilizables.</h2>
+    <p class="sub">
+      Bootstrap trae componentes ya construidos: botones, alertas, tarjetas, menús, formularios…
+      Pulsa cada pestaña para ver el código y un preview real renderizado con Bootstrap.
+    </p>
+
+    <div class="component-tabs" id="component-tabs">
+      <button class="tab-btn active" data-tab="botones">Botones</button>
+      <button class="tab-btn" data-tab="alertas">Alertas</button>
+      <button class="tab-btn" data-tab="tarjetas">Tarjetas</button>
+      <button class="tab-btn" data-tab="navbar">Menú navegación</button>
+      <button class="tab-btn" data-tab="form">Formularios</button>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="component-pane active" data-pane="botones">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:6px;">Botones</h4>
+        <p style="color:var(--muted);margin-bottom:18px;">Cambia el estilo y el color del botón con los pills. El preview se actualiza al instante.</p>
+
+        <div class="toggle-row">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);align-self:center;margin-right:8px;">VARIANTE:</span>
+          <button class="toggle-pill active" data-btn-variant="solid">Sólido (btn-)</button>
+          <button class="toggle-pill" data-btn-variant="outline">Outline (btn-outline-)</button>
+        </div>
+        <div class="toggle-row">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);align-self:center;margin-right:8px;">COLOR:</span>
+          <button class="toggle-pill active" data-btn-color="primary">primary</button>
+          <button class="toggle-pill" data-btn-color="secondary">secondary</button>
+          <button class="toggle-pill" data-btn-color="success">success</button>
+          <button class="toggle-pill" data-btn-color="danger">danger</button>
+          <button class="toggle-pill" data-btn-color="warning">warning</button>
+          <button class="toggle-pill" data-btn-color="info">info</button>
+          <button class="toggle-pill" data-btn-color="dark">dark</button>
+        </div>
+
+        <div class="preview" id="preview-btn"></div>
+        <pre class="code" id="code-btn"><button class="copy-btn">Copiar</button></pre>
+      </div>
+    </div>
+
+    <!-- ALERTAS -->
+    <div class="component-pane" data-pane="alertas">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:6px;">Alertas</h4>
+        <p style="color:var(--muted);margin-bottom:18px;">Mensajes destacados para informar al usuario (éxito, error, aviso…).</p>
+
+        <div class="toggle-row">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);align-self:center;margin-right:8px;">TIPO:</span>
+          <button class="toggle-pill active" data-alert-type="success">success</button>
+          <button class="toggle-pill" data-alert-type="danger">danger</button>
+          <button class="toggle-pill" data-alert-type="warning">warning</button>
+          <button class="toggle-pill" data-alert-type="info">info</button>
+          <button class="toggle-pill" data-alert-type="primary">primary</button>
+        </div>
+
+        <div class="preview" id="preview-alert"></div>
+        <pre class="code" id="code-alert"><button class="copy-btn">Copiar</button></pre>
+      </div>
+    </div>
+
+    <!-- TARJETAS -->
+    <div class="component-pane" data-pane="tarjetas">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:6px;">Tarjetas</h4>
+        <p style="color:var(--muted);margin-bottom:18px;">Contenedores con título, texto y acciones. Perfectos para listados de productos, actividades, etc.</p>
+
+        <div class="preview">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Crossfit</h5>
+                  <p class="card-text">Intensidad alta y fuerza funcional.</p>
+                  <button class="btn btn-primary">Reservar</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Yoga</h5>
+                  <p class="card-text">Flexibilidad y respiración consciente.</p>
+                  <button class="btn btn-success">Reservar</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Spinning</h5>
+                  <p class="card-text">Cardio sobre bici, ritmo y energía.</p>
+                  <button class="btn btn-warning">Reservar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"card"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"card-body"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;h5</span> <span class="tk-attr">class</span>=<span class="tk-str">"card-title"</span><span class="tk-tag">&gt;</span>Crossfit<span class="tk-tag">&lt;/h5&gt;</span>
+    <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-str">"card-text"</span><span class="tk-tag">&gt;</span>Intensidad alta y fuerza funcional.<span class="tk-tag">&lt;/p&gt;</span>
+    <span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-str">"btn btn-primary"</span><span class="tk-tag">&gt;</span>Reservar<span class="tk-tag">&lt;/button&gt;</span>
+  <span class="tk-tag">&lt;/div&gt;</span>
+<span class="tk-tag">&lt;/div&gt;</span></code></pre>
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <div class="component-pane" data-pane="navbar">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:6px;">Menú de navegación</h4>
+        <p style="color:var(--muted);margin-bottom:18px;">La barra superior con logo y enlaces. Se adapta a móvil automáticamente.</p>
+
+        <div class="preview" style="padding:0;overflow:hidden;">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">ActivaFit</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navDemo">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navDemo">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link" href="#">Actividades</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Mi perfil</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;nav</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar navbar-expand-lg navbar-dark bg-dark"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"container-fluid"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar-brand"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>ActivaFit<span class="tk-tag">&lt;/a&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"collapse navbar-collapse"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;ul</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar-nav ms-auto"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;li</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-item"</span><span class="tk-tag">&gt;&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-link"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Actividades<span class="tk-tag">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tk-tag">&lt;li</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-item"</span><span class="tk-tag">&gt;&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-link"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Mi perfil<span class="tk-tag">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="tk-tag">&lt;/ul&gt;</span>
+    <span class="tk-tag">&lt;/div&gt;</span>
+  <span class="tk-tag">&lt;/div&gt;</span>
+<span class="tk-tag">&lt;/nav&gt;</span></code></pre>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="component-pane" data-pane="form">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:24px;margin-bottom:6px;">Formularios</h4>
+        <p style="color:var(--muted);margin-bottom:18px;">Inputs, etiquetas y botones con espaciado y estilos coherentes. Pruébalo escribiendo abajo.</p>
+
+        <div class="preview">
+          <form onsubmit="event.preventDefault(); alert('¡Formulario enviado! (es solo una demo)');">
+            <div class="mb-3">
+              <label for="nombre-demo" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre-demo" placeholder="Tu nombre">
+            </div>
+            <div class="mb-3">
+              <label for="email-demo" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email-demo" placeholder="tu@email.com">
+            </div>
+            <button type="submit" class="btn btn-success">Enviar</button>
+          </form>
+        </div>
+
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;form&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"mb-3"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;label</span> <span class="tk-attr">for</span>=<span class="tk-str">"nombre"</span> <span class="tk-attr">class</span>=<span class="tk-str">"form-label"</span><span class="tk-tag">&gt;</span>Nombre<span class="tk-tag">&lt;/label&gt;</span>
+    <span class="tk-tag">&lt;input</span> <span class="tk-attr">type</span>=<span class="tk-str">"text"</span> <span class="tk-attr">class</span>=<span class="tk-str">"form-control"</span> <span class="tk-attr">id</span>=<span class="tk-str">"nombre"</span> <span class="tk-attr">placeholder</span>=<span class="tk-str">"Tu nombre"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;/div&gt;</span>
+  <span class="tk-tag">&lt;button</span> <span class="tk-attr">type</span>=<span class="tk-str">"submit"</span> <span class="tk-attr">class</span>=<span class="tk-str">"btn btn-success"</span><span class="tk-tag">&gt;</span>Enviar<span class="tk-tag">&lt;/button&gt;</span>
+<span class="tk-tag">&lt;/form&gt;</span></code></pre>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 6. PERSONALIZAR ===================== -->
+<section class="chapter" id="personalizar">
+  <div class="wrap">
+    <div class="chapter-num">06 / Personalizar</div>
+    <h2>¿Y si quiero mi propio estilo?</h2>
+    <p class="sub">
+      Bootstrap te da una base, pero no te ata. Puedes <strong>añadir tus propias clases</strong>
+      junto a las suyas para sobreescribir colores, tamaños, bordes… lo que quieras.
+    </p>
+
+    <div class="grid-2">
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:12px;">El truco: clases extra en el HTML</h4>
+        <p style="color:var(--muted);margin-bottom:14px;">Mantienes la clase de Bootstrap y añades una tuya con los cambios.</p>
+        <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt">&lt;!-- HTML --&gt;</span>
+<span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-str">"btn btn-primary btn-reserva-gimnasio"</span><span class="tk-tag">&gt;</span>
+  Reservar
+<span class="tk-tag">&lt;/button&gt;</span>
+
+<span class="tk-cmt">/* Tu CSS */</span>
+.btn-reserva-gimnasio {
+  background: #ff6b6b;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}</code></pre>
+      </div>
+
+      <div class="card-block">
+        <h4 style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:12px;">Resultado</h4>
+        <p style="color:var(--muted);margin-bottom:14px;">Mira la diferencia entre el botón estándar y el personalizado:</p>
+
+        <div class="preview" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;padding:32px;">
+          <button class="btn btn-primary">Reservar (default)</button>
+          <button class="btn btn-primary" style="background:#ff6b6b;border-color:#ff6b6b;border-radius:999px;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;padding:8px 24px;">Reservar (custom)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Consejo de oro 🪙</strong>
+      No reescribas Bootstrap entero. Empieza usando las clases tal cual y solo personaliza lo necesario. Tu CSS será más corto y mantenible.
+    </div>
+
+    <!-- Recursos -->
+    <div class="card-block" style="margin-top:32px;background:var(--ink);color:#fff;border-color:var(--ink);">
+      <h3 style="color:#fff;font-family:'Fraunces',serif;font-size:28px;margin-bottom:12px;">📚 Documentación oficial</h3>
+      <p style="color:#bbb;margin-bottom:20px;">Cuando este playground se te quede corto, ve directo a la fuente. Tienen ejemplos de absolutamente todo:</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank" rel="noopener" style="background:var(--accent);color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">→ Introducción</a>
+        <a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener" style="background:#fff;color:var(--ink);padding:10px 18px;border-radius:6px;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">→ Sistema de rejilla</a>
+        <a href="https://getbootstrap.com/docs/5.3/components/buttons/" target="_blank" rel="noopener" style="background:#fff;color:var(--ink);padding:10px 18px;border-radius:6px;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">→ Componentes</a>
+        <a href="https://getbootstrap.com/docs/5.3/utilities/api/" target="_blank" rel="noopener" style="background:#fff;color:var(--ink);padding:10px 18px;border-radius:6px;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">→ Utilidades</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <p>Tema 6 · Bootstrap · Hecho como playground didáctico · <a href="https://getbootstrap.com/" target="_blank">getbootstrap.com</a></p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   1) PLAYGROUND DE REJILLA
+   ========================================================= */
+const initialCols = [4, 4, 4];
+let cols = [...initialCols];
+const colControls = document.getElementById('col-controls');
+const simRow = document.getElementById('sim-row');
+const colSum = document.getElementById('col-sum');
+const colWarn = document.getElementById('col-warn');
+const generatedCode = document.getElementById('generated-code');
+const deviceScreen = document.getElementById('device-screen');
+
+function renderColControls() {
+  colControls.innerHTML = '';
+  cols.forEach((val, i) => {
+    const row = document.createElement('div');
+    row.className = 'col-row';
+    row.innerHTML = `
+      <span class="label-mini" style="color:#bbb;">col #${i + 1}</span>
+      <input type="number" min="1" max="12" value="${val}" data-idx="${i}">
+      <input type="range" min="1" max="12" value="${val}" data-idx="${i}" style="flex:1;">
+      ${cols.length > 1 ? `<button data-remove="${i}" style="background:transparent;border:1px solid #555;color:#bbb;border-radius:4px;cursor:pointer;padding:2px 8px;font-size:14px;">×</button>` : ''}
+    `;
+    colControls.appendChild(row);
+  });
+
+  colControls.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      const idx = +e.target.dataset.idx;
+      let v = Math.max(1, Math.min(12, +e.target.value || 1));
+      cols[idx] = v;
+      renderColControls();
+      renderPreview();
+    });
+  });
+
+  colControls.querySelectorAll('button[data-remove]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = +e.target.dataset.remove;
+      cols.splice(idx, 1);
+      renderColControls();
+      renderPreview();
+    });
+  });
+}
+
+function renderPreview() {
+  simRow.innerHTML = '';
+  let runningSum = 0;
+  cols.forEach((val, i) => {
+    const div = document.createElement('div');
+    div.className = 'sim-col';
+    const widthPct = (val / 12) * 100;
+    div.style.width = `${widthPct}%`;
+    div.textContent = `col-${val}`;
+    div.style.background = `hsl(${260 + i * 25}, 70%, 60%)`;
+    simRow.appendChild(div);
+    runningSum += val;
+  });
+
+  colSum.textContent = runningSum;
+  colSum.style.color = runningSum === 12 ? 'var(--accent-3)' : (runningSum > 12 ? 'var(--accent-2)' : 'var(--accent)');
+  colWarn.style.display = runningSum > 12 ? 'block' : 'none';
+
+  const inner = cols.map(v => `    <div class="col-${v}">col-${v}</div>`).join('\n');
+  generatedCode.innerHTML = `<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"container"</span><span class="tk-tag">&gt;</span>\n  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"row"</span><span class="tk-tag">&gt;</span>\n${cols.map(v => `    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-${v}"</span><span class="tk-tag">&gt;</span>col-${v}<span class="tk-tag">&lt;/div&gt;</span>`).join('\n')}\n  <span class="tk-tag">&lt;/div&gt;</span>\n<span class="tk-tag">&lt;/div&gt;</span>`;
+}
+
+document.getElementById('btn-add-col').addEventListener('click', () => {
+  if (cols.length < 12) cols.push(2);
+  renderColControls(); renderPreview();
+});
+document.getElementById('btn-reset-col').addEventListener('click', () => {
+  cols = [...initialCols];
+  renderColControls(); renderPreview();
+});
+
+renderColControls();
+renderPreview();
+
+/* =========================================================
+   2) TABS DE COMPONENTES
+   ========================================================= */
+document.querySelectorAll('#component-tabs .tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#component-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.tab;
+    document.querySelectorAll('.component-pane').forEach(p => {
+      p.classList.toggle('active', p.dataset.pane === target);
+    });
+  });
+});
+
+/* =========================================================
+   3) BOTÓN INTERACTIVO
+   ========================================================= */
+let btnState = { variant: 'solid', color: 'primary' };
+
+function updateBtnPreview() {
+  const cls = btnState.variant === 'solid'
+    ? `btn btn-${btnState.color}`
+    : `btn btn-outline-${btnState.color}`;
+  document.getElementById('preview-btn').innerHTML =
+    `<button class="${cls}">Reservar</button> <button class="${cls}" style="margin-left:8px;">Cancelar</button>`;
+  document.getElementById('code-btn').innerHTML =
+    `<button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-str">"${cls}"</span><span class="tk-tag">&gt;</span>Reservar<span class="tk-tag">&lt;/button&gt;</span></code>`;
+  attachCopyButtons();
+}
+
+document.querySelectorAll('[data-btn-variant]').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('[data-btn-variant]').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    btnState.variant = p.dataset.btnVariant;
+    updateBtnPreview();
+  });
+});
+document.querySelectorAll('[data-btn-color]').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('[data-btn-color]').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    btnState.color = p.dataset.btnColor;
+    updateBtnPreview();
+  });
+});
+updateBtnPreview();
+
+/* =========================================================
+   4) ALERTA INTERACTIVA
+   ========================================================= */
+const alertMessages = {
+  success: '✓ ¡Reserva confirmada!',
+  danger: '✕ Error al procesar la reserva.',
+  warning: '⚠ Tu sesión está a punto de caducar.',
+  info: 'ℹ Hay nuevas actividades disponibles.',
+  primary: '★ Bienvenido a ActivaFit.'
+};
+
+function updateAlertPreview(type) {
+  document.getElementById('preview-alert').innerHTML =
+    `<div class="alert alert-${type}" role="alert">${alertMessages[type]}</div>`;
+  document.getElementById('code-alert').innerHTML =
+    `<button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"alert alert-${type}"</span> <span class="tk-attr">role</span>=<span class="tk-str">"alert"</span><span class="tk-tag">&gt;</span>\n  ${alertMessages[type]}\n<span class="tk-tag">&lt;/div&gt;</span></code>`;
+  attachCopyButtons();
+}
+document.querySelectorAll('[data-alert-type]').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('[data-alert-type]').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    updateAlertPreview(p.dataset.alertType);
+  });
+});
+updateAlertPreview('success');
+
+/* =========================================================
+   5) BOTONES "COPIAR"
+   ========================================================= */
+function attachCopyButtons() {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    if (btn.dataset.bound) return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => {
+      const pre = btn.closest('pre');
+      // Coger el texto del code, sin los spans
+      const code = pre.querySelector('code') || pre;
+      const text = code.innerText.replace(/Copiar\s*/, '');
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ Copiado';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 1400);
+      });
+    });
+  });
+}
+attachCopyButtons();
+</script>
+
+</body>
+</html>
