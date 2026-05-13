@@ -364,6 +364,154 @@
   /* IMPORTANTE: aislamos el preview para que Bootstrap solo afecte ahí dentro */
   /* Bootstrap sí actúa dentro de .preview, que es lo que queremos. */
 
+  /* =====================  CLASES PERSONALIZADAS DEL EJEMPLO ACTIVAFIT  ===================== */
+  /* Las usamos en el "Paso 7" para enseñar a combinar Bootstrap (col-*, navbar, card, btn)
+     con CSS propio, en vez de meter chorros de utility classes en el HTML. */
+  .gym-hero {
+    background: linear-gradient(135deg, #6f3fff 0%, #ff6b6b 100%);
+    color: #fff;
+    padding: 60px 24px;
+    text-align: center;
+  }
+  .gym-hero h1 { font-size: 44px; font-weight: 800; margin: 0 0 12px; }
+  .gym-hero p  { font-size: 17px; opacity: 0.95; margin: 0 0 22px; }
+
+  .gym-card {
+    padding: 22px;
+    text-align: center;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    height: 100%;
+  }
+  .gym-card h3 { font-size: 20px; margin: 0 0 8px; font-weight: 700; }
+  .gym-card p  { color: #666; font-size: 14px; margin: 0 0 14px; }
+
+  .gym-thumb {
+    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; letter-spacing: 0.08em;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .gym-thumb-1 { background: linear-gradient(135deg, #ff6b6b, #ffd166); }
+  .gym-thumb-2 { background: linear-gradient(135deg, #6f3fff, #06d6a0); }
+  .gym-thumb-3 { background: linear-gradient(135deg, #2ecc71, #0ea5e9); }
+  .gym-thumb-4 { background: linear-gradient(135deg, #0f0f1a, #6f3fff); }
+
+  .gym-footer {
+    background: #0f0f1a;
+    color: #fff;
+    padding: 32px 24px;
+  }
+  .gym-footer h4 { font-size: 18px; margin: 0 0 8px; font-weight: 700; }
+  .gym-footer p  { color: #aaa; font-size: 14px; margin: 0; }
+  .gym-footer a  { color: #fff; text-decoration: none; margin-right: 14px; }
+  .gym-footer hr { border-color: #333; margin: 18px 0; }
+  .gym-footer .copy { text-align: center; color: #888; font-size: 13px; }
+
+  /* =====================  WEB REAL: PREVIEW + CÓDIGO  ===================== */
+  .real-step {
+    margin-bottom: 56px;
+    scroll-margin-top: 80px;
+  }
+  .real-step .step-head {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .real-step .step-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: var(--ink); color: #fff;
+    padding: 4px 10px; border-radius: 999px;
+    letter-spacing: 0.15em;
+  }
+  .real-step h3 {
+    font-family: 'Fraunces', serif; font-size: 28px; font-weight: 800;
+    margin: 0; letter-spacing: -0.01em;
+  }
+  .real-step .step-sub {
+    color: var(--muted); font-size: 15px;
+    margin: 8px 0 22px; max-width: 680px;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: stretch;
+  }
+  @media (max-width: 960px) { .split { grid-template-columns: 1fr; } }
+
+  .split > .preview-real,
+  .split > .code-real {
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .split .pane-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 8px 14px;
+    border-bottom: 2px solid var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .split .pane-label .dotmini {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent-3);
+  }
+  .split .preview-real { background: #fff; }
+  .split .preview-real .pane-label { background: var(--paper-2); color: var(--ink); }
+  .split .preview-real .preview-body {
+    padding: 0;
+    flex: 1;
+    overflow: auto;
+    max-height: 540px;
+  }
+  .split .code-real { background: var(--code-bg); }
+  .split .code-real .pane-label {
+    background: #1f1f2e; color: #c9c4d6; border-bottom-color: #2a2a3c;
+  }
+  .split .code-real pre.code {
+    border: none; border-radius: 0;
+    flex: 1; margin: 0;
+    max-height: 540px;
+    overflow: auto;
+  }
+  .split .code-real .copy-btn { top: 12px; right: 12px; }
+
+  /* Mini hero de demo */
+  .demo-hero {
+    background: linear-gradient(135deg, #6f3fff 0%, #ff6b6b 100%);
+    color: #fff;
+    padding: 56px 28px;
+    text-align: center;
+  }
+  .demo-hero h2.real {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 30px !important; font-weight: 800; margin: 0 0 10px !important;
+    color: #fff !important; letter-spacing: -0.01em;
+  }
+  .demo-hero p.real { opacity: 0.95; margin: 0 0 22px; font-size: 15px; }
+
+  /* Mini sitio completo embebido */
+  .real-final {
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 28px;
+    background: #fff;
+  }
+  .real-final .pane-label {
+    background: var(--ink); color: #fff;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 10px 16px;
+  }
+  .real-final iframe {
+    width: 100%; height: 720px; border: 0; display: block; background: #fff;
+  }
+
   /* Pequeñas utilidades de scroll bonitas */
   html { scroll-behavior: smooth; }
   ::selection { background: var(--accent); color: #fff; }
@@ -386,6 +534,7 @@
       <a href="#breakpoints">Breakpoints</a>
       <a href="#componentes">Componentes</a>
       <a href="#personalizar">Personalizar</a>
+      <a href="#web-real">Web real</a>
     </nav>
   </div>
 </header>
@@ -897,6 +1046,530 @@
         <a href="https://getbootstrap.com/docs/5.3/utilities/api/" target="_blank" rel="noopener" style="background:#fff;color:var(--ink);padding:10px 18px;border-radius:6px;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">→ Utilidades</a>
       </div>
     </div>
+
+  </div>
+</section>
+
+<!-- ===================== 7. CÓMO HACER UNA WEB REALISTA ===================== -->
+<section class="chapter" id="web-real">
+  <div class="wrap">
+    <div class="chapter-num">07 / Caso práctico</div>
+    <h2>Cómo hacer una página web realista con Bootstrap</h2>
+    <p class="sub">
+      Hasta aquí has visto las piezas sueltas. Ahora vamos a montar una <strong>página real</strong>
+      de un gimnasio ficticio (ActivaFit), trozo a trozo. A la izquierda verás el <em>resultado</em>;
+      a la derecha, el <em>código exacto</em> que lo produce. Las clases de Bootstrap están resaltadas
+      para que veas dónde está la magia.
+    </p>
+
+    <div class="callout">
+      <strong>Cómo leer este apartado 📖</strong>
+      Cada bloque es independiente. Si copias y pegas todos en orden dentro de un HTML con Bootstrap enlazado, obtendrás la web completa que verás abajo del todo.
+    </div>
+
+    <!-- ============ PASO 1: NAVBAR ============ -->
+    <div class="real-step" id="real-navbar">
+      <div class="step-head">
+        <span class="step-num">PASO 1</span>
+        <h3>Barra de navegación (navbar)</h3>
+      </div>
+      <p class="step-sub">
+        Toda web seria empieza con una barra arriba: logo a la izquierda, enlaces a la derecha.
+        Bootstrap nos da el componente <code>navbar</code> con su botón hamburguesa para móvil ya hecho.
+      </p>
+
+      <div class="split">
+        <div class="preview-real">
+          <div class="pane-label"><span class="dotmini"></span> Resultado</div>
+          <div class="preview-body">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+              <a class="navbar-brand" href="#"><span style="color:#ff6b6b;">●</span> ActivaFit</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navDemo1">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navDemo1">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Clases</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Precios</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+              </div>
+            </nav>
+            <div style="padding:24px;color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace;">
+              ↑ Componente <code>navbar</code> de Bootstrap. En móvil aparece el botón ☰ solo.
+            </div>
+          </div>
+        </div>
+
+        <div class="code-real">
+          <div class="pane-label"><span class="dotmini"></span> Código HTML</div>
+          <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-tag">&lt;nav</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar navbar-expand-lg navbar-dark bg-dark"</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar-brand"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>
+    ActivaFit
+  <span class="tk-tag">&lt;/a&gt;</span>
+
+  <span class="tk-cmt">&lt;!-- Botón hamburguesa para móvil --&gt;</span>
+  <span class="tk-tag">&lt;button</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar-toggler"</span>
+          <span class="tk-attr">data-bs-toggle</span>=<span class="tk-str">"collapse"</span>
+          <span class="tk-attr">data-bs-target</span>=<span class="tk-str">"#nav1"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;span</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar-toggler-icon"</span><span class="tk-tag">&gt;&lt;/span&gt;</span>
+  <span class="tk-tag">&lt;/button&gt;</span>
+
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"collapse navbar-collapse"</span> <span class="tk-attr">id</span>=<span class="tk-str">"nav1"</span><span class="tk-tag">&gt;</span>
+    <span class="tk-tag">&lt;ul</span> <span class="tk-attr">class</span>=<span class="tk-str">"navbar-nav"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;li</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-item"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-link"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Inicio<span class="tk-tag">&lt;/a&gt;</span>
+      <span class="tk-tag">&lt;/li&gt;</span>
+      <span class="tk-tag">&lt;li</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-item"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-link"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Clases<span class="tk-tag">&lt;/a&gt;</span>
+      <span class="tk-tag">&lt;/li&gt;</span>
+      <span class="tk-tag">&lt;li</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-item"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-link"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Precios<span class="tk-tag">&lt;/a&gt;</span>
+      <span class="tk-tag">&lt;/li&gt;</span>
+      <span class="tk-tag">&lt;li</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-item"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;a</span> <span class="tk-attr">class</span>=<span class="tk-str">"nav-link"</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Contacto<span class="tk-tag">&lt;/a&gt;</span>
+      <span class="tk-tag">&lt;/li&gt;</span>
+    <span class="tk-tag">&lt;/ul&gt;</span>
+  <span class="tk-tag">&lt;/div&gt;</span>
+
+<span class="tk-tag">&lt;/nav&gt;</span></code></pre>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <strong>Las clases clave 🔑</strong>
+        <code>navbar</code> es el componente. <code>navbar-expand-lg</code> hace que sea horizontal en pantallas grandes y se pliegue en móvil. <code>navbar-dark bg-dark</code> le da fondo oscuro. <code>navbar-brand</code> es el logo, <code>nav-link</code> cada enlace. Todo viene de Bootstrap, sin tocar CSS propio.
+      </div>
+    </div>
+
+    <!-- ============ PASO 2: HERO ============ -->
+    <div class="real-step" id="real-hero">
+      <div class="step-head">
+        <span class="step-num">PASO 2</span>
+        <h3>Cabecera (hero) con clase propia</h3>
+      </div>
+      <p class="step-sub">
+        Para la cabecera Bootstrap no nos da un componente concreto, así que usamos nuestra propia clase
+        <code>.gym-hero</code> definida en el CSS. Dentro va un botón de Bootstrap (<code>btn</code>)
+        para la llamada a la acción.
+      </p>
+
+      <div class="split">
+        <div class="preview-real">
+          <div class="pane-label"><span class="dotmini"></span> Resultado</div>
+          <div class="preview-body">
+            <section class="gym-hero">
+              <h1>Entrena. Suda. Repite.</h1>
+              <p>El gimnasio donde tu mejor versión ya tiene cita.</p>
+              <a href="#" class="btn btn-light">Reserva tu prueba gratis</a>
+            </section>
+          </div>
+        </div>
+
+        <div class="code-real">
+          <div class="pane-label"><span class="dotmini"></span> Código HTML + CSS</div>
+          <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt">&lt;!-- HTML --&gt;</span>
+<span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-str">"gym-hero"</span><span class="tk-tag">&gt;</span>
+
+  <span class="tk-tag">&lt;h1&gt;</span>Entrena. Suda. Repite.<span class="tk-tag">&lt;/h1&gt;</span>
+
+  <span class="tk-tag">&lt;p&gt;</span>
+    El gimnasio donde tu mejor versión
+    ya tiene cita.
+  <span class="tk-tag">&lt;/p&gt;</span>
+
+  <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span> <span class="tk-attr">class</span>=<span class="tk-str">"btn btn-light"</span><span class="tk-tag">&gt;</span>
+    Reserva tu prueba gratis
+  <span class="tk-tag">&lt;/a&gt;</span>
+
+<span class="tk-tag">&lt;/section&gt;</span>
+
+<span class="tk-cmt">/* CSS propio */</span>
+.gym-hero {
+  background: linear-gradient(135deg, #6f3fff, #ff6b6b);
+  color: #fff;
+  padding: 60px 24px;
+  text-align: center;
+}
+.gym-hero h1 { font-size: 44px; }
+.gym-hero p  { font-size: 17px; }</code></pre>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <strong>Las clases clave 🔑</strong>
+        <code>.gym-hero</code> es <em>nuestra</em> clase: gradiente, padding y centrado. El botón <code>btn btn-light</code> sí viene de Bootstrap. Es el patrón típico: Bootstrap para los componentes que ya existen (botones, navbar, cards…) y CSS propio para lo que es único de tu web.
+      </div>
+    </div>
+
+    <!-- ============ PASO 3: CARDS / SERVICIOS ============ -->
+    <div class="real-step" id="real-cards">
+      <div class="step-head">
+        <span class="step-num">PASO 3</span>
+        <h3>Tarjetas de servicios con la rejilla</h3>
+      </div>
+      <p class="step-sub">
+        Aquí entra la <strong>rejilla de 12 columnas</strong>. Queremos 3 tarjetas en pantalla grande
+        y 1 en móvil. Solución: <code>col-md-4</code> (4 de 12 = un tercio en pantallas medianas en adelante,
+        ancho completo en móvil).
+      </p>
+
+      <div class="split">
+        <div class="preview-real">
+          <div class="pane-label"><span class="dotmini"></span> Resultado</div>
+          <div class="preview-body">
+            <div class="container" style="padding:24px 0;">
+              <h3 style="text-align:center;font-family:'Inter',sans-serif;font-weight:700;margin:0 0 20px;">Nuestras clases</h3>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="gym-card">
+                    <h3>🏋️ Fuerza</h3>
+                    <p>Levanta peso con técnica. Resultados en 6 semanas.</p>
+                    <a href="#" class="btn btn-primary">Apuntarme</a>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="gym-card">
+                    <h3>🧘 Yoga</h3>
+                    <p>Movilidad, respiración y cero estrés.</p>
+                    <a href="#" class="btn btn-primary">Apuntarme</a>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="gym-card">
+                    <h3>🚴 Spinning</h3>
+                    <p>45 minutos de cardio intenso con música.</p>
+                    <a href="#" class="btn btn-primary">Apuntarme</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-real">
+          <div class="pane-label"><span class="dotmini"></span> Código HTML + CSS</div>
+          <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt">&lt;!-- HTML --&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"container"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h2&gt;</span>Nuestras clases<span class="tk-tag">&lt;/h2&gt;</span>
+
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"row"</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-cmt">&lt;!-- Tarjeta 1 --&gt;</span>
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-md-4"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"gym-card"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h3&gt;</span>🏋️ Fuerza<span class="tk-tag">&lt;/h3&gt;</span>
+        <span class="tk-tag">&lt;p&gt;</span>Levanta peso con técnica.<span class="tk-tag">&lt;/p&gt;</span>
+        <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span> <span class="tk-attr">class</span>=<span class="tk-str">"btn btn-primary"</span><span class="tk-tag">&gt;</span>
+          Apuntarme
+        <span class="tk-tag">&lt;/a&gt;</span>
+      <span class="tk-tag">&lt;/div&gt;</span>
+    <span class="tk-tag">&lt;/div&gt;</span>
+
+    <span class="tk-cmt">&lt;!-- Tarjeta 2 (Yoga) y 3 (Spinning):</span>
+    <span class="tk-cmt">     misma estructura, cambia solo el texto --&gt;</span>
+
+  <span class="tk-tag">&lt;/div&gt;</span>
+<span class="tk-tag">&lt;/div&gt;</span>
+
+<span class="tk-cmt">/* CSS propio */</span>
+.gym-card {
+  padding: 22px;
+  text-align: center;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <strong>Las clases clave 🔑</strong>
+        <code>container</code> centra el contenido. <code>row</code> es la fila. <code>col-md-4</code> es la magia: en pantallas <em>md</em> en adelante cada tarjeta ocupa 4 columnas (4+4+4 = 12); en móvil, ocupan 12 cada una y se apilan. El botón <code>btn btn-primary</code> es de Bootstrap; el estilo de la tarjeta (<code>.gym-card</code>) lo hacemos nosotros.
+      </div>
+    </div>
+
+    <!-- ============ PASO 4: GALERÍA ============ -->
+    <div class="real-step" id="real-gallery">
+      <div class="step-head">
+        <span class="step-num">PASO 4</span>
+        <h3>Galería con rejilla mixta (responsive)</h3>
+      </div>
+      <p class="step-sub">
+        Galería de instalaciones: <strong>2 columnas en móvil, 4 en escritorio</strong>. Esto se hace
+        combinando dos breakpoints en la misma columna: <code>col-6 col-md-3</code>. Bootstrap aplica
+        el primero por defecto y el segundo a partir de <em>md</em>.
+      </p>
+
+      <div class="split">
+        <div class="preview-real">
+          <div class="pane-label"><span class="dotmini"></span> Resultado</div>
+          <div class="preview-body">
+            <div class="container" style="padding:24px 0;">
+              <h3 style="text-align:center;font-family:'Inter',sans-serif;font-weight:700;margin:0 0 20px;">Instalaciones</h3>
+              <div class="row">
+                <div class="col-6 col-md-3"><div class="gym-thumb gym-thumb-1">SALA 1</div></div>
+                <div class="col-6 col-md-3"><div class="gym-thumb gym-thumb-2">CARDIO</div></div>
+                <div class="col-6 col-md-3"><div class="gym-thumb gym-thumb-3">PESAS</div></div>
+                <div class="col-6 col-md-3"><div class="gym-thumb gym-thumb-4">SAUNA</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-real">
+          <div class="pane-label"><span class="dotmini"></span> Código HTML + CSS</div>
+          <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt">&lt;!-- HTML --&gt;</span>
+<span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"container"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;h2&gt;</span>Instalaciones<span class="tk-tag">&lt;/h2&gt;</span>
+
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"row"</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-cmt">&lt;!-- En móvil:    2 columnas (col-6)</span>
+    <span class="tk-cmt">     En md (≥768): 4 columnas (col-md-3) --&gt;</span>
+
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-6 col-md-3"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"gym-thumb gym-thumb-1"</span><span class="tk-tag">&gt;</span>
+        SALA 1
+      <span class="tk-tag">&lt;/div&gt;</span>
+    <span class="tk-tag">&lt;/div&gt;</span>
+
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-6 col-md-3"</span><span class="tk-tag">&gt;</span>
+      <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"gym-thumb gym-thumb-2"</span><span class="tk-tag">&gt;</span>
+        CARDIO
+      <span class="tk-tag">&lt;/div&gt;</span>
+    <span class="tk-tag">&lt;/div&gt;</span>
+
+    <span class="tk-cmt">&lt;!-- ...y PESAS, SAUNA igual --&gt;</span>
+
+  <span class="tk-tag">&lt;/div&gt;</span>
+<span class="tk-tag">&lt;/div&gt;</span>
+
+<span class="tk-cmt">/* CSS propio */</span>
+.gym-thumb {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+}
+.gym-thumb-1 { background: linear-gradient(135deg, #ff6b6b, #ffd166); }
+.gym-thumb-2 { background: linear-gradient(135deg, #6f3fff, #06d6a0); }</code></pre>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <strong>Las clases clave 🔑</strong>
+        <code>col-6 col-md-3</code> dice: <em>"en móvil, 2 por fila (6+6=12); a partir de md, 4 por fila (3+3+3+3=12)"</em>. Es la forma estándar de Bootstrap para hacer una rejilla que cambia según el tamaño de pantalla, sin escribir ni una media query.
+      </div>
+    </div>
+
+    <!-- ============ PASO 5: FOOTER ============ -->
+    <div class="real-step" id="real-footer">
+      <div class="step-head">
+        <span class="step-num">PASO 5</span>
+        <h3>Pie de página (footer)</h3>
+      </div>
+      <p class="step-sub">
+        Cerramos con un footer de dos columnas: a la izquierda la dirección, a la derecha las redes.
+        Usamos <code>col-md-6</code> para partir el ancho en dos y nuestra clase <code>.gym-footer</code>
+        para el estilo oscuro.
+      </p>
+
+      <div class="split">
+        <div class="preview-real">
+          <div class="pane-label"><span class="dotmini"></span> Resultado</div>
+          <div class="preview-body">
+            <footer class="gym-footer">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h4><span style="color:#ff6b6b;">●</span> ActivaFit</h4>
+                    <p>C/ Mayor 12, Aranjuez<br>Lun–Vie 7:00–22:00</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h4>Síguenos</h4>
+                    <p>
+                      <a href="#">Instagram</a>
+                      <a href="#">TikTok</a>
+                      <a href="#">YouTube</a>
+                    </p>
+                  </div>
+                </div>
+                <hr>
+                <p class="copy">© 2026 ActivaFit · Todos los derechos reservados</p>
+              </div>
+            </footer>
+          </div>
+        </div>
+
+        <div class="code-real">
+          <div class="pane-label"><span class="dotmini"></span> Código HTML + CSS</div>
+          <pre class="code"><button class="copy-btn">Copiar</button><code><span class="tk-cmt">&lt;!-- HTML --&gt;</span>
+<span class="tk-tag">&lt;footer</span> <span class="tk-attr">class</span>=<span class="tk-str">"gym-footer"</span><span class="tk-tag">&gt;</span>
+  <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"container"</span><span class="tk-tag">&gt;</span>
+
+    <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"row"</span><span class="tk-tag">&gt;</span>
+
+      <span class="tk-cmt">&lt;!-- Columna izquierda --&gt;</span>
+      <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-md-6"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h4&gt;</span>ActivaFit<span class="tk-tag">&lt;/h4&gt;</span>
+        <span class="tk-tag">&lt;p&gt;</span>
+          C/ Mayor 12, Aranjuez<span class="tk-tag">&lt;br&gt;</span>
+          Lun–Vie 7:00–22:00
+        <span class="tk-tag">&lt;/p&gt;</span>
+      <span class="tk-tag">&lt;/div&gt;</span>
+
+      <span class="tk-cmt">&lt;!-- Columna derecha --&gt;</span>
+      <span class="tk-tag">&lt;div</span> <span class="tk-attr">class</span>=<span class="tk-str">"col-md-6"</span><span class="tk-tag">&gt;</span>
+        <span class="tk-tag">&lt;h4&gt;</span>Síguenos<span class="tk-tag">&lt;/h4&gt;</span>
+        <span class="tk-tag">&lt;p&gt;</span>
+          <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>Instagram<span class="tk-tag">&lt;/a&gt;</span>
+          <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>TikTok<span class="tk-tag">&lt;/a&gt;</span>
+          <span class="tk-tag">&lt;a</span> <span class="tk-attr">href</span>=<span class="tk-str">"#"</span><span class="tk-tag">&gt;</span>YouTube<span class="tk-tag">&lt;/a&gt;</span>
+        <span class="tk-tag">&lt;/p&gt;</span>
+      <span class="tk-tag">&lt;/div&gt;</span>
+
+    <span class="tk-tag">&lt;/div&gt;</span>
+
+    <span class="tk-tag">&lt;hr&gt;</span>
+    <span class="tk-tag">&lt;p</span> <span class="tk-attr">class</span>=<span class="tk-str">"copy"</span><span class="tk-tag">&gt;</span>© 2026 ActivaFit<span class="tk-tag">&lt;/p&gt;</span>
+
+  <span class="tk-tag">&lt;/div&gt;</span>
+<span class="tk-tag">&lt;/footer&gt;</span>
+
+<span class="tk-cmt">/* CSS propio */</span>
+.gym-footer { background: #0f0f1a; color: #fff; padding: 32px 24px; }
+.gym-footer a { color: #fff; margin-right: 14px; }
+.gym-footer .copy { text-align: center; color: #888; }</code></pre>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <strong>Las clases clave 🔑</strong>
+        Otra vez el patrón <code>container → row → col-md-6 + col-md-6</code> = dos columnas iguales en escritorio que se apilan en móvil automáticamente. El resto (colores, espaciados) va en <code>.gym-footer</code>, que es nuestra clase.
+      </div>
+    </div>
+
+    <!-- ============ RESULTADO FINAL ============ -->
+    <div class="real-step" id="real-final">
+      <div class="step-head">
+        <span class="step-num">RESULTADO</span>
+        <h3>Todo junto: la web completa de ActivaFit</h3>
+      </div>
+      <p class="step-sub">
+        Al juntar los 5 pasos, esto es lo que obtienes. Una página real, responsive, usando solo
+        <strong>componentes de Bootstrap</strong> (<code>navbar</code>, <code>btn</code>) y
+        <strong>la rejilla</strong> (<code>container</code>, <code>row</code>, <code>col-*</code>),
+        más un puñado de clases propias para el estilo.
+      </p>
+
+      <div class="real-final">
+        <div class="pane-label">▾ Vista previa completa (interactiva)</div>
+        <iframe srcdoc='&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js&quot; defer&gt;&lt;/script&gt;
+&lt;style&gt;
+  body { font-family: system-ui, sans-serif; margin: 0; }
+  .gym-hero { background: linear-gradient(135deg,#6f3fff,#ff6b6b); color:#fff; padding:60px 24px; text-align:center; }
+  .gym-hero h1 { font-size: 44px; margin: 0 0 12px; }
+  .gym-hero p  { font-size: 17px; opacity: 0.95; margin: 0 0 22px; }
+  .gym-section { padding: 40px 0; }
+  .gym-section h2 { text-align: center; margin: 0 0 24px; font-size: 28px; }
+  .gym-card { padding:22px; text-align:center; border-radius:10px; background:#fff; box-shadow:0 4px 14px rgba(0,0,0,0.08); height:100%; }
+  .gym-card h3 { font-size:20px; margin:0 0 8px; }
+  .gym-card p  { color:#666; font-size:14px; margin:0 0 14px; }
+  .gym-thumb { aspect-ratio: 1/1; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; letter-spacing:0.08em; font-family:monospace; font-size:14px; }
+  .gym-thumb-1 { background: linear-gradient(135deg,#ff6b6b,#ffd166); }
+  .gym-thumb-2 { background: linear-gradient(135deg,#6f3fff,#06d6a0); }
+  .gym-thumb-3 { background: linear-gradient(135deg,#2ecc71,#0ea5e9); }
+  .gym-thumb-4 { background: linear-gradient(135deg,#0f0f1a,#6f3fff); }
+  .gym-footer { background:#0f0f1a; color:#fff; padding:32px 24px; }
+  .gym-footer h4 { font-size:18px; margin:0 0 8px; }
+  .gym-footer p  { color:#aaa; font-size:14px; margin:0; }
+  .gym-footer a  { color:#fff; text-decoration:none; margin-right:14px; }
+  .gym-footer hr { border-color:#333; margin:18px 0; }
+  .gym-footer .copy { text-align:center; color:#888; font-size:13px; }
+  .row [class*=col-] { margin-bottom: 16px; }
+&lt;/style&gt;
+&lt;/head&gt;&lt;body&gt;
+
+&lt;nav class=&quot;navbar navbar-expand-lg navbar-dark bg-dark&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;&lt;span style=&quot;color:#ff6b6b&quot;&gt;●&lt;/span&gt; ActivaFit&lt;/a&gt;
+    &lt;button class=&quot;navbar-toggler&quot; data-bs-toggle=&quot;collapse&quot; data-bs-target=&quot;#nv&quot;&gt;&lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;nv&quot;&gt;
+      &lt;ul class=&quot;navbar-nav ms-auto&quot;&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Clases&lt;/a&gt;&lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Precios&lt;/a&gt;&lt;/li&gt;
+        &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+&lt;section class=&quot;gym-hero&quot;&gt;
+  &lt;h1&gt;Entrena. Suda. Repite.&lt;/h1&gt;
+  &lt;p&gt;El gimnasio donde tu mejor versión ya tiene cita.&lt;/p&gt;
+  &lt;a href=&quot;#&quot; class=&quot;btn btn-light&quot;&gt;Reserva tu prueba gratis&lt;/a&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;gym-section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2&gt;Nuestras clases&lt;/h2&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-md-4&quot;&gt;&lt;div class=&quot;gym-card&quot;&gt;&lt;h3&gt;🏋️ Fuerza&lt;/h3&gt;&lt;p&gt;Levanta peso con técnica. Resultados en 6 semanas.&lt;/p&gt;&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot;&gt;Apuntarme&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;col-md-4&quot;&gt;&lt;div class=&quot;gym-card&quot;&gt;&lt;h3&gt;🧘 Yoga&lt;/h3&gt;&lt;p&gt;Movilidad, respiración y cero estrés.&lt;/p&gt;&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot;&gt;Apuntarme&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;col-md-4&quot;&gt;&lt;div class=&quot;gym-card&quot;&gt;&lt;h3&gt;🚴 Spinning&lt;/h3&gt;&lt;p&gt;45 minutos de cardio intenso con música.&lt;/p&gt;&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot;&gt;Apuntarme&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;gym-section&quot; style=&quot;background:#f7f7fa;&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2&gt;Instalaciones&lt;/h2&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-6 col-md-3&quot;&gt;&lt;div class=&quot;gym-thumb gym-thumb-1&quot;&gt;SALA 1&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;col-6 col-md-3&quot;&gt;&lt;div class=&quot;gym-thumb gym-thumb-2&quot;&gt;CARDIO&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;col-6 col-md-3&quot;&gt;&lt;div class=&quot;gym-thumb gym-thumb-3&quot;&gt;PESAS&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;col-6 col-md-3&quot;&gt;&lt;div class=&quot;gym-thumb gym-thumb-4&quot;&gt;SAUNA&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;footer class=&quot;gym-footer&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-md-6&quot;&gt;
+        &lt;h4&gt;&lt;span style=&quot;color:#ff6b6b&quot;&gt;●&lt;/span&gt; ActivaFit&lt;/h4&gt;
+        &lt;p&gt;C/ Mayor 12, Aranjuez&lt;br&gt;Lun–Vie 7:00–22:00&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-md-6&quot;&gt;
+        &lt;h4&gt;Síguenos&lt;/h4&gt;
+        &lt;p&gt;&lt;a href=&quot;#&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;TikTok&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;YouTube&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;p class=&quot;copy&quot;&gt;© 2026 ActivaFit · Todos los derechos reservados&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+
+&lt;/body&gt;&lt;/html&gt;'></iframe>
+      </div>
+
+      <div class="callout" style="margin-top:24px;">
+        <strong>Lo que has aprendido en este apartado 🎓</strong>
+        Una web realista es la suma de bloques estándar: <em>navbar + hero + cards + galería + footer</em>. De Bootstrap usamos solo <strong>componentes</strong> (<code>navbar</code>, <code>btn</code>) y <strong>la rejilla</strong> (<code>container</code>, <code>row</code>, <code>col-*</code>). El estilo lo metemos en clases propias (<code>.gym-hero</code>, <code>.gym-card</code>, <code>.gym-thumb</code>, <code>.gym-footer</code>). Así el HTML queda limpio y el CSS centralizado, en vez de llenar las etiquetas de utility classes.
+      </div>
+    </div>
+
 
   </div>
 </section>
