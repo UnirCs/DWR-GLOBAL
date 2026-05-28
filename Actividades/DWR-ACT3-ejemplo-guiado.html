@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DWR · Actividad 3 — Ejemplo guiado (Tailwind CSS · Cafetería Nexus)</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!--
+  ════════════════════════════════════════════════════════════════════════════
+   ARCHIVO ÚNICO PARA DOCENCIA
+   Este HTML contiene:
+     1. La configuración de Tailwind (que en un proyecto real iría en
+        tailwind.config.js).
+     2. Los componentes con @apply (que irían en src/input.css).
+     3. La página real (lo que vería un usuario de Nexus).
+     4. Paneles explicativos intercalados con el código de cada sección.
+
+   En un proyecto entregable estos cuatro bloques estarían SEPARADOS. Aquí
+   los juntamos para que los alumnos puedan leer el ejemplo de corrido.
+  ════════════════════════════════════════════════════════════════════════════
+  -->
+
+  <!-- Tailwind por CDN (solo para este ejemplo didáctico) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- BLOQUE 1 · Lo que iría en tailwind.config.js -->
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: {
+          xs: '420px', sm: '640px', md: '768px', lg: '1024px', xl: '1280px'
+        },
+        extend: {
+          colors: {
+            'nexus-cream':       '#F7F1E8',
+            'nexus-paper':       '#FDFAF4',
+            'nexus-dark':        '#1F1A14',
+            'nexus-muted':       '#6E6357',
+            'nexus-accent':      '#C0683A',
+            'nexus-accent-dark': '#9A4E25',
+            'nexus-leaf':        '#3F6B4E'
+          },
+          fontFamily: {
+            display: ['Fraunces', 'serif'],
+            body:    ['Inter', 'system-ui', 'sans-serif'],
+            mono:    ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            soft: '0 4px 20px -8px rgba(31, 26, 20, 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- BLOQUE 2 · Lo que iría en src/input.css dentro de @layer components -->
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply font-body bg-nexus-cream text-nexus-dark antialiased; }
+      h1, h2, h3, h4 { @apply font-display tracking-tight; }
+    }
+    @layer components {
+      .btn          { @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nexus-accent; }
+      .btn-primary  { @apply btn bg-nexus-accent text-white hover:bg-nexus-accent-dark active:scale-[0.98]; }
+      .btn-ghost    { @apply btn bg-transparent text-nexus-dark hover:bg-nexus-paper; }
+      .chip         { @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border whitespace-nowrap cursor-pointer transition; }
+      .chip-off     { @apply chip bg-white border-nexus-cream text-nexus-muted hover:border-nexus-accent hover:text-nexus-dark; }
+      .chip-on      { @apply chip bg-nexus-dark border-nexus-dark text-nexus-cream; }
+      .card-producto{ @apply bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col hover:shadow-xl hover:-translate-y-1 transition duration-300; }
+      .badge        { @apply inline-block px-2 py-0.5 rounded-md text-xs font-semibold; }
+    }
+  </style>
+
+  <!-- Estilos exclusivos del modo docente (paneles, bloques de código) -->
+  <style>
+    .docente {
+      background: linear-gradient(180deg, #1F1A14 0%, #2A2218 100%);
+      color: #F7F1E8;
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,.4);
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .docente h3 { font-family: 'Fraunces', serif; color: #F7F1E8; margin-bottom: .5rem; font-size: 1.25rem; }
+    .docente p  { color: #D9CDB9; font-size: .95rem; line-height: 1.6; }
+    .docente .tag {
+      display: inline-block; font-size: .7rem; letter-spacing: .12em;
+      text-transform: uppercase; font-weight: 700; padding: .25rem .6rem;
+      border-radius: .375rem; margin-bottom: .75rem;
+    }
+    .docente .tag-c1 { background: #C0683A; color: #fff; }       /* Criterio 1 */
+    .docente .tag-c2 { background: #3F6B4E; color: #fff; }       /* Criterio 2 */
+    .docente .tag-c3 { background: #6A4FB6; color: #fff; }       /* Criterio 3 */
+    .docente .tag-c4 { background: #B65F8A; color: #fff; }       /* Criterio 4 */
+    .docente .tag-info { background: #6E6357; color: #fff; }
+    .docente pre {
+      background: #0F0C09; color: #F7F1E8;
+      padding: 1rem; border-radius: .5rem;
+      overflow-x: auto; font-size: .82rem; line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: .75rem;
+      border: 1px solid rgba(192,104,58,.25);
+    }
+    .docente pre .k { color: #E8A87C; }   /* clase tailwind / palabra clave */
+    .docente pre .c { color: #7A8B7F; font-style: italic; }  /* comentario */
+    .docente pre .s { color: #C6E1A4; }   /* string / valor */
+    .docente .nota {
+      background: rgba(192,104,58,.12);
+      border-left: 3px solid #C0683A;
+      padding: .6rem .9rem; margin-top: .75rem; border-radius: .25rem;
+      font-size: .9rem;
+    }
+    .docente ul { margin-top: .5rem; padding-left: 1.2rem; color: #D9CDB9; font-size: .92rem; }
+    .docente ul li { margin-bottom: .25rem; }
+    .docente .grid-criterios {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: .75rem; margin-top: 1rem;
+    }
+    .docente .grid-criterios > div {
+      background: rgba(255,255,255,.05); padding: .75rem; border-radius: .5rem;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .docente .grid-criterios .pct { font-size: 1.5rem; font-weight: 700; font-family: 'Fraunces'; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       PANEL DE INTRODUCCIÓN (modo docente)
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl pt-8">
+    <div class="docente">
+      <span class="tag tag-info">Ejemplo guiado · Profesor</span>
+      <h3>Actividad 3 DWR — Menú de la cafetería Nexus con Tailwind CSS</h3>
+      <p>
+        Este archivo es un <strong>ejemplo de referencia</strong>. Recorre la página
+        de arriba abajo: cada sección visual viene precedida por un panel oscuro
+        como este, que explica <em>qué</em> se ha hecho y <em>por qué</em>, mostrando
+        el código exacto. Los paneles están etiquetados con el criterio de la rúbrica
+        al que aporta cada decisión.
+      </p>
+      <div class="grid-criterios">
+        <div><span class="tag tag-c1">Criterio 1</span><div class="pct">45%</div><div style="font-size:.8rem;color:#A89B89">Uso de Tailwind y utilidades</div></div>
+        <div><span class="tag tag-c2">Criterio 2</span><div class="pct">35%</div><div style="font-size:.8rem;color:#A89B89">Escalabilidad y @apply</div></div>
+        <div><span class="tag tag-c3">Criterio 3</span><div class="pct">10%</div><div style="font-size:.8rem;color:#A89B89">tailwind.config.js</div></div>
+        <div><span class="tag tag-c4">Criterio 4</span><div class="pct">10%</div><div style="font-size:.8rem;color:#A89B89">Videomemoria</div></div>
+      </div>
+      <div class="nota">
+        ⚠️ <strong>Importante</strong>: en vuestra entrega, los bloques que aquí ves al
+        principio del <code>&lt;head&gt;</code> (configuración de Tailwind y
+        <code>@apply</code>) deben ir en archivos separados:
+        <code>tailwind.config.js</code> y <code>src/input.css</code>. Aquí están
+        juntos solo para que se pueda leer el ejemplo de un tirón.
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       PANEL 1: La configuración de Tailwind
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c3">Criterio 3 · 10%</span>
+      <h3>1 · Personalización de <code>tailwind.config.js</code></h3>
+      <p>
+        Lo primero es definir la identidad visual de Nexus. Si usamos
+        <code>bg-orange-600</code> genérico de Tailwind, no estamos
+        personalizando nada. Lo que hacemos es declarar colores propios y
+        tipografías propias, de forma que cualquier cambio futuro de marca solo
+        afecte a este archivo.
+      </p>
+      <pre><span class="c">// tailwind.config.js</span>
+<span class="k">module.exports</span> = {
+  theme: {
+    screens: {
+      xs: <span class="s">'420px'</span>,    <span class="c">// breakpoint extra para móviles grandes</span>
+      sm: <span class="s">'640px'</span>, md: <span class="s">'768px'</span>, lg: <span class="s">'1024px'</span>, xl: <span class="s">'1280px'</span>
+    },
+    extend: {
+      colors: {
+        <span class="s">'nexus-cream'</span>:       <span class="s">'#F7F1E8'</span>,  <span class="c">// fondo cálido</span>
+        <span class="s">'nexus-dark'</span>:        <span class="s">'#1F1A14'</span>,  <span class="c">// texto y footer</span>
+        <span class="s">'nexus-accent'</span>:      <span class="s">'#C0683A'</span>,  <span class="c">// CTAs y precios</span>
+        <span class="s">'nexus-accent-dark'</span>: <span class="s">'#9A4E25'</span>,  <span class="c">// hover del accent</span>
+        <span class="s">'nexus-leaf'</span>:        <span class="s">'#3F6B4E'</span>,  <span class="c">// badges "vegano"</span>
+        <span class="s">'nexus-muted'</span>:       <span class="s">'#6E6357'</span>   <span class="c">// texto secundario</span>
+      },
+      fontFamily: {
+        display: [<span class="s">'Fraunces'</span>, <span class="s">'serif'</span>],
+        body:    [<span class="s">'Inter'</span>, <span class="s">'sans-serif'</span>]
+      },
+      boxShadow: {
+        soft: <span class="s">'0 4px 20px -8px rgba(31, 26, 20, 0.15)'</span>
+      }
+    }
+  }
+}</pre>
+      <div class="nota">
+        💡 <strong>Por qué nombres semánticos</strong>: usar <code>nexus-accent</code> en lugar de
+        <code>orange-600</code> hace que el HTML sea autoexplicativo, y permite cambiar
+        toda la paleta tocando un solo archivo.
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       PANEL 2: Los componentes con @apply
+       ════════════════════════════════════════════════════════════════════ -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c2">Criterio 2 · 35%</span>
+      <h3>2 · Componentes reutilizables con <code>@apply</code> y <code>@layer</code></h3>
+      <p>
+        Tailwind es <em>utility-first</em>, pero cuando un patrón se repite
+        muchas veces (por ejemplo, el botón principal aparece en 8 sitios) lo
+        extraemos a un componente. Eso se hace en <code>src/input.css</code>:
+      </p>
+      <pre><span class="c">/* src/input.css */</span>
+<span class="k">@tailwind</span> base;
+<span class="k">@tailwind</span> components;
+<span class="k">@tailwind</span> utilities;
+
+<span class="k">@layer</span> components {
+  .btn {
+    <span class="k">@apply</span> inline-flex items-center justify-center gap-2
+           px-4 py-2 rounded-lg font-medium transition
+           focus:ring-2 focus:ring-nexus-accent;
+  }
+  .btn-primary  { <span class="k">@apply</span> btn bg-nexus-accent text-white hover:bg-nexus-accent-dark; }
+  .chip-on      { <span class="k">@apply</span> chip bg-nexus-dark text-nexus-cream; }
+  .chip-off     { <span class="k">@apply</span> chip bg-white text-nexus-muted hover:border-nexus-accent; }
+  .card-producto{ <span class="k">@apply</span> bg-white rounded-2xl shadow-soft overflow-hidden
+                          flex flex-col hover:shadow-xl hover:-translate-y-1
+                          transition duration-300; }
+}</pre>
+      <div class="nota">
+        ⚖️ <strong>Regla práctica</strong>: extraigo a componente cuando uso el patrón
+        <strong>3 o más veces</strong>. Si lo uso 1-2 veces, lo dejo inline en el HTML.
+        Abusar de <code>@apply</code> es montar CSS clásico disfrazado y rompe la
+        filosofía de Tailwind.
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       === A PARTIR DE AQUÍ VA LA PÁGINA REAL, CON PANELES INTERCALADOS ===
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <!-- PANEL: Header -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c1">Criterio 1 · Mobile-first</span>
+      <h3>3 · Header sticky con menú adaptativo</h3>
+      <p>El header se pega arriba al hacer scroll y usa <em>backdrop blur</em>
+      para mantener legibilidad. El menú de navegación se oculta en móvil (donde
+      sobra espacio) y aparece a partir de <code>md:</code> (768px).</p>
+      <pre><span class="k">&lt;header</span> class=<span class="s">"sticky top-0 z-20 bg-nexus-cream/85 backdrop-blur
+                       border-b border-nexus-paper"</span><span class="k">&gt;</span>
+  <span class="k">&lt;div</span> class=<span class="s">"container mx-auto px-4 sm:px-6 lg:px-8 py-3
+                    flex items-center justify-between gap-4"</span><span class="k">&gt;</span>
+    ...
+    <span class="c">&lt;!-- Solo visible desde tablet --&gt;</span>
+    <span class="k">&lt;nav</span> class=<span class="s">"hidden md:flex items-center gap-6"</span><span class="k">&gt;</span> ... <span class="k">&lt;/nav&gt;</span>
+    ...
+  <span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;/header&gt;</span></pre>
+      <ul>
+        <li><code>sticky top-0 z-20</code> → se ancla arriba al hacer scroll</li>
+        <li><code>bg-nexus-cream/85 backdrop-blur</code> → fondo semitransparente con desenfoque</li>
+        <li><code>hidden md:flex</code> → el patrón mobile-first por excelencia: oculto por defecto, visible desde tablet</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HEADER REAL (renderizado) ═══════════════════ -->
+  <header class="sticky top-0 z-20 bg-nexus-cream/85 backdrop-blur border-b border-nexus-paper">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+      <a href="#" class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-nexus-dark text-nexus-cream font-display font-bold flex items-center justify-center">N</span>
+        <span class="font-display font-bold text-lg sm:text-xl">Nexus</span>
+        <span class="hidden xs:inline text-nexus-muted text-sm">· Librería &amp; Cowork</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#" class="hover:text-nexus-accent transition">Espacios</a>
+        <a href="#" class="hover:text-nexus-accent transition">Eventos</a>
+        <a href="#" class="text-nexus-accent">Cafetería</a>
+        <a href="#" class="hover:text-nexus-accent transition">Tienda</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button class="btn-ghost relative" aria-label="Ver carrito">
+          🛒
+          <span class="absolute -top-1 -right-1 bg-nexus-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">3</span>
+        </button>
+        <button class="btn-primary hidden sm:inline-flex">Iniciar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PANEL: Hero -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c1">Criterio 1 · Tipografía responsive</span>
+      <h3>4 · Hero con tipografía escalable</h3>
+      <p>El título crece a medida que aumenta el viewport. Esto es típico mobile-first:
+      empezamos con un tamaño legible en móvil y vamos subiendo.</p>
+      <pre><span class="k">&lt;h1</span> class=<span class="s">"text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight"</span><span class="k">&gt;</span>
+  Café de especialidad, libros y un sitio donde quedarte.
+<span class="k">&lt;/h1&gt;</span></pre>
+      <ul>
+        <li><code>text-3xl</code> → 30px en móvil</li>
+        <li><code>sm:text-4xl</code> → 36px desde 640px</li>
+        <li><code>lg:text-5xl</code> → 48px desde 1024px</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HERO REAL ═══════════════════ -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+    <p class="text-nexus-accent uppercase tracking-widest text-xs font-semibold mb-2">Cafetería · Aranjuez</p>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight max-w-2xl">
+      Café de especialidad, libros y un sitio donde quedarte.
+    </h1>
+    <p class="mt-3 text-nexus-muted max-w-xl">
+      Pide desde la mesa, recógelo en barra. Te avisamos cuando esté listo.
+    </p>
+  </section>
+
+  <!-- PANEL: Filtros -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c2">Criterio 2 · Componentes</span>
+      <h3>5 · Filtros con scroll horizontal en móvil</h3>
+      <p>En móvil no caben 7 categorías en una fila, así que en lugar de
+      apilarlas verticalmente (que ocuparía mucho alto) hacemos que el
+      contenedor pueda <strong>desbordarse y desplazarse horizontalmente</strong>.
+      Cada chip está construido con el componente <code>.chip-on</code> /
+      <code>.chip-off</code> definido en <code>input.css</code>.</p>
+      <pre><span class="k">&lt;div</span> class=<span class="s">"flex items-center gap-2 overflow-x-auto pb-1"</span><span class="k">&gt;</span>
+  <span class="k">&lt;span</span> class=<span class="s">"chip-on"</span><span class="k">&gt;</span>Todos<span class="k">&lt;/span&gt;</span>
+  <span class="k">&lt;span</span> class=<span class="s">"chip-off"</span><span class="k">&gt;</span>☕ Cafés<span class="k">&lt;/span&gt;</span>
+  <span class="k">&lt;span</span> class=<span class="s">"chip-off"</span><span class="k">&gt;</span>🍵 Tés &amp; infusiones<span class="k">&lt;/span&gt;</span>
+  ...
+<span class="k">&lt;/div&gt;</span></pre>
+      <div class="nota">
+        🎯 Fíjate en lo limpio que queda el HTML al usar <code>chip-on</code>
+        en lugar de las 8 utilidades que esa clase encapsula. Eso es lo que
+        evalúa el criterio 2.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FILTROS REALES ═══════════════════ -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 sticky top-[65px] z-10 bg-nexus-cream/85 backdrop-blur py-3">
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+      <span class="chip-on">Todos</span>
+      <span class="chip-off">☕ Cafés</span>
+      <span class="chip-off">🍵 Tés &amp; infusiones</span>
+      <span class="chip-off">🥐 Bollería</span>
+      <span class="chip-off">🥗 Snacks salados</span>
+      <span class="chip-off">🍰 Dulces</span>
+      <span class="chip-off">🌱 Vegano</span>
+    </div>
+  </section>
+
+  <!-- PANEL: Grid de productos -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c1">Criterio 1 · CSS Grid responsive</span>
+      <h3>6 · Cuadrícula de productos progresiva</h3>
+      <p>El número de columnas cambia según el viewport. Una sola declaración
+      con prefijos responsive lo controla todo:</p>
+      <pre><span class="k">&lt;div</span> class=<span class="s">"grid grid-cols-1 xs:grid-cols-2
+                    lg:grid-cols-2 xl:grid-cols-3 gap-5"</span><span class="k">&gt;</span>
+  <span class="c">&lt;!-- 6 cards de producto --&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+      <ul>
+        <li>📱 Móvil pequeño (&lt; 420px): <strong>1 columna</strong></li>
+        <li>📱 Móvil grande (≥ 420px): <strong>2 columnas</strong></li>
+        <li>💻 Desktop (≥ 1024px): <strong>2 columnas</strong> + columna lateral del resumen</li>
+        <li>🖥️ Desktop ancho (≥ 1280px): <strong>3 columnas</strong> + columna lateral</li>
+      </ul>
+      <div class="nota">
+        🔍 <strong>Para la videomemoria</strong>: abrid DevTools (F12) y redimensionad
+        la ventana en vivo mientras explicáis. Es la forma más visual de demostrar
+        el comportamiento responsive.
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL: Anatomía de una card -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c1">Criterio 1 · Flexbox</span>
+      <span class="tag tag-c2">Criterio 2 · Componente</span>
+      <h3>7 · Anatomía de una card de producto</h3>
+      <p>Cada card es <code>flex flex-col</code> para que el botón quede siempre
+      pegado abajo aunque las descripciones tengan distinto largo. El
+      <code>flex-1</code> en la descripción es el truco que empuja al botón.</p>
+      <pre><span class="k">&lt;article</span> class=<span class="s">"card-producto"</span><span class="k">&gt;</span>
+  <span class="k">&lt;div</span> class=<span class="s">"aspect-[4/3] bg-gradient-to-br from-amber-100 to-orange-200
+                  flex items-center justify-center text-6xl"</span><span class="k">&gt;</span>☕<span class="k">&lt;/div&gt;</span>
+  <span class="k">&lt;div</span> class=<span class="s">"p-4 flex flex-col gap-2 flex-1"</span><span class="k">&gt;</span>
+    <span class="k">&lt;div</span> class=<span class="s">"flex items-start justify-between gap-2"</span><span class="k">&gt;</span>
+      <span class="k">&lt;h3</span> class=<span class="s">"font-display font-semibold text-lg"</span><span class="k">&gt;</span>Flat white<span class="k">&lt;/h3&gt;</span>
+      <span class="k">&lt;span</span> class=<span class="s">"font-bold text-nexus-accent"</span><span class="k">&gt;</span>2,90 €<span class="k">&lt;/span&gt;</span>
+    <span class="k">&lt;/div&gt;</span>
+    <span class="k">&lt;p</span> class=<span class="s">"text-sm text-nexus-muted flex-1"</span><span class="k">&gt;</span>Doble ristretto...<span class="k">&lt;/p&gt;</span>
+    <span class="k">&lt;span</span> class=<span class="s">"badge bg-nexus-leaf/10 text-nexus-leaf"</span><span class="k">&gt;</span>Sin lactosa ✓<span class="k">&lt;/span&gt;</span>
+    <span class="k">&lt;button</span> class=<span class="s">"btn-primary w-full mt-3"</span><span class="k">&gt;</span>Añadir<span class="k">&lt;/button&gt;</span>
+  <span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;/article&gt;</span></pre>
+      <ul>
+        <li><code>aspect-[4/3]</code> → ratio fijo, las imágenes siempre tienen la misma proporción</li>
+        <li><code>flex-1</code> en el <code>&lt;p&gt;</code> → empuja al botón hasta el fondo</li>
+        <li><code>nexus-leaf/10</code> → fondo verde al 10% de opacidad (sintaxis moderna de Tailwind)</li>
+        <li><code>aria-label</code>, <code>alt</code>, <code>&lt;button&gt;</code> real → accesibilidad sumando puntos al criterio 1</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MAIN: GRID + RESUMEN REALES ═══════════════════ -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pb-16 mt-4">
+    <div class="grid lg:grid-cols-[1fr_320px] gap-8">
+
+      <section aria-labelledby="titulo-menu">
+        <h2 id="titulo-menu" class="text-2xl sm:text-3xl font-bold mb-4">Hoy en la barra</h2>
+
+        <div class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+
+          <article class="card-producto">
+            <div class="aspect-[4/3] bg-gradient-to-br from-amber-100 to-orange-200 flex items-center justify-center text-6xl">☕</div>
+            <div class="p-4 flex flex-col gap-2 flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-display font-semibold text-lg">Flat white de la casa</h3>
+                <span class="font-bold text-nexus-accent whitespace-nowrap">2,90 €</span>
+              </div>
+              <p class="text-sm text-nexus-muted flex-1">Doble ristretto con leche texturizada. Tueste claro, notas de cacao.</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="badge bg-nexus-leaf/10 text-nexus-leaf">Sin lactosa ✓</span>
+              </div>
+              <button class="btn-primary w-full mt-3">Añadir al pedido</button>
+            </div>
+          </article>
+
+          <article class="card-producto">
+            <div class="aspect-[4/3] bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center text-6xl">🥐</div>
+            <div class="p-4 flex flex-col gap-2 flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-display font-semibold text-lg">Croissant artesano</h3>
+                <span class="font-bold text-nexus-accent whitespace-nowrap">1,80 €</span>
+              </div>
+              <p class="text-sm text-nexus-muted flex-1">Masa madre, mantequilla francesa. Horneado a las 7:30.</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="badge bg-amber-100 text-amber-800">Recién hecho</span>
+              </div>
+              <button class="btn-primary w-full mt-3">Añadir al pedido</button>
+            </div>
+          </article>
+
+          <article class="card-producto">
+            <div class="aspect-[4/3] bg-gradient-to-br from-green-100 to-emerald-200 flex items-center justify-center text-6xl">🥗</div>
+            <div class="p-4 flex flex-col gap-2 flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-display font-semibold text-lg">Bowl quinoa &amp; aguacate</h3>
+                <span class="font-bold text-nexus-accent whitespace-nowrap">6,50 €</span>
+              </div>
+              <p class="text-sm text-nexus-muted flex-1">Quinoa, aguacate, edamame, semillas y vinagreta de cítricos.</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="badge bg-nexus-leaf/10 text-nexus-leaf">🌱 Vegano</span>
+                <span class="badge bg-blue-50 text-blue-700">Sin gluten</span>
+              </div>
+              <button class="btn-primary w-full mt-3">Añadir al pedido</button>
+            </div>
+          </article>
+
+          <article class="card-producto">
+            <div class="aspect-[4/3] bg-gradient-to-br from-yellow-100 to-amber-200 flex items-center justify-center text-6xl">🍵</div>
+            <div class="p-4 flex flex-col gap-2 flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-display font-semibold text-lg">Matcha latte</h3>
+                <span class="font-bold text-nexus-accent whitespace-nowrap">3,40 €</span>
+              </div>
+              <p class="text-sm text-nexus-muted flex-1">Matcha ceremonial Uji, leche de avena, sin azúcar añadido.</p>
+              <button class="btn-primary w-full mt-3">Añadir al pedido</button>
+            </div>
+          </article>
+
+          <article class="card-producto">
+            <div class="aspect-[4/3] bg-gradient-to-br from-orange-100 to-red-200 flex items-center justify-center text-6xl">🍰</div>
+            <div class="p-4 flex flex-col gap-2 flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-display font-semibold text-lg">Tarta de zanahoria</h3>
+                <span class="font-bold text-nexus-accent whitespace-nowrap">4,20 €</span>
+              </div>
+              <p class="text-sm text-nexus-muted flex-1">Receta de la abuela, frosting de queso crema y nueces.</p>
+              <button class="btn-primary w-full mt-3">Añadir al pedido</button>
+            </div>
+          </article>
+
+          <article class="card-producto">
+            <div class="aspect-[4/3] bg-gradient-to-br from-stone-100 to-stone-300 flex items-center justify-center text-6xl">🥪</div>
+            <div class="p-4 flex flex-col gap-2 flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <h3 class="font-display font-semibold text-lg">Sándwich de pavo</h3>
+                <span class="font-bold text-nexus-accent whitespace-nowrap">5,90 €</span>
+              </div>
+              <p class="text-sm text-nexus-muted flex-1">Pan de centeno, pavo, queso brie, rúcula y mostaza dulce.</p>
+              <button class="btn-primary w-full mt-3">Añadir al pedido</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════════ ASIDE: RESUMEN ═══════════════════ -->
+      <aside class="lg:sticky lg:top-32 lg:self-start">
+        <div class="bg-white rounded-2xl shadow-soft p-5">
+          <h2 class="font-display font-bold text-xl mb-4">Tu pedido</h2>
+          <ul class="space-y-3 mb-4">
+            <li class="flex items-start justify-between gap-3 pb-3 border-b border-nexus-cream">
+              <div>
+                <p class="font-medium">Flat white de la casa</p>
+                <p class="text-sm text-nexus-muted">× 2</p>
+              </div>
+              <span class="font-semibold">5,80 €</span>
+            </li>
+            <li class="flex items-start justify-between gap-3 pb-3 border-b border-nexus-cream">
+              <div>
+                <p class="font-medium">Croissant artesano</p>
+                <p class="text-sm text-nexus-muted">× 1</p>
+              </div>
+              <span class="font-semibold">1,80 €</span>
+            </li>
+          </ul>
+          <div class="space-y-1 text-sm mb-4">
+            <div class="flex justify-between text-nexus-muted"><span>Subtotal</span><span>7,60 €</span></div>
+            <div class="flex justify-between text-nexus-muted"><span>IVA incluido</span><span>—</span></div>
+            <div class="flex justify-between font-bold text-base text-nexus-dark pt-2 border-t border-nexus-cream">
+              <span>Total</span><span>7,60 €</span>
+            </div>
+          </div>
+          <label class="block text-sm font-medium mb-1" for="hora">Hora de recogida</label>
+          <select id="hora" class="w-full px-3 py-2 rounded-lg border border-nexus-cream bg-nexus-paper focus:outline-none focus:ring-2 focus:ring-nexus-accent mb-4">
+            <option>Lo antes posible (≈ 8 min)</option>
+            <option>En 15 min</option>
+            <option>En 30 min</option>
+            <option>En 1 h</option>
+          </select>
+          <button class="btn-primary w-full">Confirmar pedido →</button>
+          <button class="btn-ghost w-full mt-2 text-sm">Editar carrito</button>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- PANEL: Aside / resumen -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c1">Criterio 1 · Grid avanzado</span>
+      <h3>8 · Columna lateral sticky en desktop, debajo en móvil</h3>
+      <p>El layout principal usa una grilla de 2 columnas <strong>solo en
+      desktop</strong>. En móvil y tablet, todo va apilado verticalmente.
+      Además, la columna del resumen se queda fija al hacer scroll.</p>
+      <pre><span class="k">&lt;div</span> class=<span class="s">"grid lg:grid-cols-[1fr_320px] gap-8"</span><span class="k">&gt;</span>
+  <span class="k">&lt;section&gt;</span> ... productos ... <span class="k">&lt;/section&gt;</span>
+  <span class="k">&lt;aside</span> class=<span class="s">"lg:sticky lg:top-32 lg:self-start"</span><span class="k">&gt;</span>
+    ... resumen del pedido ...
+  <span class="k">&lt;/aside&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+      <ul>
+        <li><code>lg:grid-cols-[1fr_320px]</code> → grilla arbitraria: la primera columna ocupa el espacio sobrante, la segunda 320px fijos</li>
+        <li><code>lg:sticky lg:top-32</code> → el resumen se ancla a 128px del top al hacer scroll, pero solo desde 1024px</li>
+        <li><code>lg:self-start</code> → evita que la columna se estire al alto de la otra</li>
+      </ul>
+      <div class="nota">
+        💡 Esta sección cubre también la opción 3 del enunciado (pantalla de
+        resumen de pedido). Sin necesidad de hacer una página aparte, integramos
+        el resumen como columna lateral.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER REAL ═══════════════════ -->
+  <footer class="bg-nexus-dark text-nexus-cream">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+      <div class="col-span-2">
+        <p class="font-display font-bold text-lg mb-2">Nexus</p>
+        <p class="text-nexus-cream/70">Librería &amp; cowork. Calle Real 42, Aranjuez.</p>
+      </div>
+      <div>
+        <p class="font-semibold mb-2">Horario</p>
+        <p class="text-nexus-cream/70">Lun–Vie 8:00–22:00<br />Sáb–Dom 9:00–20:00</p>
+      </div>
+      <div>
+        <p class="font-semibold mb-2">Síguenos</p>
+        <p class="text-nexus-cream/70">Instagram · X · Bluesky</p>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
+      <p class="container mx-auto px-4 py-4 text-xs text-nexus-cream/50">© 2026 Nexus · Proyecto académico UNIR — DWR Actividad 3</p>
+    </div>
+  </footer>
+
+  <!-- PANEL FINAL: cómo grabar la videomemoria -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <div class="docente">
+      <span class="tag tag-c4">Criterio 4 · 10%</span>
+      <h3>9 · Cómo grabar la videomemoria (máx. 10 min)</h3>
+      <p>El enunciado pide cubrir 5 puntos. Esta es una distribución que
+      funciona y entra holgada en 10 minutos:</p>
+      <ul>
+        <li><strong>0:00–0:30</strong> · Presentación y vista elegida.</li>
+        <li><strong>0:30–3:00</strong> · Aplicación de clases utilitarias: abrir el HTML y recorrer los patrones (header, grid, cards).</li>
+        <li><strong>3:00–5:00</strong> · <code>tailwind.config.js</code>: enseñar colores, fuentes, breakpoints propios.</li>
+        <li><strong>5:00–7:00</strong> · Directivas: <code>@apply</code> y <code>@layer</code> en <code>input.css</code>.</li>
+        <li><strong>7:00–9:30</strong> · Visualización en móvil, tablet y desktop con DevTools en vivo.</li>
+        <li><strong>9:30–10:00</strong> · Conclusiones: ventajas, retos, mejoras.</li>
+      </ul>
+      <div class="nota">
+        🎬 La videomemoria <strong>debe mostrar código</strong>, no solo el
+        resultado final. Es lo que diferencia un 0,5 de un 1 en este criterio.
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL FINAL: estructura de entrega -->
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl pb-12">
+    <div class="docente">
+      <span class="tag tag-info">Entrega</span>
+      <h3>10 · Estructura del ZIP final</h3>
+      <p>Recordad: este archivo es <strong>didáctico</strong>. En vuestra entrega
+      no hay paneles oscuros ni CDN. Tenéis que separar los archivos así:</p>
+      <pre>DWR-ACT3-ApellidoNombre.zip
+├── videomemoria.mp4
+└── proyecto/
+    ├── index.html              <span class="c">// limpio, sin paneles de explicación</span>
+    ├── tailwind.config.js      <span class="c">// el bloque que aquí está en &lt;script&gt;</span>
+    ├── package.json
+    ├── src/
+    │   └── input.css           <span class="c">// el bloque que aquí está en &lt;style&gt;</span>
+    └── dist/
+        └── output.css          <span class="c">// generado por: npm run build</span></pre>
+      <ul>
+        <li>❌ <strong>SIN</strong> <code>node_modules/</code> (lo dice expresamente el enunciado).</li>
+        <li>✅ Compilad antes de entregar: <code>npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify</code></li>
+        <li>✅ Cambiad el <code>&lt;script src="https://cdn.tailwindcss.com"&gt;</code> por <code>&lt;link rel="stylesheet" href="./dist/output.css"&gt;</code></li>
+        <li>✅ Registrad la actividad en el formulario de Moodle (aunque sea individual).</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>
