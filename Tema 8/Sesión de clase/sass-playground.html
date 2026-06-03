@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SASS Playground · Tema 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#cf649a;       /* SASS hotpink */
+    --pink-deep:#bf4080;
+    --plum:#3a1f33;
+    --plum-dark:#241019;
+    --ink:#1a0f15;
+    --cream:#fdf6f9;
+    --sand:#f6e7ee;
+    --line:rgba(207,100,154,.22);
+    --code-bg:#2a1722;
+    --green:#7ec699;
+    --gold:#e6c068;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Space Grotesk',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--pink);color:#fff}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 120% at 80% -10%, #5a2d49 0%, var(--plum) 38%, var(--plum-dark) 100%);
+    color:var(--cream);
+    padding:clamp(3rem,8vw,7rem) clamp(1.2rem,5vw,5rem) clamp(4rem,9vw,8rem);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:22px 22px;pointer-events:none;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:.5rem;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:100px;padding:.35rem .9rem;
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--pink);background:rgba(207,100,154,.08);
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(3rem,11vw,8rem);
+    line-height:.9;letter-spacing:-.02em;
+    margin:1.4rem 0 .4rem;
+    position:relative;z-index:2;
+  }
+  .hero h1 em{font-style:italic;color:var(--pink)}
+  .hero .sub{
+    font-size:clamp(1rem,2.2vw,1.45rem);
+    max-width:36ch;color:rgba(253,246,249,.78);position:relative;z-index:2;
+  }
+  .hero .problem{
+    margin-top:2.2rem;display:flex;align-items:flex-start;gap:.9rem;
+    max-width:46ch;position:relative;z-index:2;
+  }
+  .hero .problem .q{
+    font-family:'Fraunces',serif;font-style:italic;font-size:2.4rem;
+    color:var(--pink);line-height:1;
+  }
+  .hero .problem p{font-size:1.05rem;color:rgba(253,246,249,.9)}
+  .swirl{
+    position:absolute;right:-6%;top:50%;transform:translateY(-50%);
+    width:min(46vw,540px);opacity:.9;z-index:1;
+  }
+
+  /* ---------- NAV / TOC ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(253,246,249,.86);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    display:flex;gap:.4rem;overflow-x:auto;
+    padding:.7rem clamp(1rem,5vw,5rem);
+  }
+  nav a{
+    flex:0 0 auto;text-decoration:none;color:var(--plum);
+    font-family:var(--mono);font-size:.78rem;font-weight:500;
+    padding:.4rem .8rem;border-radius:8px;transition:.2s;white-space:nowrap;
+  }
+  nav a:hover{background:var(--sand);color:var(--pink-deep)}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:clamp(2.6rem,6vw,5rem) clamp(1.2rem,5vw,5rem);max-width:1200px;margin:0 auto}
+  .sec-num{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:clamp(2.6rem,7vw,5rem);color:var(--pink);
+    line-height:1;opacity:.55;
+  }
+  .sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:.4rem;flex-wrap:wrap}
+  h2{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(1.8rem,4.5vw,3rem);letter-spacing:-.01em;color:var(--ink);
+  }
+  .lead{font-size:1.12rem;color:#5a4450;max-width:62ch;margin:.6rem 0 2rem}
+  .lead code{background:var(--sand);padding:.1em .4em;border-radius:5px;font-family:var(--mono);font-size:.88em;color:var(--pink-deep)}
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;gap:1rem}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:1.4rem;transition:.25s;position:relative;overflow:hidden;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(191,64,128,.45)}
+  .card .ic{
+    width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+    background:var(--sand);color:var(--pink-deep);font-size:1.3rem;margin-bottom:.9rem;
+  }
+  .card h3{font-size:1.05rem;margin-bottom:.3rem;font-weight:700}
+  .card p{font-size:.92rem;color:#6b5560}
+
+  /* ---------- PLAYGROUND ---------- */
+  .pg{
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:#fff;box-shadow:0 24px 60px -40px rgba(58,31,51,.5);margin-top:1rem;
+  }
+  .pg-bar{
+    display:flex;align-items:center;gap:.6rem;
+    background:var(--code-bg);padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+  .pg-bar .label{
+    margin-left:.5rem;font-family:var(--mono);font-size:.74rem;color:#c7a9bb;letter-spacing:.05em;
+  }
+  .pg-bar .tag{
+    margin-left:auto;font-family:var(--mono);font-size:.66rem;color:var(--pink);
+    border:1px solid rgba(207,100,154,.35);border-radius:6px;padding:.18rem .5rem;
+  }
+  .pg-body{display:grid;grid-template-columns:1fr 1fr;min-height:260px}
+  @media(max-width:760px){.pg-body{grid-template-columns:1fr}}
+  .pane{display:flex;flex-direction:column;min-width:0}
+  .pane+.pane{border-left:1px solid rgba(255,255,255,.06)}
+  @media(max-width:760px){.pane+.pane{border-left:none;border-top:1px solid rgba(255,255,255,.06)}}
+  .pane-h{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    padding:.55rem 1rem;color:#9c8092;background:#22131c;display:flex;align-items:center;gap:.5rem;
+  }
+  .pane-h .scss{color:var(--pink)}
+  .pane-h .css{color:var(--green)}
+  textarea.editor{
+    flex:1;background:var(--code-bg);color:#f3e6ee;border:0;outline:0;resize:vertical;
+    font-family:var(--mono);font-size:.82rem;line-height:1.65;padding:1rem;min-height:230px;
+    white-space:pre;tab-size:2;
+  }
+  pre.out{
+    flex:1;margin:0;background:#1d2620;color:#d6ead9;overflow:auto;
+    font-family:var(--mono);font-size:.82rem;line-height:1.65;padding:1rem;min-height:230px;
+  }
+  pre.out.err{background:#2c1517;color:#ffb4b4}
+  .tok-sel{color:#7fd1e0}.tok-prop{color:#cdb4e0}.tok-val{color:#9be8b0}
+  .pg-foot{
+    display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+    background:#22131c;padding:.7rem 1rem;border-top:1px solid rgba(255,255,255,.06);
+  }
+  .btn{
+    font-family:var(--mono);font-size:.74rem;font-weight:700;cursor:pointer;
+    border:0;border-radius:8px;padding:.5rem 1rem;transition:.2s;letter-spacing:.04em;
+  }
+  .btn-run{background:var(--pink);color:#fff}
+  .btn-run:hover{background:var(--pink-deep)}
+  .btn-reset{background:rgba(255,255,255,.08);color:#c7a9bb}
+  .btn-reset:hover{background:rgba(255,255,255,.16)}
+  .pg-foot .hint{font-size:.72rem;color:#8a6f7e;margin-left:auto}
+  .live{display:flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.7rem;color:var(--green)}
+  .live .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* preview box for rendered result */
+  .preview{
+    margin-top:1rem;border:1px dashed var(--line);border-radius:14px;padding:1.4rem;
+    background:repeating-linear-gradient(45deg,#fff,#fff 12px,#fdf0f5 12px,#fdf0f5 24px);
+  }
+  .preview-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#b18ba0;margin-bottom:.8rem}
+
+  /* nesting compare */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:680px){.compare{grid-template-columns:1fr}}
+  .compare .col{background:var(--code-bg);border-radius:14px;overflow:hidden}
+  .compare .col .h{font-family:var(--mono);font-size:.7rem;padding:.55rem 1rem;color:#c7a9bb;border-bottom:1px solid rgba(255,255,255,.06)}
+  .compare .col pre{margin:0;padding:1rem;font-family:var(--mono);font-size:.78rem;line-height:1.6;color:#f3e6ee;overflow:auto}
+
+  /* file tree */
+  .tree{
+    background:var(--code-bg);border-radius:16px;padding:1.4rem 1.6rem;
+    font-family:var(--mono);font-size:.84rem;line-height:1.9;color:#e7d3df;
+  }
+  .tree .dir{color:var(--gold)}
+  .tree .file{color:#c8b0bf}
+  .tree .main{color:var(--pink);font-weight:700}
+  .tree .cm{color:#7a6270}
+
+  footer{
+    background:var(--plum-dark);color:rgba(253,246,249,.6);
+    text-align:center;padding:3rem 1.5rem;font-family:var(--mono);font-size:.8rem;
+  }
+
+  /* ---- pasos manuales ---- */
+  .steps{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}
+  .step{
+    display:grid;grid-template-columns:auto 1fr;gap:1.1rem;
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.3rem 1.5rem;
+  }
+  .step-n{
+    width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    background:var(--pink);color:#fff;font-family:var(--mono);font-weight:700;font-size:1rem;
+  }
+  .step h3{font-size:1.08rem;margin-bottom:.15rem}
+  .step .who{
+    display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;
+    text-transform:uppercase;padding:.18rem .55rem;border-radius:6px;margin-bottom:.55rem;
+  }
+  .who.manual{background:#fbe3ee;color:var(--pink-deep)}
+  .who.auto{background:#e3f3ea;color:#2f7d52}
+  .step p{font-size:.94rem;color:#5a4450;margin:.35rem 0}
+  .step .path{font-family:var(--mono);font-size:.8rem;color:var(--pink-deep);background:var(--sand);padding:.1em .45em;border-radius:5px}
+  .codeblock{
+    background:var(--code-bg);color:#f3e6ee;border-radius:10px;padding:.85rem 1rem;
+    font-family:var(--mono);font-size:.8rem;line-height:1.6;margin-top:.6rem;overflow:auto;white-space:pre;
+  }
+  .codeblock .cm{color:#7a6270}
+  .codeblock .pk{color:var(--pink)}
+  .codeblock .gr{color:var(--green)}
+  .callout{
+    border-left:3px solid var(--pink);background:#fff;border-radius:0 12px 12px 0;
+    padding:.9rem 1.2rem;margin-top:1rem;font-size:.92rem;color:#5a4450;
+  }
+  .callout strong{color:var(--ink)}
+  /* file-type legend */
+  .ftypes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin-top:1rem}
+  .ftype{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem}
+  .ftype code{font-family:var(--mono);font-weight:700;color:var(--pink-deep);font-size:.92rem}
+  .ftype p{font-size:.88rem;color:#6b5560;margin-top:.3rem}
+  /* nextjs tabs */
+  .nx{margin-top:1rem;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+  .nx-tabs{display:flex;gap:.2rem;background:var(--sand);padding:.4rem;flex-wrap:wrap}
+  .nx-tab{
+    flex:1;min-width:140px;border:0;cursor:pointer;border-radius:9px;padding:.6rem .8rem;
+    font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--plum);background:transparent;transition:.2s;
+  }
+  .nx-tab.active{background:#fff;color:var(--pink-deep);box-shadow:0 2px 8px -3px rgba(191,64,128,.4)}
+  .nx-panel{display:none;padding:1.3rem 1.5rem}
+  .nx-panel.active{display:block}
+  .nx-panel h4{font-size:1rem;margin-bottom:.5rem}
+  .nx-panel p{font-size:.92rem;color:#5a4450;margin:.4rem 0}
+  footer strong{color:var(--pink)}
+  .reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="swirl" viewBox="0 0 200 200" fill="none">
+    <path d="M100 20c40 0 60 30 50 55-8 20-40 22-55 12-12-8-6-26 8-26 18 0 22 22 6 34-22 16-66 6-79-22" stroke="#cf649a" stroke-width="6" stroke-linecap="round" opacity=".55"/>
+    <circle cx="100" cy="100" r="78" stroke="#cf649a" stroke-width="1.5" opacity=".25"/>
+  </svg>
+  <span class="badge">● Tema 8 · Frontend</span>
+  <h1>S<em>A</em>SS</h1>
+  <p class="sub">Un preprocesador que convierte el CSS en un lenguaje con superpoderes: variables, anidamiento, mixins y funciones.</p>
+  <div class="problem">
+    <span class="q">?</span>
+    <p>El problema de la semana: <strong>¿cómo mejorar el mantenimiento del CSS</strong> en proyectos que crecen y se vuelven inmanejables?</p>
+  </div>
+</header>
+
+<nav>
+  <a href="#que-es">¿Qué es?</a>
+  <a href="#ventajas">Ventajas</a>
+  <a href="#proyecto">A mano</a>
+  <a href="#nextjs">Con framework</a>
+  <a href="#variables">Variables</a>
+  <a href="#anidamiento">Anidamiento</a>
+  <a href="#mixins">Mixins</a>
+  <a href="#funciones">Funciones &amp; bucles</a>
+  <a href="#estructura">Estructura</a>
+  <a href="#libre">Modo libre</a>
+</nav>
+
+<!-- 1. QUÉ ES -->
+<section id="que-es" class="reveal">
+  <div class="sec-head"><span class="sec-num">01</span><h2>¿Qué es SASS?</h2></div>
+  <p class="lead"><strong>SASS</strong> (Syntactically Awesome Stylesheets) es un <strong>preprocesador CSS</strong>: una herramienta que extiende la sintaxis del CSS permitiendo usar funcionalidades propias de lenguajes de programación. Escribes <code>.scss</code>, y SASS lo <em>compila</em> a CSS plano que el navegador entiende.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ic">📝</div><h3>Escribes SCSS</h3><p>Código con variables, anidación y lógica. Más expresivo que el CSS.</p></div>
+    <div class="card"><div class="ic">⚙️</div><h3>SASS compila</h3><p>El preprocesador traduce todo a CSS estándar, optimizado.</p></div>
+    <div class="card"><div class="ic">🌐</div><h3>El navegador lee CSS</h3><p>El resultado es CSS normal: el navegador nunca ve tu SCSS.</p></div>
+  </div>
+  <p class="lead" style="margin-top:1.6rem">Otros preprocesadores del mismo ecosistema: <code>Less</code>, <code>Stylus</code> y <code>PostCSS</code>. SASS es el más extendido.</p>
+</section>
+
+<!-- 2. VENTAJAS -->
+<section id="ventajas" class="reveal">
+  <div class="sec-head"><span class="sec-num">02</span><h2>¿Por qué usarlo?</h2></div>
+  <p class="lead">SASS no añade nada que el navegador no pueda hacer — añade comodidad para <em>ti</em>. Estas son las ganancias reales en el día a día.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ic">🧹</div><h3>Código más limpio</h3><p>Estructura organizada y legible.</p></div>
+    <div class="card"><div class="ic">♻️</div><h3>Reutilización</h3><p>Mixins y funciones evitan repetir estilos.</p></div>
+    <div class="card"><div class="ic">🔧</div><h3>Mantenimiento</h3><p>Un cambio en una variable se propaga a todo.</p></div>
+    <div class="card"><div class="ic">📈</div><h3>Escalabilidad</h3><p>Soporta proyectos grandes sin caos.</p></div>
+    <div class="card"><div class="ic">🤝</div><h3>Colaboración</h3><p>Convenciones claras para el equipo.</p></div>
+    <div class="card"><div class="ic">⚡</div><h3>Más rápido</h3><p>Menos código manual, menos errores.</p></div>
+  </div>
+</section>
+
+<!-- 3. EN PROYECTOS -->
+<section id="proyecto" class="reveal">
+  <div class="sec-head"><span class="sec-num">03·a</span><h2>A mano (HTML y CSS puro)</h2></div>
+  <p class="lead">Este flujo aplica cuando <strong>no usas un bundler ni un framework</strong>: un proyecto de HTML + CSS sin más. Como no hay nada que dispare la compilación, eres tú quien arranca el compilador. El navegador <strong>no entiende SCSS</strong>: solo lee CSS. Por eso necesitas un paso de <em>compilación</em> que traduzca tus <code>.scss</code> a <code>.css</code>. Aquí tienes exactamente qué hace el desarrollador <strong>a mano</strong> y qué hace la herramienta <strong>sola</strong>, paso a paso, desde la terminal en la raíz del proyecto.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div>
+        <span class="who manual">✋ manual · terminal</span>
+        <h3>Instalar SASS</h3>
+        <p>En la <strong>raíz del proyecto</strong> (donde está tu <span class="path">package.json</span>), instala el compilador como dependencia de desarrollo:</p>
+        <div class="codeblock"><span class="cm"># si aún no tienes package.json:</span>
+npm init -y
+
+<span class="cm"># instalar el compilador SASS:</span>
+npm install -D sass</div>
+        <p>El flag <code>-D</code> lo guarda en <code>devDependencies</code>: solo se usa al desarrollar, no se envía al navegador.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">2</div>
+      <div>
+        <span class="who manual">✋ manual · crear carpetas y archivos</span>
+        <h3>Crear la carpeta de fuentes y tu primer <code>.scss</code></h3>
+        <p>Crea tú mismo una carpeta para el código fuente (convención: <span class="path">scss/</span> o <span class="path">styles/</span>) y dentro un archivo de entrada <span class="path">scss/main.scss</span>. La carpeta de salida <span class="path">css/</span> la generará la herramienta sola en el paso 3 — <strong>no la creas tú</strong>.</p>
+        <div class="codeblock"><span class="cm"># crear la carpeta de código fuente a mano:</span>
+mkdir scss
+
+<span class="cm"># crear el archivo de entrada (con tu editor o así):</span>
+<span class="gr">echo</span> <span class="pk">'$color: #cf649a; body { color: $color; }'</span> > scss/main.scss</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">3</div>
+      <div>
+        <span class="who auto">⚙️ automático · lo hace SASS</span>
+        <h3>Arrancar el compilador en modo <code>--watch</code></h3>
+        <p>Este comando deja a SASS <strong>vigilando</strong> la carpeta de entrada. Cada vez que <em>tú</em> guardes un <code>.scss</code>, él recompila y escribe el <code>.css</code> automáticamente. Déjalo corriendo mientras trabajas.</p>
+        <div class="codeblock"><span class="cm"># formato:  sass --watch [entrada]:[salida]</span>
+npx sass --watch scss:css</div>
+        <p>SASS crea solo la carpeta <span class="path">css/</span> y dentro <span class="path">main.css</span> (+ un <span class="path">main.css.map</span> para depurar). <strong>Nunca edites el CSS generado</strong>: tus cambios van siempre en los <code>.scss</code>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">4</div>
+      <div>
+        <span class="who manual">✋ manual · en tu HTML</span>
+        <h3>Enlazar el <code>.css</code> compilado (no el SCSS)</h3>
+        <p>En tu HTML enlazas el archivo <strong>de salida</strong> que generó SASS, no el <code>.scss</code>. El navegador solo ve CSS:</p>
+        <div class="codeblock"><span class="cm">&lt;!-- index.html --&gt;</span>
+&lt;link rel=<span class="pk">"stylesheet"</span> href=<span class="pk">"css/main.css"</span>&gt;</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-n">5</div>
+      <div>
+        <span class="who manual">✋ recomendado · package.json</span>
+        <h3>Guardar el comando como script</h3>
+        <p>Para no recordar la ruta cada vez, añade tú un script en <span class="path">package.json</span>. Luego arrancas con <code>npm run sass</code>:</p>
+        <div class="codeblock"><span class="cm">// package.json</span>
+<span class="pk">"scripts"</span>: {
+  <span class="pk">"sass"</span>: <span class="gr">"sass --watch scss:css"</span>,
+  <span class="pk">"build:css"</span>: <span class="gr">"sass scss:css --style compressed"</span>
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Regla de oro:</strong> tú editas archivos <code>.scss</code> → SASS los compila → el navegador lee el <code>.css</code> resultante. El <code>.css</code> es un artefacto generado; muchos equipos lo añaden a <code>.gitignore</code> y lo regeneran en cada build.
+  </div>
+
+  <h2 style="font-size:clamp(1.3rem,3vw,1.8rem);margin-top:2.6rem">Tipos de archivo que vas a manejar</h2>
+  <div class="ftypes">
+    <div class="ftype"><code>.scss</code><p>Lo que <strong>tú escribes</strong>. Sintaxis con llaves y <code>;</code> (parecida a CSS). Es la que usa todo el mundo hoy.</p></div>
+    <div class="ftype"><code>_archivo.scss</code><p>Un <strong>parcial</strong>: el guion bajo le dice a SASS que <em>no</em> genere un <code>.css</code> propio. Se importa desde otros. Tú creas estos.</p></div>
+    <div class="ftype"><code>main.scss</code><p>El <strong>punto de entrada</strong> (sin guion bajo). Importa todos los parciales. Es el único que se compila a un <code>.css</code> final.</p></div>
+    <div class="ftype"><code>.sass</code><p>Sintaxis antigua, por indentación y sin llaves ni <code>;</code>. Existe pero <strong>casi nadie la usa</strong>; quédate con <code>.scss</code>.</p></div>
+    <div class="ftype"><code>main.css</code><p><strong>Generado por SASS</strong>, no lo tocas. Es lo que enlaza el navegador.</p></div>
+    <div class="ftype"><code>main.css.map</code><p><strong>Generado</strong>. Un <em>source map</em> que conecta el CSS con tu SCSS para depurar en DevTools.</p></div>
+  </div>
+</section>
+
+<!-- NEXT.JS -->
+<section id="nextjs" class="reveal">
+  <div class="sec-head"><span class="sec-num">03·b</span><h2>Con framework (Next.js)</h2></div>
+  <p class="lead">Cuando usas un bundler o framework (Next.js, Vite, Angular…), <strong>no necesitas el comando <code>--watch</code></strong>: el propio framework detecta y compila SASS durante el desarrollo y el build. Instalar <code>sass</code> y crear archivos <code>.scss</code> es suficiente — por eso quizá no recuerdes haber lanzado nunca el compilador a mano. Tu único paso manual extra es instalar el paquete. Elige el patrón según cómo quieras aplicar los estilos.</p>
+
+  <div class="nx">
+    <div class="nx-tabs">
+      <button class="nx-tab active" data-nx="0">① Instalar</button>
+      <button class="nx-tab" data-nx="1">② Global</button>
+      <button class="nx-tab" data-nx="2">③ Por componente</button>
+      <button class="nx-tab" data-nx="3">④ Variables compartidas</button>
+    </div>
+
+    <div class="nx-panel active">
+      <h4>Paso manual único: instalar <code>sass</code></h4>
+      <p>Desde la raíz del proyecto Next.js. No hay que configurar nada más en <code>next.config.js</code>: Next lo detecta automáticamente.</p>
+      <div class="codeblock">npm install -D sass</div>
+      <p>A partir de aquí, ejecutas tu proyecto como siempre (<code>npm run dev</code>) y Next compila el SASS al vuelo.</p>
+    </div>
+
+    <div class="nx-panel">
+      <h4>Estilos globales</h4>
+      <p><strong>Tú creas</strong> un archivo, p. ej. <span class="path">app/globals.scss</span>, y lo importas <strong>una sola vez</strong> en el layout raíz. Solo el archivo global puede importarse así.</p>
+      <div class="codeblock"><span class="cm">// app/globals.scss  (lo creas tú)</span>
+$marca: #cf649a;
+body { margin: 0; color: $marca; }</div>
+      <div class="codeblock"><span class="cm">// app/layout.tsx</span>
+<span class="pk">import</span> <span class="gr">'./globals.scss'</span>;
+
+<span class="pk">export default function</span> RootLayout({ children }) {
+  <span class="pk">return</span> &lt;html&gt;&lt;body&gt;{children}&lt;/body&gt;&lt;/html&gt;;
+}</div>
+    </div>
+
+    <div class="nx-panel">
+      <h4>CSS Modules con SCSS (recomendado por componente)</h4>
+      <p>El archivo <strong>debe llamarse</strong> <span class="path">algo.module.scss</span>. Next aísla las clases por componente (sin colisiones de nombres). Tú creas el <code>.module.scss</code> y lo importas como objeto.</p>
+      <div class="codeblock"><span class="cm">// components/Boton.module.scss  (lo creas tú)</span>
+$radio: 8px;
+.boton {
+  background: #cf649a;
+  border-radius: $radio;
+  &amp;:hover { opacity: .9; }
+}</div>
+      <div class="codeblock"><span class="cm">// components/Boton.tsx</span>
+<span class="pk">import</span> styles <span class="pk">from</span> <span class="gr">'./Boton.module.scss'</span>;
+
+<span class="pk">export default function</span> Boton() {
+  <span class="pk">return</span> &lt;button className={styles.boton}&gt;Click&lt;/button&gt;;
+}</div>
+    </div>
+
+    <div class="nx-panel">
+      <h4>Compartir variables y mixins entre archivos</h4>
+      <p>Crea tú una carpeta <span class="path">styles/</span> con parciales (<code>_variables.scss</code>, <code>_mixins.scss</code>) y úsalos con <code>@use</code>. Opcionalmente, registra esa carpeta en <code>next.config.js</code> para importar sin rutas largas.</p>
+      <div class="codeblock"><span class="cm">// next.config.js  (edición manual opcional)</span>
+<span class="pk">const</span> path = <span class="pk">require</span>(<span class="gr">'path'</span>);
+module.exports = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, <span class="gr">'styles'</span>)],
+  },
+};</div>
+      <div class="codeblock"><span class="cm">// dentro de cualquier .scss o .module.scss</span>
+<span class="pk">@use</span> <span class="gr">'variables'</span> <span class="pk">as</span> v;
+.tarjeta { color: v.$marca; }</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Diferencia clave con el proyecto "a mano":</strong> en Next.js no arrancas <code>sass --watch</code> ni enlazas un <code>.css</code> en el HTML. Importas el <code>.scss</code> directamente en tu componente/layout y el framework se encarga de compilar y de inyectar los estilos. Tu trabajo manual se reduce a: <strong>instalar el paquete + crear y nombrar bien tus archivos</strong>.
+  </div>
+</section>
+
+<!-- ============ FUNCIONALIDADES CLAVE — PLAYGROUNDS ============ -->
+
+<!-- VARIABLES -->
+<section id="variables" class="reveal">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Variables <span style="font-family:var(--mono);font-size:1rem;color:var(--pink)">$</span></h2></div>
+  <p class="lead">Almacenan valores reutilizables: colores, espaciados, tamaños. Cámbialos en un sitio y se actualiza todo el proyecto. <strong>Edita el SCSS de la izquierda</strong> y mira cómo cambia el CSS al instante.</p>
+
+  <div class="pg" data-pg>
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">variables.scss</span><span class="tag">$</span></div>
+    <div class="pg-body">
+      <div class="pane">
+        <div class="pane-h"><span class="scss">●</span> SCSS — editable</div>
+        <textarea class="editor" spellcheck="false">// Definir variables
+$color-principal: #cf649a;
+$color-secundario: #00bfa6;
+$padding: 1.5rem;
+
+// Usar variables
+.boton {
+  background: $color-principal;
+  color: white;
+  padding: $padding;
+  border-radius: 8px;
+}
+.boton--secundario {
+  background: $color-secundario;
+}</textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-h"><span class="css">●</span> CSS compilado</div>
+        <pre class="out">Compilando…</pre>
+      </div>
+    </div>
+    <div class="pg-foot">
+      <button class="btn btn-run">▶ Compilar</button>
+      <button class="btn btn-reset">↺ Reset</button>
+      <span class="live"><span class="pulse"></span>auto-compila al escribir</span>
+    </div>
+  </div>
+  <div class="preview" data-preview><div class="preview-label">Vista previa del resultado</div></div>
+</section>
+
+<!-- ANIDAMIENTO -->
+<section id="anidamiento" class="reveal">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Anidamiento</h2></div>
+  <p class="lead">Refleja la estructura del HTML escribiendo selectores anidados. El símbolo <code>&amp;</code> representa al selector padre — ideal para estados como <code>:hover</code>. Compara el SCSS con el CSS que genera.</p>
+
+  <div class="pg" data-pg>
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">tarjeta.scss</span><span class="tag">{ }</span></div>
+    <div class="pg-body">
+      <div class="pane">
+        <div class="pane-h"><span class="scss">●</span> SCSS anidado — editable</div>
+        <textarea class="editor" spellcheck="false">.tarjeta {
+  padding: 1rem;
+  border: 1px solid #eee;
+
+  .titulo {
+    font-size: 1.4rem;
+    &:hover { color: #cf649a; }
+  }
+  .contenido { color: #555; }
+  .boton {
+    background: #cf649a;
+    &:hover { background: #bf4080; }
+  }
+}</textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-h"><span class="css">●</span> CSS plano (sin anidar)</div>
+        <pre class="out">Compilando…</pre>
+      </div>
+    </div>
+    <div class="pg-foot">
+      <button class="btn btn-run">▶ Compilar</button>
+      <button class="btn btn-reset">↺ Reset</button>
+      <span class="hint">El <code style="color:var(--pink)">&amp;</code> se sustituye por el selector padre</span>
+    </div>
+  </div>
+</section>
+
+<!-- MIXINS -->
+<section id="mixins" class="reveal">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Mixins <span style="font-family:var(--mono);font-size:1rem;color:var(--pink)">@mixin</span></h2></div>
+  <p class="lead">Bloques de estilos reutilizables que aceptan <strong>parámetros</strong>. Se definen con <code>@mixin</code> y se insertan con <code>@include</code>. Prueba a cambiar la intensidad de la sombra.</p>
+
+  <div class="pg" data-pg>
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">mixins.scss</span><span class="tag">@mixin</span></div>
+    <div class="pg-body">
+      <div class="pane">
+        <div class="pane-h"><span class="scss">●</span> SCSS — editable</div>
+        <textarea class="editor" spellcheck="false">// Definir mixin con parámetro por defecto
+@mixin sombra-tarjeta($intensidad: 0.1) {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, $intensidad);
+  transition: box-shadow 0.3s ease;
+}
+
+// Reutilizar con distintos valores
+.tarjeta {
+  @include sombra-tarjeta(0.15);
+}
+.tarjeta-destacada {
+  @include sombra-tarjeta(0.25);
+}</textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-h"><span class="css">●</span> CSS compilado</div>
+        <pre class="out">Compilando…</pre>
+      </div>
+    </div>
+    <div class="pg-foot">
+      <button class="btn btn-run">▶ Compilar</button>
+      <button class="btn btn-reset">↺ Reset</button>
+      <span class="hint">Un mixin = estilos parametrizables reutilizables</span>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONES Y BUCLES -->
+<section id="funciones" class="reveal">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Funciones &amp; Bucles</h2></div>
+  <p class="lead">Las <strong>funciones</strong> (<code>@function</code>) devuelven valores calculados. Los <strong>bucles</strong> (<code>@for</code>) automatizan la creación de clases repetitivas — utilidades de espaciado, colores o tamaños — reduciendo código manual y errores. Cambia el rango del bucle y observa cuántas clases se generan.</p>
+
+  <div class="pg" data-pg>
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">utilidades.scss</span><span class="tag">@for</span></div>
+    <div class="pg-body">
+      <div class="pane">
+        <div class="pane-h"><span class="scss">●</span> SCSS — editable</div>
+        <textarea class="editor" spellcheck="false">// Función personalizada
+@function espaciado($n) {
+  @return $n * 0.5rem;
+}
+.margen-2 {
+  margin: espaciado(2); // 1rem
+}
+
+// Bucle: genera clases .mt-1 ... .mt-5
+@for $i from 1 through 5 {
+  .mt-#{$i} {
+    margin-top: #{$i * 0.5}rem;
+  }
+}</textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-h"><span class="css">●</span> CSS generado automáticamente</div>
+        <pre class="out">Compilando…</pre>
+      </div>
+    </div>
+    <div class="pg-foot">
+      <button class="btn btn-run">▶ Compilar</button>
+      <button class="btn btn-reset">↺ Reset</button>
+      <span class="hint">5 clases con 4 líneas de SCSS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRUCTURA -->
+<section id="estructura" class="reveal">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Estructurar los archivos</h2></div>
+  <p class="lead">Los archivos que empiezan con <code>_</code> son <strong>parciales</strong>: no se compilan solos, se importan desde un <code>main.scss</code>. Esta es la estructura recomendada (patrón <em>7-1</em> simplificado).</p>
+  <div class="grid g2">
+    <div class="tree">
+<span class="dir">/scss</span>
+  <span class="dir">base/</span>
+    <span class="file">_reset.scss</span>
+    <span class="file">_variables.scss</span>
+    <span class="file">_mixins.scss</span>
+  <span class="dir">layout/</span>
+    <span class="file">_header.scss</span>
+    <span class="file">_footer.scss</span>
+  <span class="dir">components/</span>
+    <span class="file">_boton.scss</span>
+    <span class="file">_tarjeta.scss</span>
+  <span class="dir">pages/</span>
+    <span class="file">_home.scss</span>
+  <span class="main">main.scss</span>  <span class="cm">← punto de entrada</span>
+    </div>
+    <div class="grid" style="gap:.7rem;align-content:start">
+      <div class="card"><h3>🗂️ Organización clara</h3><p>Cada cosa en su sitio: localizas estilos al instante.</p></div>
+      <div class="card"><h3>🔁 Reutilización</h3><p>Los componentes se importan donde hagan falta.</p></div>
+      <div class="card"><h3>👥 Trabajo en equipo</h3><p>Menos conflictos de merge, responsabilidades claras.</p></div>
+      <div class="card"><h3>🔧 Mantenimiento</h3><p>Escala sin convertirse en un único archivo gigante.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODO LIBRE -->
+<section id="libre" class="reveal">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Modo libre · Demo Time</h2></div>
+  <p class="lead">Tu turno. Combina todo lo aprendido — variables, anidamiento, mixins, funciones y bucles — y míralo compilar y renderizar en vivo. Pulsa <strong>Compilar</strong> para inyectar el CSS en la vista previa real de abajo.</p>
+
+  <div class="pg" data-pg data-render="true">
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">demo.scss</span><span class="tag">⚡ live</span></div>
+    <div class="pg-body">
+      <div class="pane">
+        <div class="pane-h"><span class="scss">●</span> SCSS — escribe lo que quieras</div>
+        <textarea class="editor" spellcheck="false">$marca: #cf649a;
+$radio: 14px;
+$marca-oscuro: #9c3d6b;
+
+@mixin centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-caja {
+  @include centro;
+  flex-direction: column;
+  gap: .6rem;
+  padding: 2rem;
+  border-radius: $radio;
+  background: linear-gradient(135deg, $marca, $marca-oscuro);
+  color: white;
+  font-family: sans-serif;
+
+  .demo-titulo {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .demo-btn {
+    background: white;
+    color: $marca;
+    border: 0;
+    padding: .6rem 1.4rem;
+    border-radius: 999px;
+    cursor: pointer;
+    &:hover { transform: scale(1.05); }
+  }
+}</textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-h"><span class="css">●</span> CSS compilado</div>
+        <pre class="out">Compilando…</pre>
+      </div>
+    </div>
+    <div class="pg-foot">
+      <button class="btn btn-run">▶ Compilar &amp; renderizar</button>
+      <button class="btn btn-reset">↺ Reset</button>
+      <span class="hint">El CSS se aplica al recuadro de abajo 👇</span>
+    </div>
+  </div>
+  <div class="preview" data-preview>
+    <div class="preview-label">Vista previa en vivo (HTML real estilizado por tu SCSS)</div>
+    <div class="demo-caja">
+      <span class="demo-titulo">¡Hola, SASS!</span>
+      <span>Este recuadro lo estás estilizando tú.</span>
+      <button class="demo-btn">Botón demo</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Playground didáctico de <strong>SASS</strong> · Tema 8 — Diseño Web Responsive<br>
+  Compilación SCSS→CSS en vivo con <strong>Sass.js</strong> · 100% offline una vez cargado
+</footer>
+
+<script type="module">
+  // ---- Cargar Dart Sass (compilador oficial) de forma robusta ----
+  // Mecanismo: sass.dart.js (script clásico) expone globalThis._cliPkgExports;
+  // luego library.load({immutable}, exports) rellena compileString.
+  let compileString = null;
+
+  function loadScript(src){
+    return new Promise(function(res, rej){
+      const s=document.createElement('script');
+      s.src=src; s.onload=res; s.onerror=function(){rej(new Error('fallo al cargar '+src));};
+      document.head.appendChild(s);
+    });
+  }
+
+  const SETS = [
+    { dart:'https://cdn.jsdelivr.net/npm/sass@1.77.8/sass.dart.js',
+      imm:'https://cdn.jsdelivr.net/npm/immutable@4.3.6/dist/immutable.es.js' },
+    { dart:'https://unpkg.com/sass@1.77.8/sass.dart.js',
+      imm:'https://unpkg.com/immutable@4.3.6/dist/immutable.es.js' }
+  ];
+
+  async function loadSass(){
+    for(const set of SETS){
+      try{
+        await loadScript(set.dart);
+        if(!globalThis._cliPkgExports || !globalThis._cliPkgExports.length) continue;
+        const immutable = await import(set.imm);
+        const lib = globalThis._cliPkgExports.pop();
+        const exp = {};
+        lib.load({immutable}, exp);
+        if(typeof exp.compileString === 'function') return exp.compileString;
+      }catch(e){ /* probar siguiente set */ }
+    }
+    return null;
+  }
+
+  function highlight(css){
+    return css
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/(\/\*[\s\S]*?\*\/)/g,'<span style="color:#7a6270">$1</span>')
+      .replace(/([.#%][\w\-]+|&amp;[\w:\-]*)/g,'<span class="tok-sel">$1</span>')
+      .replace(/([\w\-]+)(\s*:\s*)/g,'<span class="tok-prop">$1</span>$2');
+  }
+
+  function compile(scss, outEl, cb){
+    if(!compileString){ outEl.textContent='Cargando compilador…'; return; }
+    try{
+      const result = compileString(scss);
+      outEl.classList.remove('err');
+      outEl.innerHTML = highlight((result.css||'').trim() || '/* sin salida */');
+      if(cb) cb(result.css||'');
+    }catch(err){
+      outEl.classList.add('err');
+      outEl.textContent = '⚠ Error de compilación:\n\n' + (err.message || 'Revisa la sintaxis');
+    }
+  }
+
+  const playgrounds = [];
+  document.querySelectorAll('[data-pg]').forEach(function(pg){
+    const ta   = pg.querySelector('.editor');
+    const out  = pg.querySelector('.out');
+    const run  = pg.querySelector('.btn-run');
+    const reset= pg.querySelector('.btn-reset');
+    const original = ta.value;
+    const doRender = pg.getAttribute('data-render')==='true';
+    const section = pg.closest('section');
+    const preview = section ? section.querySelector('[data-preview]') : null;
+    let styleEl = null;
+
+    function go(){
+      compile(ta.value, out, function(css){
+        if(doRender && preview){
+          if(!styleEl){ styleEl=document.createElement('style'); section.appendChild(styleEl); }
+          styleEl.textContent = css;
+        }
+      });
+    }
+    let t;
+    ta.addEventListener('input', function(){ clearTimeout(t); t=setTimeout(go,350); });
+    ta.addEventListener('keydown', function(e){
+      if(e.key==='Tab'){ e.preventDefault();
+        const s=this.selectionStart, en=this.selectionEnd;
+        this.value=this.value.slice(0,s)+'  '+this.value.slice(en);
+        this.selectionStart=this.selectionEnd=s+2;
+      }
+    });
+    run.addEventListener('click', go);
+    reset.addEventListener('click', function(){ ta.value=original; go(); });
+    playgrounds.push(go);
+    out.textContent = 'Cargando compilador…';
+  });
+
+  // ---- pestañas Next.js ----
+  (function(){
+    const tabs = document.querySelectorAll('.nx-tab');
+    const panels = document.querySelectorAll('.nx-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        const i = +tab.getAttribute('data-nx');
+        tabs.forEach(function(t){ t.classList.remove('active'); });
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        if(panels[i]) panels[i].classList.add('active');
+      });
+    });
+  })();
+
+  // ---- scroll reveal ----
+  const io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  // ---- Arrancar: cargar Sass y compilar todos los paneles ----
+  (async function(){
+    compileString = await loadSass();
+    if(!compileString){
+      document.querySelectorAll('.out').forEach(function(o){
+        o.classList.add('err');
+        o.textContent='⚠ No se pudo cargar el compilador SASS. Comprueba tu conexión a internet y recarga la página.';
+      });
+    } else {
+      playgrounds.forEach(function(go){ go(); });
+    }
+  })();
+</script>
+</body>
+</html>
