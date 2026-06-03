@@ -243,6 +243,33 @@
     padding:.9rem 1.2rem;margin-top:1rem;font-size:.92rem;color:#5a4450;
   }
   .callout strong{color:var(--ink)}
+  /* how-to: pasos explicativos dentro de un ejemplo */
+  .howto{counter-reset:ht;list-style:none;margin:.9rem 0 0;padding:0;display:flex;flex-direction:column;gap:.55rem}
+  .howto li{
+    position:relative;padding-left:2.2rem;font-size:.93rem;color:#5a4450;line-height:1.55;
+  }
+  .howto li::before{
+    counter-increment:ht;content:counter(ht);
+    position:absolute;left:0;top:.05rem;width:1.5rem;height:1.5rem;border-radius:7px;
+    background:var(--sand);color:var(--pink-deep);font-family:var(--mono);font-weight:700;
+    font-size:.78rem;display:grid;place-items:center;
+  }
+  .howto li code{background:var(--sand);padding:.08em .4em;border-radius:5px;font-family:var(--mono);font-size:.85em;color:var(--pink-deep)}
+  .howto li strong{color:var(--ink)}
+  /* tabla comparativa css vs sass */
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+  @media(max-width:680px){.vs{grid-template-columns:1fr}}
+  .vs-col{border-radius:16px;padding:1.3rem 1.4rem;border:1px solid var(--line)}
+  .vs-css{background:#eef5fb;border-color:#cfe0f0}
+  .vs-sass{background:#fbe9f1;border-color:#f0cfe0}
+  .vs-col h4{font-size:1.05rem;margin-bottom:.2rem;display:flex;align-items:center;gap:.5rem}
+  .vs-col .pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .5rem;border-radius:6px}
+  .vs-css .pill{background:#2f6db0;color:#fff}
+  .vs-sass .pill{background:var(--pink);color:#fff}
+  .vs-col ul{margin:.7rem 0 0;padding-left:1.1rem}
+  .vs-col li{font-size:.9rem;color:#4a3a44;margin:.4rem 0;line-height:1.5}
+  .vs-col code{font-family:var(--mono);font-size:.84em;background:rgba(0,0,0,.05);padding:.06em .35em;border-radius:4px}
+  .vs-col .verdict{margin-top:.8rem;font-size:.86rem;font-weight:600;color:var(--ink)}
   /* file-type legend */
   .ftypes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin-top:1rem}
   .ftype{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem}
@@ -292,6 +319,7 @@
   <a href="#funciones">Funciones &amp; bucles</a>
   <a href="#estructura">Estructura</a>
   <a href="#libre">Modo libre</a>
+  <a href="#mas">Más ejemplos</a>
 </nav>
 
 <!-- 1. QUÉ ES -->
@@ -732,9 +760,142 @@ $marca-oscuro: #9c3d6b;
   </div>
 </section>
 
+<!-- MÁS EJEMPLOS -->
+<section id="mas" class="reveal">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Más cosas que puedes hacer</h2></div>
+  <p class="lead">SASS da para mucho más que variables y anidamiento. Aquí tienes tres recetas reales explicadas <strong>paso a paso</strong> — todas <strong>compilables en vivo</strong>. Edita el SCSS y observa el CSS que genera.</p>
+
+  <!-- @each + mapas -->
+  <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;margin:1.8rem 0 .2rem">1 · Mapas + <code style="font-family:var(--mono);color:var(--pink-deep)">@each</code> — generar clases en serie</h3>
+  <p style="color:#5a4450;max-width:64ch;margin-bottom:.4rem">Sirve para crear muchas clases parecidas (utilidades de color, espaciado, etc.) sin escribirlas una a una.</p>
+  <ol class="howto">
+    <li>Defines un <strong>mapa</strong> <code>$colores</code>: una lista de pares <code>"clave": valor</code>, como un diccionario.</li>
+    <li><code>@each $nombre, $valor in $colores</code> recorre el mapa y, en cada vuelta, <code>$nombre</code> y <code>$valor</code> toman los datos de una entrada.</li>
+    <li><code>#{$nombre}</code> es <strong>interpolación</strong>: inserta el valor de la variable dentro del nombre del selector (<code>.bg-#{$nombre}</code> → <code>.bg-primario</code>).</li>
+    <li>SASS repite el bloque por cada entrada → 4 colores producen 8 clases de CSS. Añade un color al mapa y verás aparecer sus dos clases solas.</li>
+  </ol>
+  <div class="pg" data-pg>
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">paleta.scss</span><span class="tag">@each</span></div>
+    <div class="pg-body">
+      <div class="pane"><div class="pane-h"><span class="scss">●</span> SCSS — editable</div>
+        <textarea class="editor" spellcheck="false">$colores: (
+  "primario":  #cf649a,
+  "exito":     #2f9e69,
+  "alerta":    #e0a020,
+  "peligro":   #d64545
+);
+
+@each $nombre, $valor in $colores {
+  .bg-#{$nombre} { background: $valor; }
+  .text-#{$nombre} { color: $valor; }
+}</textarea></div>
+      <div class="pane"><div class="pane-h"><span class="css">●</span> CSS generado</div><pre class="out">Cargando compilador…</pre></div>
+    </div>
+    <div class="pg-foot"><button class="btn btn-run">▶ Compilar</button><button class="btn btn-reset">↺ Reset</button><span class="hint">4 colores → 8 clases utilitarias</span></div>
+  </div>
+
+  <!-- funciones de color -->
+  <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;margin:2.4rem 0 .2rem">2 · Funciones de color — variaciones automáticas</h3>
+  <p style="color:#5a4450;max-width:64ch;margin-bottom:.4rem">Sirve para derivar bordes, sombras o estados <code>:hover</code> a partir de un único color base, sin elegir cada tono a mano.</p>
+  <ol class="howto">
+    <li><code>@use "sass:color"</code> carga el <strong>módulo de color</strong> de SASS, que trae funciones para manipular colores.</li>
+    <li>Defines un solo color base en <code>$base</code>.</li>
+    <li><code>color.adjust($base, $lightness: -18%)</code> devuelve el mismo color un 18% <strong>más oscuro</strong> (para el borde); con <code>+10%</code> lo aclara (para el hover).</li>
+    <li>Si cambias <code>$base</code>, el borde y el hover <strong>se recalculan solos</strong>. Pruébalo y pasa el ratón por el recuadro de abajo.</li>
+  </ol>
+  <div class="pg" data-pg data-render="true">
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">colores.scss</span><span class="tag">⚡ live</span></div>
+    <div class="pg-body">
+      <div class="pane"><div class="pane-h"><span class="scss">●</span> SCSS — cambia $base</div>
+        <textarea class="editor" spellcheck="false">@use "sass:color";
+$base: #cf649a;
+
+.color-demo {
+  padding: 1.4rem;
+  border-radius: 10px;
+  font-family: sans-serif;
+  color: white;
+  background: $base;
+  border: 3px solid color.adjust($base, $lightness: -18%);
+
+  &:hover {
+    background: color.adjust($base, $lightness: 10%);
+  }
+}</textarea></div>
+      <div class="pane"><div class="pane-h"><span class="css">●</span> CSS generado</div><pre class="out">Cargando compilador…</pre></div>
+    </div>
+    <div class="pg-foot"><button class="btn btn-run">▶ Compilar &amp; renderizar</button><button class="btn btn-reset">↺ Reset</button><span class="hint">Pasa el ratón por el recuadro 👇</span></div>
+  </div>
+  <div class="preview" data-preview>
+    <div class="preview-label">Vista previa en vivo</div>
+    <div class="color-demo">Color base + borde y hover calculados automáticamente. Pásame el ratón.</div>
+  </div>
+
+  <!-- @if / @else en mixin -->
+  <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;margin:2.4rem 0 .2rem">3 · Lógica con <code style="font-family:var(--mono);color:var(--pink-deep)">@if</code> / <code style="font-family:var(--mono);color:var(--pink-deep)">@else</code></h3>
+  <p style="color:#5a4450;max-width:64ch;margin-bottom:.4rem">Sirve para que un mismo mixin produzca CSS distinto según un parámetro: aquí, un tema claro u oscuro.</p>
+  <ol class="howto">
+    <li>Defines un mixin <code>tema($modo)</code> que recibe un parámetro.</li>
+    <li><code>@if $modo == oscuro</code> comprueba el valor recibido. Si se cumple, usa los estilos oscuros.</li>
+    <li><code>@else</code> cubre el resto de casos con los estilos claros.</li>
+    <li>Al hacer <code>@include tema(oscuro)</code>, SASS evalúa la condición <strong>durante la compilación</strong> y escribe solo la rama que toca. El CSS final no contiene ningún <code>@if</code>: ya está resuelto.</li>
+  </ol>
+  <div class="pg" data-pg>
+    <div class="pg-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="label">condicional.scss</span><span class="tag">@if</span></div>
+    <div class="pg-body">
+      <div class="pane"><div class="pane-h"><span class="scss">●</span> SCSS — prueba "claro"</div>
+        <textarea class="editor" spellcheck="false">@mixin tema($modo) {
+  @if $modo == oscuro {
+    background: #1a1a1a;
+    color: #f0f0f0;
+  } @else {
+    background: #ffffff;
+    color: #1a1a1a;
+  }
+}
+
+.tarjeta-dark { @include tema(oscuro); }
+.tarjeta-light { @include tema(claro); }</textarea></div>
+      <div class="pane"><div class="pane-h"><span class="css">●</span> CSS generado</div><pre class="out">Cargando compilador…</pre></div>
+    </div>
+    <div class="pg-foot"><button class="btn btn-run">▶ Compilar</button><button class="btn btn-reset">↺ Reset</button><span class="hint">Cambia "oscuro"/"claro" y recompila</span></div>
+  </div>
+
+  <!-- COMPARATIVA: ¿lógica en CSS o solo en SASS? -->
+  <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;margin:2.6rem 0 .2rem">¿Se puede hacer lógica con CSS, o solo con SASS?</h3>
+  <p style="color:#5a4450;max-width:64ch;margin-bottom:.4rem">Es una distinción importante, porque ambos tienen "lógica" pero de naturaleza muy distinta. La clave es <strong>cuándo</strong> se resuelve.</p>
+  <div class="vs">
+    <div class="vs-col vs-sass">
+      <h4><span class="pill">SASS</span> Lógica en compilación</h4>
+      <p style="font-size:.9rem;color:#4a3a44">Se evalúa <strong>una sola vez</strong>, antes de llegar al navegador. Genera CSS estático.</p>
+      <ul>
+        <li><code>@if</code> / <code>@else</code>: ramas condicionales.</li>
+        <li><code>@for</code>, <code>@each</code>, <code>@while</code>: bucles que repiten reglas.</li>
+        <li><code>@function</code>: funciones que devuelven valores calculados.</li>
+        <li>Operaciones con variables: <code>$a * 2</code>, comparaciones, etc.</li>
+      </ul>
+      <p class="verdict">Decide qué CSS se escribe. No reacciona a nada en tiempo de ejecución.</p>
+    </div>
+    <div class="vs-col vs-css">
+      <h4><span class="pill">CSS</span> Lógica en ejecución</h4>
+      <p style="font-size:.9rem;color:#3a4656">El navegador la evalúa <strong>en vivo</strong> y reacciona al usuario, al tamaño de pantalla, al estado…</p>
+      <ul>
+        <li>Variables nativas: <code>var(--color)</code> (cambiables con JS en caliente).</li>
+        <li>Cálculos vivos: <code>calc()</code>, <code>clamp()</code>, <code>min()</code>, <code>max()</code>.</li>
+        <li>Condiciones de entorno: <code>@media</code>, <code>@container</code>, <code>@supports</code>.</li>
+        <li>Estados y selección: <code>:hover</code>, <code>:has()</code>, <code>:nth-child()</code>.</li>
+      </ul>
+      <p class="verdict">Reacciona al contexto del usuario. No puede generar reglas en bucle.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <strong>En resumen:</strong> el <code>@if</code>/<code>@for</code> de SASS <strong>no existe</strong> en CSS nativo — esa lógica de "generar reglas" es exclusiva del preprocesador y se resuelve antes de publicar. Lo que CSS sí tiene es lógica <em>reactiva</em> (<code>@media</code>, <code>calc()</code>, <code>:has()</code>, variables con <code>var()</code>), que SASS no puede sustituir porque ocurre en el navegador. Por eso <strong>se complementan</strong>: SASS organiza y genera tu CSS; CSS reacciona en tiempo real. No eliges uno u otro para la lógica: usas cada uno para su tipo de lógica.
+  </div>
+</section>
+
 <footer>
   Playground didáctico de <strong>SASS</strong> · Tema 8 — Diseño Web Responsive<br>
-  Compilación SCSS→CSS en vivo con <strong>Sass.js</strong> · 100% offline una vez cargado
+  Compilación SCSS→CSS en vivo con <strong>Dart Sass</strong> · funciona offline una vez cargado el compilador
 </footer>
 
 <script type="module">
