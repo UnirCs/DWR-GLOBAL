@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repaso · Desarrollo Web Responsive (11041)</title>
+<style>
+  :root{
+    --azul:#003366; --azul2:#0055a5; --acento:#00a3a3;
+    --bg:#f4f6f9; --card:#fff; --borde:#dde4ee; --txt:#222; --gris:#666;
+    --ok:#1a8a4a; --okbg:#e6f6ec; --warn:#c0392b; --warnbg:#fdeeec;
+    --code:#1e2733;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding-bottom:60px;}
+
+  /* ---------- Cabecera ---------- */
+  header.top{background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;padding:38px 20px 30px;text-align:center;}
+  header.top h1{font-size:1.9rem;margin-bottom:8px;}
+  header.top p{opacity:.92;font-size:.98rem;}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:20px;font-size:.8rem;margin-top:12px;}
+
+  /* ---------- Navegación ---------- */
+  nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--borde);box-shadow:0 1px 6px rgba(0,0,0,.05);}
+  nav .wrap{max-width:1000px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 14px;}
+  nav a{flex-shrink:0;text-decoration:none;color:var(--azul2);font-weight:600;font-size:.82rem;padding:6px 11px;border-radius:7px;white-space:nowrap;}
+  nav a:hover{background:var(--bg);}
+
+  /* ---------- Layout ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 18px;}
+  section{background:var(--card);border:1px solid var(--borde);border-radius:12px;padding:26px 28px;margin-top:28px;box-shadow:0 1px 4px rgba(0,0,0,.05);scroll-margin-top:64px;}
+  section > h2{display:flex;align-items:center;gap:12px;font-size:1.4rem;color:var(--azul);margin-bottom:6px;}
+  section > h2 .num{background:var(--azul);color:#fff;width:34px;height:34px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+  .lead{color:var(--gris);font-size:.96rem;margin-bottom:18px;border-left:3px solid var(--acento);padding-left:12px;}
+  h3{color:var(--azul2);font-size:1.08rem;margin:22px 0 10px;}
+  p{margin-bottom:10px;}
+  ul.li, ol.li{margin:8px 0 12px 22px;}
+  ul.li li, ol.li li{margin-bottom:6px;}
+  strong{color:var(--azul);}
+  code.inline{background:#eef2f7;color:#b5256b;padding:1px 6px;border-radius:5px;font-family:'Consolas',monospace;font-size:.88em;}
+
+  /* ---------- Bloques de código ---------- */
+  pre{background:var(--code);color:#e8eef5;border-radius:9px;padding:14px 16px;overflow-x:auto;font-family:'Consolas','Courier New',monospace;font-size:.85rem;line-height:1.5;margin:10px 0;}
+  pre .c{color:#7f9cc0;} pre .k{color:#79c0ff;} pre .s{color:#a5d6a3;} pre .p{color:#ffa657;}
+
+  /* ---------- Cajas semánticas ---------- */
+  .box{border-radius:9px;padding:13px 16px;margin:14px 0;font-size:.93rem;}
+  .tip{background:#eef9f9;border-left:4px solid var(--acento);}
+  .key{background:#fff8e6;border-left:4px solid #e0a800;}
+  .err{background:var(--warnbg);border-left:4px solid var(--warn);}
+  .box b.t{display:block;margin-bottom:3px;text-transform:uppercase;font-size:.72rem;letter-spacing:.5px;}
+  .tip b.t{color:var(--acento);} .key b.t{color:#b8860b;} .err b.t{color:var(--warn);}
+
+  /* ---------- Demos visuales ---------- */
+  .demo{border:1px dashed #c3cede;border-radius:10px;padding:16px;margin:14px 0;background:#fafcff;}
+  .demo .label{font-size:.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+
+  .flex-demo, .grid-demo{display:flex;gap:8px;}
+  .item{background:var(--azul2);color:#fff;padding:14px 0;text-align:center;border-radius:7px;font-weight:700;font-size:.9rem;flex:1;min-width:48px;}
+  .item.alt{background:var(--acento);}
+  .item.alt2{background:#7a4fd1;}
+
+  .controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .controls button{background:#fff;border:1px solid var(--borde);color:var(--azul2);font-weight:600;font-size:.82rem;padding:6px 12px;border-radius:7px;cursor:pointer;transition:.15s;}
+  .controls button:hover{background:var(--azul2);color:#fff;border-color:var(--azul2);}
+  .controls button.on{background:var(--azul);color:#fff;border-color:var(--azul);}
+  .controls .gv{font-size:.8rem;color:var(--gris);align-self:center;}
+
+  /* Grid demo */
+  .grid-area-demo{display:grid;gap:8px;grid-template-columns:1fr 1fr 1fr;grid-template-areas:"h h h" "s m m" "f f f";}
+  .ga{background:#e7eef7;border:1px solid #c3cede;border-radius:7px;padding:12px 4px;text-align:center;font-weight:700;color:var(--azul);font-size:.85rem;}
+  .ga.h{grid-area:h;background:var(--azul);color:#fff;}
+  .ga.s{grid-area:s;background:var(--acento);color:#fff;}
+  .ga.m{grid-area:m;}
+  .ga.f{grid-area:f;background:#7a4fd1;color:#fff;}
+
+  /* tabla comparativa */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem;}
+  th,td{border:1px solid var(--borde);padding:9px 12px;text-align:left;vertical-align:top;}
+  th{background:var(--azul);color:#fff;font-weight:600;}
+  tr:nth-child(even){background:#f8fafd;}
+
+  /* contraste accesibilidad */
+  .contrast-row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
+  .swatch{flex:1;min-width:140px;border-radius:8px;padding:16px;text-align:center;font-weight:700;border:1px solid var(--borde);}
+  .c-bad{background:#bcd2e8;color:#cfe0f0;}
+  .c-good{background:#003366;color:#fff;}
+
+  /* color-only demo */
+  .dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+
+  /* utility-first visual */
+  .pill{display:inline-block;background:#eef2f7;border:1px solid var(--borde);border-radius:6px;padding:3px 9px;font-family:monospace;font-size:.8rem;color:#b5256b;margin:3px 4px 3px 0;}
+
+  /* quiz */
+  .quiz{background:#f0f6ff;border:1px solid #cfe0f5;border-radius:10px;padding:16px 18px;margin:16px 0;}
+  .quiz .q{font-weight:600;margin-bottom:10px;}
+  .quiz .opts{display:flex;flex-direction:column;gap:7px;}
+  .quiz .opt{background:#fff;border:1px solid var(--borde);border-radius:7px;padding:9px 12px;cursor:pointer;font-size:.9rem;transition:.15s;}
+  .quiz .opt:hover{border-color:var(--azul2);}
+  .quiz .opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok);font-weight:600;}
+  .quiz .opt.no{background:var(--warnbg);border-color:var(--warn);color:var(--warn);}
+  .quiz .fb{margin-top:10px;font-size:.88rem;font-weight:600;display:none;}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:680px){.twocol{grid-template-columns:1fr;}}
+
+  footer.end{text-align:center;color:#9aa6b5;font-size:.85rem;padding:34px 20px 10px;}
+
+  .timer{display:inline-block;background:var(--acento);color:#fff;font-size:.74rem;font-weight:700;padding:3px 9px;border-radius:14px;margin-left:8px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Desarrollo Web Responsive</h1>
+  <p>Sesión de repaso · Conceptos clave del temario completo (Temas 1–10)</p>
+  
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#s1">1 · Mobile First</a>
+    <a href="#s2">2 · Media Queries</a>
+    <a href="#s3">3 · Flexbox</a>
+    <a href="#s4">4 · Grid I</a>
+    <a href="#s5">5 · Grid II</a>
+    <a href="#s6">6 · Bootstrap</a>
+    <a href="#s7">7 · Tailwind</a>
+    <a href="#s8">8 · SASS</a>
+    <a href="#s9">9 · Accesibilidad I</a>
+    <a href="#s10">10 · Accesibilidad II</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ INTRO ============ -->
+<section style="margin-top:22px;">
+  <h2><span class="num">★</span> Cómo aprovechar esta sesión</h2>
+  <p class="lead">Repaso visual de los conceptos que más se preguntan. No memoricéis definiciones sueltas: lo importante es entender <strong>para qué sirve cada cosa</strong> y <strong>distinguir conceptos parecidos</strong>, que es justo por donde van las preguntas tipo test.</p>
+  <p>Cada bloque tiene: una explicación breve, un <strong>ejemplo visual interactivo</strong> que puedes tocar, y una <strong>mini-pregunta</strong> para autoevaluarte. Los bloques con más peso son <strong>Flexbox</strong>, <strong>Grid</strong> y <strong>Accesibilidad</strong>: dedicadles más tiempo.</p>
+  <div class="box tip"><b class="t">Distribución orientativa</b> ~5 min por bloque. Si vais justos de tiempo, priorizad los bloques 3, 4, 5, 9 y 10.</div>
+</section>
+
+<!-- ============ 1 · MOBILE FIRST ============ -->
+<section id="s1">
+  <h2><span class="num">1</span> Mobile First <span class="timer">~5 min</span></h2>
+  <p class="lead">Estrategia de diseño que parte de la pantalla más pequeña y escala hacia arriba.</p>
+
+  <p><strong>Mobile First</strong> significa diseñar pensando primero en <strong>cómo se presenta y se consume el contenido en el móvil</strong>, y luego ir añadiendo complejidad para pantallas mayores. No es un capricho estético: en una pantalla pequeña el espacio es escaso, así que te obliga a decidir qué contenido es <em>realmente</em> esencial desde el principio.</p>
+
+  <h3>¿Por qué se prioriza el móvil?</h3>
+  <ul class="li">
+    <li>Porque el contenido debe ser <strong>claro y usable en pantallas pequeñas desde el inicio</strong>.</li>
+    <li>Si funciona en lo más limitado, escalar hacia arriba (añadir columnas, espacio…) es fácil.</li>
+    <li>El camino inverso —quitar cosas de un diseño de escritorio— suele dejar interfaces apretadas y rotas.</li>
+  </ul>
+
+  <div class="demo">
+    <div class="label">Móvil primero → luego escala</div>
+    <div style="display:flex;align-items:flex-end;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <div style="text-align:center;"><div style="width:60px;height:100px;border:2px solid var(--azul2);border-radius:8px;margin:0 auto 6px;background:#eef2f7;"></div><small>📱 Base</small></div>
+      <div style="font-size:1.4rem;color:var(--acento);">→</div>
+      <div style="text-align:center;"><div style="width:110px;height:90px;border:2px solid var(--azul2);border-radius:8px;margin:0 auto 6px;background:#eef2f7;"></div><small>📱 Tablet</small></div>
+      <div style="font-size:1.4rem;color:var(--acento);">→</div>
+      <div style="text-align:center;"><div style="width:170px;height:80px;border:2px solid var(--azul2);border-radius:8px;margin:0 auto 6px;background:#eef2f7;"></div><small>💻 Escritorio</small></div>
+    </div>
+  </div>
+
+  <div class="box key"><b class="t">No confundir</b> <strong>Mobile First</strong> = de pequeño a grande. <strong>Desktop First</strong> = al revés: se diseña para pantallas grandes y se va <em>recortando</em> hacia tamaños menores.</div>
+
+  <div class="quiz" data-answer="b">
+    <div class="q">¿Qué implica aplicar el enfoque Mobile First?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Diseñar primero la versión de escritorio y adaptarla a móvil</div>
+      <div class="opt" data-k="b">Priorizar cómo se presenta y consume el contenido en pantallas móviles</div>
+      <div class="opt" data-k="c">Evitar el uso de media queries</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 2 · MEDIA QUERIES ============ -->
+<section id="s2">
+  <h2><span class="num">2</span> Media Queries y Breakpoints <span class="timer">~5 min</span></h2>
+  <p class="lead">El mecanismo de CSS que aplica estilos distintos según el dispositivo.</p>
+
+  <p>Una <strong>media query</strong> no mira el HTML ni el servidor: <strong>evalúa las características del viewport / dispositivo</strong> (ancho, alto, orientación, etc.) y, si se cumple la condición, aplica un bloque de estilos. Sirven para <strong>adaptar los estilos según el tamaño de pantalla</strong>.</p>
+
+  <pre><span class="c">/* Estilos base (móvil) aplican siempre */</span>
+.caja{ <span class="k">flex-direction</span>: column; }
+
+<span class="c">/* A partir de 768px de ancho, cambia */</span>
+<span class="p">@media</span> (min-width: 768px){
+  .caja{ <span class="k">flex-direction</span>: row; }
+}</pre>
+
+  <p>Los <strong>breakpoints</strong> son esos puntos de ruptura (768px, 1024px…) donde el diseño cambia para <strong>adaptarse a distintos tamaños de pantalla</strong>. Con Mobile First se usa <code class="inline">min-width</code> (de pequeño a grande); con Desktop First, <code class="inline">max-width</code>.</p>
+
+  <div class="demo">
+    <div class="label">Redimensiona la ventana del navegador y observa</div>
+    <div id="vpbox" style="border-radius:8px;padding:18px;text-align:center;font-weight:700;color:#fff;transition:.3s;background:var(--azul2);">
+      Cargando ancho…
+    </div>
+  </div>
+
+  <div class="box tip"><b class="t">Truco mental</b> "media" = medio/dispositivo. La query <em>pregunta</em> al dispositivo "¿cuánto mides?" y responde con estilos.</div>
+
+  <div class="quiz" data-answer="b">
+    <div class="q">¿Qué evalúa realmente una media query en CSS?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">El contenido HTML de la página</div>
+      <div class="opt" data-k="b">Las características del viewport o dispositivo</div>
+      <div class="opt" data-k="c">El framework CSS utilizado</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 3 · FLEXBOX ============ -->
+<section id="s3">
+  <h2><span class="num">3</span> Flexbox <span class="timer">~7 min</span></h2>
+  <p class="lead">Sistema de alineación y distribución en <strong>una sola dimensión</strong>. Bloque con bastante peso.</p>
+
+  <p>Flexbox organiza y alinea elementos a lo largo de <strong>un único eje</strong> (una fila o una columna). Es ideal para barras de navegación, botoneras, tarjetas en línea… cualquier cosa que vaya "en una dirección".</p>
+
+  <h3>El eje principal depende de <code class="inline">flex-direction</code></h3>
+  <ul class="li">
+    <li><code class="inline">row</code> → eje principal <strong>horizontal</strong> (izquierda → derecha).</li>
+    <li><code class="inline">column</code> → eje principal <strong>vertical</strong> (arriba → abajo).</li>
+  </ul>
+
+  <div class="demo">
+    <div class="label">Demo interactiva · pulsa los botones</div>
+    <div class="controls" id="flexCtrl">
+      <button data-prop="flex-direction" data-val="row" class="on">row</button>
+      <button data-prop="flex-direction" data-val="column">column</button>
+      <button data-prop="flex-wrap" data-val="nowrap" class="on">nowrap</button>
+      <button data-prop="flex-wrap" data-val="wrap">wrap</button>
+      <button data-prop="justify-content" data-val="flex-start" class="on">justify: start</button>
+      <button data-prop="justify-content" data-val="center">justify: center</button>
+      <button data-prop="justify-content" data-val="space-between">justify: space-between</button>
+    </div>
+    <div id="flexBox" class="flex-demo" style="flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;">
+      <div class="item">1</div>
+      <div class="item alt">2</div>
+      <div class="item alt2">3</div>
+      <div class="item">4</div>
+      <div class="item alt">5</div>
+    </div>
+  </div>
+
+  <h3>Propiedades estrella para el examen</h3>
+  <table>
+    <tr><th>Propiedad</th><th>Qué hace</th></tr>
+    <tr><td><code class="inline">order</code></td><td>Cambia el <strong>orden visual</strong> de un ítem <strong>sin tocar el HTML</strong>.</td></tr>
+    <tr><td><code class="inline">flex-wrap: wrap</code></td><td>Permite que los ítems <strong>pasen a nuevas líneas</strong> si no caben.</td></tr>
+    <tr><td><code class="inline">flex-direction</code></td><td>Define el eje principal (<code class="inline">row</code> / <code class="inline">column</code>).</td></tr>
+    <tr><td><code class="inline">justify-content</code></td><td>Distribuye a lo largo del eje principal.</td></tr>
+  </table>
+
+  <div class="demo">
+    <div class="label">Propiedad <code class="inline">order</code> · pulsa para mover el ítem azul al final</div>
+    <div class="controls"><button id="orderBtn">Aplicar order: 99 al ítem 1</button><span class="gv" id="orderState">order actual: 0</span></div>
+    <div class="flex-demo">
+      <div class="item" id="orderItem" style="order:0">1</div>
+      <div class="item alt">2</div>
+      <div class="item alt2">3</div>
+    </div>
+  </div>
+
+  <div class="box key"><b class="t">Clave</b> Flexbox = <strong>una dimensión</strong>. Si necesitas controlar filas <em>y</em> columnas a la vez, eso es Grid (bloque siguiente).</div>
+
+  <div class="quiz" data-answer="a">
+    <div class="q">¿Qué propiedad cambia el orden visual de un ítem flex sin modificar el HTML?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">order</div>
+      <div class="opt" data-k="b">z-index</div>
+      <div class="opt" data-k="c">position</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 4 · GRID I ============ -->
+<section id="s4">
+  <h2><span class="num">4</span> CSS Grid · fundamentos <span class="timer">~7 min</span></h2>
+  <p class="lead">Sistema de layout <strong>bidimensional</strong>: controla filas y columnas a la vez.</p>
+
+  <div class="box key"><b class="t">La diferencia que MÁS se pregunta</b> <strong>Grid trabaja en dos dimensiones</strong> (filas + columnas). Flexbox solo en una. Esa es la distinción fundamental entre ambos.</div>
+
+  <h3>Propiedades base</h3>
+  <table>
+    <tr><th>Propiedad</th><th>Qué define</th></tr>
+    <tr><td><code class="inline">grid-template-columns</code></td><td>La <strong>estructura de columnas</strong> (cuántas y de qué tamaño).</td></tr>
+    <tr><td><code class="inline">grid-template-rows</code></td><td>La estructura de filas.</td></tr>
+    <tr><td><code class="inline">gap</code></td><td><strong>Separa filas y columnas</strong> (NO es padding ni margin).</td></tr>
+    <tr><td><code class="inline">grid-template-areas</code></td><td>Nombra zonas para <strong>entender y reorganizar</strong> el layout visualmente.</td></tr>
+  </table>
+
+  <pre>.layout{
+  <span class="k">display</span>: grid;
+  <span class="k">grid-template-columns</span>: 1fr 1fr 1fr; <span class="c">/* 3 columnas iguales */</span>
+  <span class="k">gap</span>: 8px; <span class="c">/* hueco entre celdas */</span>
+}</pre>
+
+  <div class="demo">
+    <div class="label">Demo · cambia el nº de columnas y el gap</div>
+    <div class="controls" id="gridCtrl">
+      <button data-c="2">2 columnas</button>
+      <button data-c="3" class="on">3 columnas</button>
+      <button data-c="4">4 columnas</button>
+      <span class="gv">|</span>
+      <button data-g="4">gap 4px</button>
+      <button data-g="8" class="on">gap 8px</button>
+      <button data-g="20">gap 20px</button>
+    </div>
+    <div id="gridBox" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div class="item">1</div><div class="item alt">2</div><div class="item alt2">3</div>
+      <div class="item alt">4</div><div class="item alt2">5</div><div class="item">6</div>
+    </div>
+  </div>
+
+  <h3><code class="inline">grid-template-areas</code> en acción</h3>
+  <p>Permite "dibujar" el layout con nombres. Se lee de un vistazo y reorganizarlo es trivial:</p>
+  <div class="twocol">
+    <pre style="margin:0;">.page{
+  <span class="k">display</span>:grid;
+  <span class="k">grid-template-areas</span>:
+   <span class="s">"head head head"</span>
+   <span class="s">"side main main"</span>
+   <span class="s">"foot foot foot"</span>;
+}</pre>
+    <div class="demo" style="margin:0;">
+      <div class="label">Resultado visual</div>
+      <div class="grid-area-demo">
+        <div class="ga h">header</div>
+        <div class="ga s">side</div>
+        <div class="ga m">main</div>
+        <div class="ga f">footer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz" data-answer="c">
+    <div class="q">¿Qué diferencia fundamental existe entre Grid y Flexbox?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Flexbox no es responsive</div>
+      <div class="opt" data-k="b">Grid no permite alineación</div>
+      <div class="opt" data-k="c">Grid trabaja en dos dimensiones</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 5 · GRID II ============ -->
+<section id="s5">
+  <h2><span class="num">5</span> CSS Grid · funciones y responsive <span class="timer">~6 min</span></h2>
+  <p class="lead">Funciones que hacen el grid flexible sin media queries: <code class="inline">fr</code>, <code class="inline">minmax()</code> y <code class="inline">repeat()</code>.</p>
+
+  <h3>La unidad <code class="inline">fr</code> (fraction)</h3>
+  <p>Representa una <strong>fracción del espacio disponible</strong>. <code class="inline">1fr 1fr</code> = dos columnas iguales; <code class="inline">2fr 1fr</code> = la primera el doble de ancha.</p>
+
+  <h3>La función <code class="inline">minmax()</code> — muy preguntada</h3>
+  <div class="box key"><b class="t">Memorízalo bien</b> <code class="inline">minmax(200px, 1fr)</code> = tamaño <strong>mínimo de 200px</strong> y <strong>máximo de 1fr</strong> (el espacio restante). Cuidado con la opción trampa que invierte mínimo y máximo.</div>
+
+  <pre>.galeria{
+  <span class="k">display</span>: grid;
+  <span class="k">grid-template-columns</span>: repeat(auto-fit, <span class="p">minmax</span>(200px, 1fr));
+  <span class="k">gap</span>: 10px;
+}</pre>
+  <p>Esto crea una galería que <strong>se adapta sola</strong>: mete tantas columnas de mínimo 200px como quepan, y reparte el sobrante. Sin escribir una sola media query.</p>
+
+  <div class="demo">
+    <div class="label">Demo · pulsa para simular distintos anchos de contenedor</div>
+    <div class="controls" id="minmaxCtrl">
+      <button data-w="100%" class="on">Ancho completo</button>
+      <button data-w="60%">60%</button>
+      <button data-w="32%">Estrecho</button>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <div id="minmaxBox" style="width:100%;transition:.3s;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;">
+        <div class="item">A</div><div class="item alt">B</div><div class="item alt2">C</div>
+        <div class="item alt">D</div><div class="item alt2">E</div><div class="item">F</div>
+      </div>
+    </div>
+    <p style="font-size:.82rem;color:var(--gris);margin-top:10px;margin-bottom:0;">Observa cómo las columnas se reorganizan automáticamente al cambiar el ancho. Eso es <code class="inline">auto-fit + minmax</code>.</p>
+  </div>
+
+  <p>En resumen, <strong>Grid se usa para organizar el layout de la página</strong> en filas y columnas, no para animaciones ni colores.</p>
+
+  <div class="quiz" data-answer="b">
+    <div class="q">¿Qué permite <code class="inline">minmax(200px, 1fr)</code> en Grid?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Fijar un tamaño único de 200px</div>
+      <div class="opt" data-k="b">Un mínimo de 200px y un máximo de 1fr (el espacio restante)</div>
+      <div class="opt" data-k="c">Un máximo de 200px y un mínimo de 1fr</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 6 · BOOTSTRAP ============ -->
+<section id="s6">
+  <h2><span class="num">6</span> Bootstrap <span class="timer">~5 min</span></h2>
+  <p class="lead">Framework CSS para construir páginas responsive rápido, con un sistema de rejilla de 12 columnas.</p>
+
+  <p>Bootstrap sirve para <strong>facilitar el diseño de páginas web responsive</strong> mediante componentes y clases ya hechas. Su pieza central es el <strong>sistema grid de 12 columnas</strong>.</p>
+
+  <h3>La estructura básica (¡memorízala en orden!)</h3>
+  <div class="box key"><b class="t">Jerarquía obligatoria</b> <code class="inline">.container</code> → <code class="inline">.row</code> → <code class="inline">.col-*</code></div>
+
+  <pre><span class="k">&lt;div</span> class=<span class="s">"container"</span><span class="k">&gt;</span>
+  <span class="k">&lt;div</span> class=<span class="s">"row"</span><span class="k">&gt;</span>
+    <span class="k">&lt;div</span> class=<span class="s">"col-6"</span><span class="k">&gt;</span>Mitad<span class="k">&lt;/div&gt;</span>
+    <span class="k">&lt;div</span> class=<span class="s">"col-6"</span><span class="k">&gt;</span>Mitad<span class="k">&lt;/div&gt;</span>
+  <span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+
+  <div class="demo">
+    <div class="label">Sistema de 12 columnas · el total siempre suma 12</div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;">
+      <div class="item" style="flex:8">col-8</div>
+      <div class="item alt" style="flex:4">col-4</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;">
+      <div class="item alt2" style="flex:4">col-4</div>
+      <div class="item" style="flex:4">col-4</div>
+      <div class="item alt" style="flex:4">col-4</div>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <div class="item alt" style="flex:6">col-6</div>
+      <div class="item alt2" style="flex:6">col-6</div>
+    </div>
+  </div>
+
+  <h3><code class="inline">.container</code> vs <code class="inline">.container-fluid</code></h3>
+  <table>
+    <tr><th>Clase</th><th>Comportamiento</th></tr>
+    <tr><td><code class="inline">.container</code></td><td>Ancho limitado y centrado, con márgenes laterales.</td></tr>
+    <tr><td><code class="inline">.container-fluid</code></td><td>Ocupa el <strong>100% del ancho del viewport</strong>.</td></tr>
+  </table>
+
+  <div class="quiz" data-answer="c">
+    <div class="q">¿Cuál es la estructura básica del sistema grid en Bootstrap?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">.grid &gt; .cell</div>
+      <div class="opt" data-k="b">.layout &gt; .box</div>
+      <div class="opt" data-k="c">.container &gt; .row &gt; .col-*</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 7 · TAILWIND ============ -->
+<section id="s7">
+  <h2><span class="num">7</span> Tailwind CSS <span class="timer">~5 min</span></h2>
+  <p class="lead">Framework <strong>utility-first</strong>: estilas componiendo clases utilitarias directamente en el HTML.</p>
+
+  <p>A diferencia de Bootstrap (que da componentes ya montados), Tailwind es <strong>utility-first</strong>: te da pequeñas clases de un solo propósito y tú las combinas. Construyes el diseño en el propio HTML.</p>
+
+  <div class="demo">
+    <div class="label">Una clase = una utilidad</div>
+    <span class="pill">flex</span><span class="pill">flex-col</span><span class="pill">gap-4</span><span class="pill">p-4</span><span class="pill">bg-blue-500</span><span class="pill">text-white</span><span class="pill">rounded-lg</span>
+    <p style="font-size:.85rem;color:var(--gris);margin:10px 0 0;">Cada una hace una cosa concreta. El estilo final es la suma de todas.</p>
+  </div>
+
+  <h3>Dos cosas que se preguntan</h3>
+  <table>
+    <tr><th>Concepto</th><th>En Tailwind</th></tr>
+    <tr><td>Flexbox en columna</td><td><code class="inline">flex-col</code> = Flexbox en dirección columna.</td></tr>
+    <tr><td>Breakpoints</td><td>Con <strong>prefijo</strong> en la clase: <code class="inline">md:</code>, <code class="inline">lg:</code>… (NO con <code class="inline">@media</code>).</td></tr>
+  </table>
+
+  <pre><span class="c">&lt;!-- columna en móvil, fila a partir de md (768px) --&gt;</span>
+<span class="k">&lt;div</span> class=<span class="s">"flex flex-col md:flex-row gap-4"</span><span class="k">&gt;</span> ... <span class="k">&lt;/div&gt;</span></pre>
+
+  <div class="box tip"><b class="t">Lee el prefijo así</b> <code class="inline">md:flex-row</code> = "a partir del breakpoint md, aplica flex-row". El prefijo es la condición responsive.</div>
+
+  <div class="quiz" data-answer="a">
+    <div class="q">¿Cómo se aplica un breakpoint en Tailwind CSS?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Con un prefijo en la clase, como md:</div>
+      <div class="opt" data-k="b">Con @media md</div>
+      <div class="opt" data-k="c">Con la clase screen-md</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 8 · SASS ============ -->
+<section id="s8">
+  <h2><span class="num">8</span> SASS / SCSS <span class="timer">~5 min</span></h2>
+  <p class="lead">Preprocesador que añade a CSS variables, anidamiento, mixins y modularidad. Se compila a CSS normal.</p>
+
+  <h3>Mixins</h3>
+  <p>Un <strong>mixin</strong> sirve para <strong>reutilizar bloques de estilos, admitiendo parámetros</strong>. Defines una vez, usas muchas con valores distintos.</p>
+  <pre><span class="p">@mixin</span> boton($color){
+  <span class="k">background</span>: $color;
+  <span class="k">padding</span>: 8px 16px;
+  <span class="k">border-radius</span>: 6px;
+}
+.primario{ <span class="p">@include</span> boton(<span class="s">#0055a5</span>); }
+.peligro{  <span class="p">@include</span> boton(<span class="s">#c0392b</span>); }</pre>
+
+  <h3>Partials</h3>
+  <p>Un <strong>partial</strong> es un archivo <code class="inline">.scss</code> pensado para ser <strong>importado</strong> en otros (su nombre empieza por <code class="inline">_</code>, p. ej. <code class="inline">_botones.scss</code>). No se compila por sí solo: sirve para organizar el código en piezas.</p>
+
+  <h3>Cuidado con el anidamiento excesivo</h3>
+  <div class="box err"><b class="t">Problema típico</b> Anidar demasiados niveles genera <strong>selectores con demasiada especificidad</strong>, difíciles de sobrescribir y mantener.</div>
+  <div class="twocol">
+    <pre style="margin:0;"><span class="c">/* ❌ Demasiado anidado */</span>
+.nav{
+  .lista{
+    .item{
+      .enlace{
+        <span class="k">color</span>: red; <span class="c">/* muy específico */</span>
+      }
+    }
+  }
+}</pre>
+    <pre style="margin:0;"><span class="c">/* ✅ Plano y mantenible */</span>
+.nav-enlace{
+  <span class="k">color</span>: red;
+}</pre>
+  </div>
+
+  <div class="quiz" data-answer="b">
+    <div class="q">¿Para qué se utiliza un mixin en SASS?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Para declarar variables globales</div>
+      <div class="opt" data-k="b">Para reutilizar bloques de estilos con parámetros</div>
+      <div class="opt" data-k="c">Para importar archivos</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 9 · ACCESIBILIDAD I ============ -->
+<section id="s9">
+  <h2><span class="num">9</span> Accesibilidad · contenido e imágenes <span class="timer">~6 min</span></h2>
+  <p class="lead">Hacer que la web pueda usarla el mayor número de personas posible. Bloque con varias preguntas.</p>
+
+  <h3>No transmitir información solo con el color</h3>
+  <p>Hay usuarios que <strong>no perciben el color</strong> (daltonismo, lectores de pantalla…). Si el color es la <em>única</em> señal, esa información se pierde. Hay que reforzarla con texto, iconos o formas.</p>
+  <div class="demo">
+    <div class="twocol">
+      <div>
+        <div class="label">❌ Solo color</div>
+        <p style="font-size:.9rem;"><span class="dot" style="background:#1a8a4a"></span>Disponible<br><span class="dot" style="background:#c0392b"></span>Agotado</p>
+        <small style="color:var(--gris)">Quien no distingue verde/rojo no entiende nada.</small>
+      </div>
+      <div>
+        <div class="label">✅ Color + texto/icono</div>
+        <p style="font-size:.9rem;"><span class="dot" style="background:#1a8a4a"></span>✔ Disponible<br><span class="dot" style="background:#c0392b"></span>✘ Agotado</p>
+        <small style="color:var(--gris)">La señal no depende solo del color.</small>
+      </div>
+    </div>
+  </div>
+
+  <h3>El atributo <code class="inline">alt</code></h3>
+  <p>El atributo <strong><code class="inline">alt</code></strong> describe la imagen para los <strong>lectores de pantalla</strong> y se muestra <strong>si la imagen no carga</strong>. Es el atributo correcto para una <strong>imagen informativa</strong> (no <code class="inline">title</code>, ni <code class="inline">role</code>, ni <code class="inline">aria-hidden</code>).</p>
+  <pre><span class="k">&lt;img</span> src=<span class="s">"grafico-ventas.png"</span>
+     alt=<span class="s">"Ventas subieron un 20% en 2025"</span><span class="k">&gt;</span></pre>
+  <div class="box tip"><b class="t">Matiz</b> Si una imagen es puramente decorativa, se usa <code class="inline">alt=""</code> (vacío) para que los lectores de pantalla la ignoren.</div>
+
+  <h3>HTML semántico</h3>
+  <p>Usar etiquetas con significado (<code class="inline">&lt;header&gt;</code>, <code class="inline">&lt;nav&gt;</code>, <code class="inline">&lt;main&gt;</code>, <code class="inline">&lt;article&gt;</code>, <code class="inline">&lt;footer&gt;</code>) en lugar de <code class="inline">&lt;div&gt;</code> para todo <strong>mejora la accesibilidad y el SEO</strong>: los lectores de pantalla y los buscadores entienden la estructura.</p>
+
+  <div class="quiz" data-answer="b">
+    <div class="q">¿Para qué sirve el atributo <code class="inline">alt</code> en una imagen?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Para añadir estilos a la imagen</div>
+      <div class="opt" data-k="b">Para describirla si no carga o para lectores de pantalla</div>
+      <div class="opt" data-k="c">Para cambiar su tamaño</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ 10 · ACCESIBILIDAD II ============ -->
+<section id="s10">
+  <h2><span class="num">10</span> Accesibilidad · interacción y teclado <span class="timer">~6 min</span></h2>
+  <p class="lead">Definición, contraste, foco y navegación por teclado.</p>
+
+  <h3>¿Qué es la accesibilidad web?</h3>
+  <div class="box key"><b class="t">Definición</b> Que una web pueda ser <strong>usada por el mayor número de personas posible</strong>, incluyendo personas con discapacidad. No es "que se vea igual en todos los navegadores" ni "que cargue más rápido".</div>
+
+  <h3>Contraste de color</h3>
+  <p>Texto y fondo necesitan suficiente contraste para ser legibles por personas con baja visión:</p>
+  <div class="contrast-row">
+    <div class="swatch c-bad">Contraste insuficiente ❌</div>
+    <div class="swatch c-good">Contraste correcto ✅</div>
+  </div>
+
+  <h3>El foco y la navegación por teclado</h3>
+  <p>Muchos usuarios navegan con <strong>Tab</strong>, sin ratón. El <code class="inline">outline</code> (el borde que aparece al enfocar) es su guía visual.</p>
+  <div class="box err"><b class="t">Error grave</b> Si eliminas <code class="inline">outline</code> sin poner una alternativa, <strong>perjudicas la navegación por teclado</strong>: el usuario deja de ver dónde está.</div>
+  <div class="demo">
+    <div class="label">Pulsa Tab para mover el foco entre estos botones</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button style="padding:8px 16px;border-radius:7px;border:1px solid var(--azul2);background:#fff;color:var(--azul2);font-weight:600;cursor:pointer;">Botón 1</button>
+      <button style="padding:8px 16px;border-radius:7px;border:1px solid var(--azul2);background:#fff;color:var(--azul2);font-weight:600;cursor:pointer;">Botón 2</button>
+      <button style="padding:8px 16px;border-radius:7px;border:1px solid var(--azul2);background:#fff;color:var(--azul2);font-weight:600;cursor:pointer;">Botón 3</button>
+    </div>
+  </div>
+
+  <h3>Accesibilidad en modales</h3>
+  <p>Un modal accesible debe <strong>atrapar el foco mientras está abierto</strong> (<em>focus trap</em>): el Tab no debe escaparse a la página de detrás. Así el usuario de teclado no se "pierde" fuera del diálogo.</p>
+
+  <div class="quiz" data-answer="c">
+    <div class="q">¿Qué ocurre si se elimina <code class="inline">outline</code> sin alternativa?</div>
+    <div class="opts">
+      <div class="opt" data-k="a">Nada relevante</div>
+      <div class="opt" data-k="b">Mejora estética sin consecuencias</div>
+      <div class="opt" data-k="c">Se perjudica la navegación por teclado</div>
+    </div>
+    <div class="fb"></div>
+  </div>
+</section>
+
+<!-- ============ CIERRE ============ -->
+<section>
+  <h2><span class="num">✓</span> Repaso final · las distinciones clave</h2>
+  <p class="lead">El examen es tipo test y va de <strong>distinguir conceptos parecidos</strong>. Si tienes claras estas parejas, vas sobrado.</p>
+  <table>
+    <tr><th>Si dudas entre…</th><th>Recuerda</th></tr>
+    <tr><td>Mobile First / Desktop First</td><td>Mobile = pequeño→grande. Desktop = grande→pequeño.</td></tr>
+    <tr><td>Flexbox / Grid</td><td>Flexbox = 1 dimensión. Grid = 2 dimensiones.</td></tr>
+    <tr><td>Bootstrap / Tailwind</td><td>Bootstrap = componentes. Tailwind = utility-first.</td></tr>
+    <tr><td><code class="inline">.container</code> / <code class="inline">.container-fluid</code></td><td>fluid = 100% del ancho.</td></tr>
+    <tr><td><code class="inline">alt</code> / <code class="inline">title</code></td><td>alt = imagen informativa y lectores de pantalla.</td></tr>
+    <tr><td><code class="inline">minmax(200px,1fr)</code></td><td>mín 200px, máx 1fr (no al revés).</td></tr>
+  </table>
+  <div class="box tip"><b class="t">Último consejo</b> Entiende el "para qué sirve" de cada herramienta y las trampas de inversión (mínimo/máximo, mobile/desktop). Mucho ánimo. 💪</div>
+</section>
+
+</main>
+
+<footer class="end">
+  11041 · Desarrollo Web Responsive · Sesión de repaso · UNIR 2026
+</footer>
+
+<script>
+/* ---- Quiz ---- */
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans=q.dataset.answer, fb=q.querySelector('.fb'), done=false;
+  q.querySelectorAll('.opt').forEach(function(o){
+    o.addEventListener('click',function(){
+      if(done) return; done=true;
+      if(o.dataset.k===ans){o.classList.add('ok');fb.textContent='✔ ¡Correcto!';fb.style.color='var(--ok)';}
+      else{o.classList.add('no');var ok=q.querySelector('.opt[data-k="'+ans+'"]');ok.classList.add('ok');fb.textContent='✘ La correcta está marcada en verde.';fb.style.color='var(--warn)';}
+      fb.style.display='block';
+    });
+  });
+});
+
+/* ---- Flexbox demo ---- */
+(function(){
+  var box=document.getElementById('flexBox'); if(!box) return;
+  document.getElementById('flexCtrl').querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var prop=b.dataset.prop;
+      box.style[prop]=b.dataset.val;
+      b.parentElement.querySelectorAll('button[data-prop="'+prop+'"]').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+})();
+
+/* ---- order demo ---- */
+(function(){
+  var it=document.getElementById('orderItem'),btn=document.getElementById('orderBtn'),st=document.getElementById('orderState');
+  if(!it) return; var on=false;
+  btn.addEventListener('click',function(){
+    on=!on; it.style.order=on?99:0;
+    st.textContent='order actual: '+(on?99:0);
+    btn.textContent=on?'Quitar order (volver a 0)':'Aplicar order: 99 al ítem 1';
+  });
+})();
+
+/* ---- Grid demo ---- */
+(function(){
+  var box=document.getElementById('gridBox'),ctrl=document.getElementById('gridCtrl'); if(!box) return;
+  ctrl.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.c){box.style.gridTemplateColumns='repeat('+b.dataset.c+',1fr)';
+        ctrl.querySelectorAll('button[data-c]').forEach(function(x){x.classList.remove('on');});}
+      if(b.dataset.g){box.style.gap=b.dataset.g+'px';
+        ctrl.querySelectorAll('button[data-g]').forEach(function(x){x.classList.remove('on');});}
+      b.classList.add('on');
+    });
+  });
+})();
+
+/* ---- minmax demo ---- */
+(function(){
+  var box=document.getElementById('minmaxBox'),ctrl=document.getElementById('minmaxCtrl'); if(!box) return;
+  ctrl.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      box.style.width=b.dataset.w;
+      ctrl.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+})();
+
+/* ---- viewport width display ---- */
+(function(){
+  var vp=document.getElementById('vpbox'); if(!vp) return;
+  function upd(){
+    var w=window.innerWidth, label, color;
+    if(w<576){label='📱 Móvil';color='#0055a5';}
+    else if(w<768){label='📱 Móvil grande';color='#00a3a3';}
+    else if(w<992){label='📲 Tablet';color='#7a4fd1';}
+    else if(w<1200){label='💻 Escritorio';color='#1a8a4a';}
+    else{label='🖥 Pantalla grande';color='#003366';}
+    vp.style.background=color;
+    vp.innerHTML='Ancho actual: '+w+'px &nbsp;·&nbsp; '+label;
+  }
+  upd(); window.addEventListener('resize',upd);
+})();
+</script>
+
+</body>
+</html>

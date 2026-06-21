@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground Tema 9 · SEO técnico, rendimiento y despliegue en Next.js</title>
+<style>
+  :root{
+    --blue:#0098CD; --teal:#006C8F; --cyan:#64D4EA; --ink:#13242b; --paper:#f4f8fa;
+    --card:#ffffff; --line:#dbe7ec; --muted:#5d7079; --ok:#1f9d6b; --warn:#d98a0b;
+    --bad:#d6453d; --code:#10212b; --codefg:#d6e7f0; --accent:#ff7a59;
+    --shadow:0 8px 30px rgba(0,80,110,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+  }
+  code,pre,.mono{font-family:"JetBrains Mono","Consolas","SF Mono",ui-monospace,monospace}
+  a{color:var(--teal)}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:linear-gradient(135deg,#007bb0 0%,#0098CD 55%,#1ab4dd 100%);
+    color:#fff;padding:54px 24px 80px;position:relative;overflow:hidden;
+  }
+  .hero .wrap{max-width:1080px;margin:0 auto;position:relative;z-index:2}
+  .eyebrow{
+    display:inline-block;letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;
+    font-weight:700;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  .hero h1{font-size:clamp(1.9rem,4.5vw,3.1rem);margin:.5em 0 .2em;line-height:1.1;font-weight:800}
+  .hero p.sub{font-size:1.12rem;max-width:680px;opacity:.95;margin:.2em 0 0}
+  .hero .pipe{
+    display:flex;gap:0;margin-top:34px;flex-wrap:wrap;border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow);max-width:760px;
+  }
+  .hero .pipe .step{
+    flex:1 1 0;min-width:120px;background:rgba(255,255,255,.12);padding:14px 12px;
+    border-right:1px solid rgba(255,255,255,.18);text-align:center;
+  }
+  .hero .pipe .step:last-child{border-right:none}
+  .hero .pipe .step b{display:block;font-size:.95rem}
+  .hero .pipe .step span{font-size:.72rem;opacity:.8}
+  .blob{position:absolute;border-radius:50%;filter:blur(8px);opacity:.25}
+  .blob.b1{width:260px;height:260px;background:#fff;top:-80px;right:-40px}
+  .blob.b2{width:180px;height:180px;background:#64D4EA;bottom:-60px;left:10%}
+
+  /* ---------- NAV ---------- */
+  nav.toc{
+    position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  }
+  nav.toc .wrap{max-width:1080px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 16px}
+  nav.toc a{
+    white-space:nowrap;font-size:.85rem;font-weight:600;color:var(--muted);
+    text-decoration:none;padding:7px 13px;border-radius:8px;transition:.18s;
+  }
+  nav.toc a:hover{background:var(--paper);color:var(--teal)}
+  nav.toc a.active{background:var(--blue);color:#fff}
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:1080px;margin:0 auto;padding:10px 20px 80px}
+  section{padding:46px 0 10px;scroll-margin-top:64px;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+  .sec-num{
+    font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--cyan);
+    font-size:1.5rem;
+  }
+  h2{font-size:1.7rem;margin:0;font-weight:800;color:var(--ink)}
+  h3{font-size:1.15rem;margin:1.6em 0 .4em;color:var(--teal)}
+  .lead{color:var(--muted);font-size:1.05rem;max-width:760px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px 24px;margin:18px 0;box-shadow:var(--shadow);
+  }
+  .analogy{
+    border-radius:14px;padding:18px 22px;margin:18px 0;
+    background:linear-gradient(180deg,#eefaff,#e2f4fb);border:1px solid #c9e9f4;
+  }
+  .analogy b{color:var(--teal)}
+  .analogy .icon{font-size:1.4rem;margin-right:8px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  pre.code{
+    background:var(--code);color:var(--codefg);border-radius:12px;padding:16px 18px;
+    overflow:auto;font-size:.84rem;line-height:1.55;margin:10px 0;
+  }
+  pre.code .c{color:#6b8a99}      /* comentario */
+  pre.code .k{color:#79c0ff}    /* keyword */
+  pre.code .s{color:#a5d6a7}      /* string */
+  pre.code .f{color:#f0b86e}      /* func */
+  .tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.04em}
+  .tag.srv{background:#e3f0ff;color:#1c63b8}
+  .tag.cli{background:#fff0e6;color:#c4621d}
+  .tag.bot{background:#eee9ff;color:#6a4bbb}
+
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:9px;font-weight:600;transition:.16s}
+  .btn{background:var(--blue);color:#fff;padding:9px 18px}
+  .btn:hover{background:var(--teal)}
+  .btn.ghost{background:#eaf5fa;color:var(--teal)}
+  .btn.ghost:hover{background:#d8edf5}
+  .btn.sm{padding:6px 12px;font-size:.82rem}
+
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .pill{
+    border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;
+    font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;user-select:none;transition:.15s
+  }
+  .pill[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  .note{font-size:.82rem;color:var(--muted)}
+  .kbd{font-family:monospace;background:#eef3f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.82em}
+  .ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+
+  /* ---------- Simulador HTTP/crawler ---------- */
+  .crawler{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  @media(max-width:720px){.crawler{grid-template-columns:1fr}}
+  .crawler .panel{padding:18px}
+  .crawler .left{background:#fbfdff;border-right:1px solid var(--line)}
+  .browser{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .urlbar{background:#eef3f6;padding:8px 12px;display:flex;gap:8px;align-items:center;font-size:.8rem}
+  .urlbar .dot{width:10px;height:10px;border-radius:50%}
+  .viewport{padding:16px;min-height:120px;font-size:.9rem}
+  .botlog{font-family:monospace;font-size:.8rem;background:var(--code);color:var(--codefg);
+    border-radius:10px;padding:12px;min-height:120px;white-space:pre-wrap}
+  .botlog .green{color:#7ee2a8}.botlog .red{color:#ff9b91}.botlog .yel{color:#ffd479}.botlog .dim{color:#6b8a99}
+
+  /* status code visual */
+  .status-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px}
+  .scode{border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff;cursor:pointer;transition:.15s}
+  .scode:hover{border-color:var(--blue);transform:translateY(-2px)}
+  .scode b{font-family:monospace;font-size:1.2rem}
+  .scode.s2 b{color:var(--ok)}.scode.s3 b{color:#2b7fd4}.scode.s4 b{color:var(--warn)}.scode.s5 b{color:var(--bad)}
+  .scode small{display:block;color:var(--muted);font-size:.76rem;margin-top:3px}
+
+  /* ---------- CWV meters ---------- */
+  .cwv{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cwv{grid-template-columns:1fr}}
+  .meter{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff;text-align:center}
+  .meter h4{margin:0 0 2px;font-size:1rem}
+  .meter .val{font-size:2rem;font-weight:800;font-family:monospace}
+  .bar{height:10px;border-radius:999px;background:#eef3f6;overflow:hidden;margin:10px 0 6px}
+  .bar i{display:block;height:100%;border-radius:999px;transition:width .4s,background .4s}
+  .meter input{width:100%}
+  .verdict{font-size:.8rem;font-weight:700;margin-top:4px}
+
+  /* ---------- head preview / OG ---------- */
+  .og-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;max-width:420px;background:#fff;box-shadow:var(--shadow)}
+  .og-img{height:160px;background:linear-gradient(135deg,#0098CD,#64D4EA);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+  .og-body{padding:12px 14px}
+  .og-body .dom{font-size:.72rem;color:var(--muted);text-transform:uppercase}
+  .og-body .t{font-weight:700;margin:2px 0}
+  .og-body .d{font-size:.85rem;color:var(--muted)}
+  .field{display:flex;flex-direction:column;gap:3px;margin:8px 0}
+  .field label{font-size:.78rem;font-weight:600;color:var(--teal)}
+  .field input{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:.88rem}
+
+  /* ---------- i18n / hreflang ---------- */
+  .locale-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .lt{padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:.85rem}
+  .lt[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+  /* env vars */
+  .envrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
+    border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff}
+  .envrow .name{font-family:monospace;font-weight:700}
+  .badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px}
+  .badge.pub{background:#fff0e6;color:#c4621d}
+  .badge.priv{background:#e3f5ec;color:#1f8a5a}
+  .leak{font-size:.78rem;font-weight:700}
+
+  footer{background:var(--ink);color:#cfe2ea;padding:30px 20px;text-align:center;font-size:.85rem}
+  footer b{color:#fff}
+
+  .quiz{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+  .quiz .opt{display:block;width:100%;text-align:left;background:#f7fafc;border:1px solid var(--line);
+    border-radius:9px;padding:10px 14px;margin:6px 0;cursor:pointer;font-size:.9rem;transition:.14s}
+  .quiz .opt:hover{border-color:var(--blue)}
+  .quiz .opt.correct{background:#e3f5ec;border-color:var(--ok);color:#13603f}
+  .quiz .opt.wrong{background:#fdecea;border-color:var(--bad);color:#9c241c}
+  .quiz .explain{font-size:.85rem;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <span class="eyebrow">Diseño Web · Tema 9 · Playground</span>
+    <h1>De funcional a encontrable</h1>
+    <p class="sub">Un laboratorio interactivo para entender el SEO técnico, la metadata, la internacionalización, el rendimiento y el despliegue de una aplicación Next.js. Toca, edita y observa.</p>
+    <div class="pipe" id="heroPipe">
+      <div class="step"><b>① Descubrir</b><span>enlaces · sitemap</span></div>
+      <div class="step"><b>② Rastrear</b><span>HTTP · crawler</span></div>
+      <div class="step"><b>③ Renderizar</b><span>HTML · JS</span></div>
+      <div class="step"><b>④ Indexar</b><span>índice · resultados</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" id="toc">
+  <div class="wrap">
+    <a href="#s1">1 · SEO técnico</a>
+    <a href="#s2">2 · Metadata & OG</a>
+    <a href="#s3">3 · i18n</a>
+    <a href="#s4">4 · Rendimiento</a>
+    <a href="#s5">5 · Despliegue</a>
+    <a href="#quiz">✓ Autoevaluación</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ SECCIÓN 1 ============ -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Fundamentos de SEO técnico</h2></div>
+  <p class="lead">El SEO técnico garantiza que una aplicación pueda ser <b>descubierta, rastreada, renderizada, comprendida e indexada</b> de forma fiable. No es marketing: es ingeniería de plataforma.</p>
+
+  <div class="analogy">
+    <span class="icon">📮</span><b>Analogía del cartero.</b> Imagina un cartero (el bot) que reparte a una ciudad enorme. Necesita <b>direcciones reales</b> (URLs en enlaces &lt;a&gt;), un <b>mapa</b> (sitemap), <b>señales de tráfico</b> (robots.txt) y <b>buzones que respondan</b> (códigos HTTP). Si la casa solo aparece tras "encender la luz" (ejecutar JavaScript), muchos carteros se van sin entregar.
+  </div>
+
+  <h3>El pipeline del buscador, paso a paso</h3>
+  <p>Pasa el ratón por cada etapa del banner superior, o recórrelas aquí. Cada una tiene su modo de fallar.</p>
+  <div class="card">
+    <div class="pill-row" id="pipePills">
+      <span class="pill" data-i="0" aria-pressed="true">① Descubrir</span>
+      <span class="pill" data-i="1" aria-pressed="false">② Rastrear</span>
+      <span class="pill" data-i="2" aria-pressed="false">③ Renderizar</span>
+      <span class="pill" data-i="3" aria-pressed="false">④ Indexar</span>
+    </div>
+    <div id="pipeBody"></div>
+  </div>
+
+  <h3>Simulador: el crawler frente a tu HTML</h3>
+  <p>Cambia cómo entrega tu página el contenido y mira qué "ve" el bot. La diferencia entre <span class="tag srv">servidor</span> y <span class="tag cli">cliente</span> es el corazón del SEO en apps modernas.</p>
+  <div class="pill-row" id="renderMode">
+    <span class="pill" data-mode="ssr" aria-pressed="true">SSR / SSG · contenido en el HTML</span>
+    <span class="pill" data-mode="csr" aria-pressed="false">CSR · todo se hidrata en cliente</span>
+  </div>
+  <div class="crawler">
+    <div class="panel left">
+      <div class="browser">
+        <div class="urlbar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>&nbsp; https://tienda.com/productos</div>
+        <div class="viewport" id="humanView"></div>
+      </div>
+      <p class="note" style="margin-top:10px">👁️ Lo que ve la persona (con JS ejecutado).</p>
+    </div>
+    <div class="panel">
+      <p style="margin:0 0 8px;font-weight:600">🤖 Primera respuesta HTML que recibe el bot:</p>
+      <div class="botlog" id="botView"></div>
+      <button class="btn sm" id="crawlBtn" style="margin-top:10px">Rastrear de nuevo</button>
+    </div>
+  </div>
+
+  <h3>Los códigos HTTP son semántica para máquinas</h3>
+  <p>Haz clic en cada código para ver qué le comunica al buscador.</p>
+  <div class="status-grid" id="statusGrid"></div>
+  <div class="card" id="statusDetail" style="display:none"></div>
+
+  <h3>robots.js y sitemap.js en App Router</h3>
+  <div class="grid2">
+    <div>
+      <span class="tag bot">señal de rastreo</span>
+      <pre class="code">// app/robots.js
+export default function robots() {
+  return {
+    rules: { userAgent: '*', allow: '/',
+      disallow: ['/api/', '/dashboard/'] },
+    sitemap: 'https://tienda.com/sitemap.xml',
+  };
+}</pre>
+      <p class="note">Regula <b>qué no rastrear</b> (paneles, endpoints de auth).</p>
+    </div>
+    <div>
+      <span class="tag bot">descubrimiento</span>
+      <pre class="code">// app/sitemap.js
+export default async function sitemap() {
+  const posts = await getPosts();
+  return [
+    { url: 'https://tienda.com', lastModified: new Date() },
+    ...posts.map(p => ({
+      url: `https://tienda.com/blog/${p.slug}`,
+      lastModified: p.updatedAt,
+    })),
+  ];
+}</pre>
+      <p class="note">Lista <b>curada</b> de lo que merece descubrirse — no un volcado de todo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 2 ============ -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Metadata, Open Graph y gestión del &lt;head&gt;</h2></div>
+  <p class="lead">En App Router el <code>&lt;head&gt;</code> es <b>declarativo y ligado a la ruta</b>. Nada de <code>next/head</code>: se usa <code>metadata</code> (estática) o <code>generateMetadata</code> (dinámica), y se resuelve <span class="tag srv">en servidor</span>.</p>
+
+  <div class="analogy">
+    <span class="icon">🪪</span><b>Analogía del DNI del documento.</b> La metadata es el carné de identidad de cada página: su nombre (<code>title</code>), su descripción y su foto para compartir (<code>og:image</code>). Si el carné se rellena "tarde" (en cliente), el portero que no espera —un bot o un previsualizador— se queda sin saber quién eres.
+  </div>
+
+  <h3>Editor en vivo: del código al &lt;head&gt; y a la tarjeta social</h3>
+  <p>Edita los campos y observa cómo cambian el HTML generado y la previsualización al compartir (Open Graph + Twitter Cards).</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="field"><label>title</label><input id="m_title" value="Zapatillas Trail Pro"></div>
+      <div class="field"><label>description</label><input id="m_desc" value="Ligeras, con agarre para montaña. Envío en 24h."></div>
+      <div class="field"><label>og:image (texto de la portada)</label><input id="m_img" value="Trail Pro 2026"></div>
+      <div class="field"><label>canonical (slug)</label><input id="m_slug" value="/es/productos/trail-pro"></div>
+      <p style="font-weight:600;margin:14px 0 4px">&lt;head&gt; generado:</p>
+      <pre class="code" id="headOut"></pre>
+    </div>
+    <div>
+      <p style="font-weight:600;margin:0 0 8px">Previsualización al compartir el enlace:</p>
+      <div class="og-card">
+        <div class="og-img" id="ogImg">Trail Pro 2026</div>
+        <div class="og-body">
+          <div class="dom">tienda.com</div>
+          <div class="t" id="ogTitle">Zapatillas Trail Pro</div>
+          <div class="d" id="ogDesc">Ligeras, con agarre para montaña. Envío en 24h.</div>
+        </div>
+      </div>
+      <div class="analogy" style="margin-top:16px">
+        <b>generateMetadata</b> cuando el título depende de datos:
+<pre class="code" style="margin-top:8px">export async function generateMetadata({ params }) {
+  const p = await getProduct(params.slug);
+  return {
+    title: p.name,
+    alternates: { canonical: `/es/productos/${p.slug}` },
+    openGraph: { images: [p.image] },
+  };
+}</pre>
+      </div>
+    </div>
+  </div>
+  <p class="note">⚖️ <b>Regla de oro:</b> los metadatos deben ser <b>deterministas respecto a la URL</b> y resolverse en servidor. Filtros y pestañas no deberían crear páginas indexables nuevas.</p>
+</section>
+
+<!-- ============ SECCIÓN 3 ============ -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">03</span><h2>SEO e internacionalización</h2></div>
+  <p class="lead">Con varios idiomas el reto deja de ser indexar una página y pasa a indexar bien una <b>familia de páginas equivalentes</b>, sin que compitan entre sí (canibalización).</p>
+
+  <div class="analogy">
+    <span class="icon">🌍</span><b>Analogía de la edición de un libro.</b> Un mismo libro en español, inglés y francés son <b>ediciones</b> distintas, no copias piratas. <b>hreflang</b> es la nota "esta es la edición francesa de la misma obra"; <b>canonical</b> es "esta es la portada oficial de <i>esta</i> edición". Cada edición se firma a sí misma y señala a las demás.
+  </div>
+
+  <h3>Explorador hreflang ⇄ canonical</h3>
+  <p>Elige el idioma del visitante y observa qué &lt;head&gt; debería emitir la página correspondiente. Fíjate en la <b>simetría</b>: todas declaran el mismo conjunto.</p>
+  <div class="card">
+    <div class="locale-tabs" id="localeTabs">
+      <button class="lt" data-loc="es" aria-pressed="true">🇪🇸 es</button>
+      <button class="lt" data-loc="en" aria-pressed="false">🇬🇧 en</button>
+      <button class="lt" data-loc="fr" aria-pressed="false">🇫🇷 fr</button>
+    </div>
+    <pre class="code" id="hreflangOut"></pre>
+    <p class="note" id="localeUrl"></p>
+  </div>
+
+  <h3>Tres cosas que separan "funciona" de "posiciona"</h3>
+  <div class="grid2">
+    <div class="card"><b>↔️ Simetría</b><p class="note">Cada versión declara el mismo conjunto de <code>alternates</code> (ida y vuelta). Si la ES apunta a la EN pero la EN no devuelve el gesto, se rompe.</p></div>
+    <div class="card"><b>🎯 Precisión de códigos</b><p class="note">Idiomas válidos y regiones con estándar (<code>es-ES</code>, <code>es-MX</code>). Lighthouse detecta errores típicos.</p></div>
+    <div class="card"><b>🔗 URLs absolutas</b><p class="note">Para <code>canonical</code> y <code>hreflang</code>, apoyadas en <code>metadataBase</code>. Las anotaciones internacionales son sensibles a inconsistencias.</p></div>
+    <div class="card"><b>🈯 Metadata localizada</b><p class="note">No basta traducir el contenido visible: <code>title</code>, <code>description</code> y OG también. Si no, el HTML "dice" una cosa y su identidad documental, otra.</p></div>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 4 ============ -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Optimización para buscadores y rendimiento</h2></div>
+  <p class="lead">El rendimiento es señal de experiencia. Google mide <b>Core Web Vitals</b> con datos reales de usuario. Buen rendimiento no garantiza el puesto 1, pero malo sí te penaliza.</p>
+
+  <div class="analogy">
+    <span class="icon">🏪</span><b>Analogía de la tienda física.</b> <b>LCP</b> = lo que tarda en encenderse el escaparate. <b>INP</b> = cuánto tarda el dependiente en atenderte al tocar el timbre. <b>CLS</b> = que no te muevan la estantería justo cuando ibas a coger el producto.
+  </div>
+
+  <h3>Laboratorio de Core Web Vitals</h3>
+  <p>Mueve los deslizadores y observa el veredicto (umbrales de Google). Desde marzo de 2024, <b>INP reemplaza a FID</b>.</p>
+  <div class="cwv">
+    <div class="meter">
+      <h4>LCP</h4><div class="note">Carga del mayor elemento</div>
+      <div class="val" id="lcpVal">2.1s</div>
+      <div class="bar"><i id="lcpBar"></i></div>
+      <input type="range" id="lcp" min="500" max="6000" step="100" value="2100">
+      <div class="verdict" id="lcpV"></div>
+      <div class="note" style="margin-top:6px">Bueno &lt; 2,5s</div>
+    </div>
+    <div class="meter">
+      <h4>INP</h4><div class="note">Respuesta a interacción</div>
+      <div class="val" id="inpVal">150ms</div>
+      <div class="bar"><i id="inpBar"></i></div>
+      <input type="range" id="inp" min="20" max="700" step="10" value="150">
+      <div class="verdict" id="inpV"></div>
+      <div class="note" style="margin-top:6px">Bueno &lt; 200ms</div>
+    </div>
+    <div class="meter">
+      <h4>CLS</h4><div class="note">Estabilidad visual</div>
+      <div class="val" id="clsVal">0.05</div>
+      <div class="bar"><i id="clsBar"></i></div>
+      <input type="range" id="cls" min="0" max="50" step="1" value="5">
+      <div class="verdict" id="clsV"></div>
+      <div class="note" style="margin-top:6px">Bueno &lt; 0,1</div>
+    </div>
+  </div>
+
+  <h3>Palancas reales en Next.js</h3>
+  <div class="grid2">
+    <div>
+      <span class="tag srv">LCP</span>
+      <pre class="code">import Image from 'next/image';
+
+&lt;Image src="/hero.jpg" alt="Portada"
+  width={1200} height={600}
+  priority                       // descarga temprana
+  sizes="(max-width:768px) 100vw, 1200px" /&gt;</pre>
+    </div>
+    <div>
+      <span class="tag cli">INP</span>
+      <pre class="code">import Script from 'next/script';
+
+&lt;Script src="https://analytics.example.com/a.js"
+  strategy="lazyOnload" /&gt;
+// beforeInteractive · afterInteractive · lazyOnload</pre>
+    </div>
+  </div>
+  <p class="note">El <b>CLS</b> se cura reservando espacio: dimensiones en imágenes, alturas mínimas con skeletons y <code>next/font</code> (auto-hosting que reduce el cambio de tipografía).</p>
+</section>
+
+<!-- ============ SECCIÓN 5 ============ -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Despliegue</h2></div>
+  <p class="lead">Publicar no es "subir ficheros": según el render (SSR, Route Handlers, ISR) puede hacer falta infraestructura ejecutable. <b>Vercel</b> es el entorno gestionado más alineado con Next.js.</p>
+
+  <div class="analogy">
+    <span class="icon">🔑</span><b>Analogía de las llaves.</b> Una variable <code>NEXT_PUBLIC_</code> es como una llave que <b>imprimes en folletos</b>: cualquiera la ve. Una variable privada es la llave de la caja fuerte: jamás se imprime, solo se usa dentro del banco (el servidor). Confundirlas es el fallo de despliegue más caro.
+  </div>
+
+  <h3>Clasifica las variables: ¿pública o secreta?</h3>
+  <p>Arrastra mentalmente cada variable a su sitio. Pulsa para alternar el prefijo y observa la fuga.</p>
+  <div id="envBox"></div>
+
+  <h3>Entornos por defecto en Vercel</h3>
+  <div class="grid2">
+    <div class="card"><b>🖥️ Local</b><p class="note">Tu máquina. <code>next dev</code>. Variables desde <code>.env.local</code>.</p></div>
+    <div class="card"><b>🔍 Preview</b><p class="note">Cada rama / pull request genera una URL real para validar caching, ISR, cabeceras… antes de producción.</p></div>
+    <div class="card"><b>🚀 Production</b><p class="note">Dominio principal. El merge a la rama de producción promueve el despliegue.</p></div>
+    <div class="card"><b>⚙️ Autónomo</b><p class="note"><code>output: 'standalone'</code> para Docker / AWS / Azure cuando se necesita control total.</p></div>
+  </div>
+  <p class="note">⚠️ <b>process.env</b> no es un objeto normal: muchas variables se sustituyen en <i>build-time</i>. No las destructures; usa <code>process.env.MI_VARIABLE</code> de forma explícita.</p>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="quiz">
+  <div class="sec-head"><span class="sec-num">✓</span><h2>Autoevaluación rápida</h2></div>
+  <p class="lead">Cinco preguntas para fijar lo esencial. Haz clic en la respuesta que creas correcta.</p>
+  <div id="quizBox"></div>
+</section>
+
+</main>
+
+<footer>
+  <p><b>Playground Tema 9</b> · Diseño Web Responsive · SEO técnico, rendimiento y despliegue en Next.js</p>
+  <p class="note" style="color:#9fc0cd">Material didáctico autocontenido · sin dependencias externas</p>
+</footer>
+
+<script>
+/* ============ helpers ============ */
+const $=(s,c=document)=>c.querySelector(s);
+const $$=(s,c=document)=>[...c.querySelectorAll(s)];
+
+/* ---- TOC scroll spy ---- */
+const secs=$$('main section');const links=$$('#toc a');
+const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}});},
+  {rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s=>spy.observe(s));
+
+/* ============ 1 · pipeline ============ */
+const pipe=[
+ {t:'① Descubrimiento',d:'Una URL se descubre por enlaces &lt;a&gt;, sitemaps o señales externas.',fail:'Fallo típico: enlaces que solo existen tras un onClick, sin href real → el bot no los sigue.'},
+ {t:'② Rastreo (crawl)',d:'El bot solicita la URL y recibe una respuesta HTTP: código, cabeceras y cuerpo.',fail:'Fallo típico: respuestas inestables (503 intermitentes) que agotan el presupuesto de rastreo.'},
+ {t:'③ Renderizado',d:'Se ejecuta (o no) el JavaScript para "ver" el contenido. Google lo hace con colas y límites.',fail:'Fallo típico: el contenido principal solo aparece tras hidratar en cliente → renderizado incompleto.'},
+ {t:'④ Indexación',d:'Se decide si la página entra al índice y cómo se representa en resultados.',fail:'Fallo típico: miles de URLs duplicadas (filtros, parámetros) que diluyen señales.'}
+];
+function showPipe(i){
+  $('#pipeBody').innerHTML=`<h4 style="margin:.2em 0;color:var(--teal)">${pipe[i].t}</h4>
+    <p style="margin:.3em 0">${pipe[i].d}</p>
+    <p class="note bad">⚠️ ${pipe[i].fail}</p>`;
+  $$('#pipePills .pill').forEach(p=>p.setAttribute('aria-pressed',p.dataset.i==i));
+}
+$$('#pipePills .pill').forEach(p=>p.onclick=()=>showPipe(+p.dataset.i));
+$$('#heroPipe .step').forEach((s,i)=>s.onmouseenter=()=>{location.hash='#s1';showPipe(i);});
+showPipe(0);
+
+/* ============ 1 · crawler sim ============ */
+let mode='ssr';
+function crawl(){
+  const human=$('#humanView'),bot=$('#botView');
+  human.innerHTML=`<b>Zapatillas Trail Pro</b><br>Ligeras, con agarre para montaña.<br><a href="/es/productos/trail-pro">Ver producto →</a>`;
+  if(mode==='ssr'){
+    typeBot(bot,[
+      ['dim','GET /productos  → 200 OK'],
+      ['green','&lt;h1&gt;Zapatillas Trail Pro&lt;/h1&gt;'],
+      ['green','&lt;a href="/es/productos/trail-pro"&gt;Ver producto&lt;/a&gt;'],
+      ['green','✓ contenido principal presente en el HTML'],
+      ['green','✓ enlace rastreable encontrado'],
+      ['dim','→ indexable con buena señal']
+    ]);
+  }else{
+    typeBot(bot,[
+      ['dim','GET /productos  → 200 OK'],
+      ['yel','&lt;div id="root"&gt;&lt;/div&gt;'],
+      ['yel','&lt;script src="/_next/app.js"&gt;&lt;/script&gt;'],
+      ['red','✗ sin contenido en el HTML inicial'],
+      ['red','✗ requiere ejecutar JS para "ver" el producto'],
+      ['dim','→ riesgo: bots sin JS no indexan nada']
+    ]);
+  }
+}
+function typeBot(el,lines){
+  el.innerHTML='';let i=0;
+  (function next(){
+    if(i>=lines.length)return;
+    const[c,t]=lines[i++];
+    const span=document.createElement('div');span.className=c;span.innerHTML=t;
+    el.appendChild(span);setTimeout(next,180);
+  })();
+}
+$$('#renderMode .pill').forEach(p=>p.onclick=()=>{
+  mode=p.dataset.mode;
+  $$('#renderMode .pill').forEach(x=>x.setAttribute('aria-pressed',x===p));
+  crawl();
+});
+$('#crawlBtn').onclick=crawl;
+crawl();
+
+/* ============ 1 · status codes ============ */
+const codes=[
+ {c:'200',cls:'s2',k:'OK',d:'Contenido válido. El bot lo procesa con normalidad.'},
+ {c:'301',cls:'s3',k:'Movido (permanente)',d:'Consolida señales hacia una URL canónica. Ideal para reorganizar rutas.'},
+ {c:'404',cls:'s4',k:'No encontrado',d:'Ausencia. En Next.js: devuelve notFound() de forma explícita, no un 200 con pantalla vacía.'},
+ {c:'410',cls:'s4',k:'Eliminado',d:'Retirada definitiva de un recurso. Más explícito que un 404 cuando algo se borró de verdad.'},
+ {c:'500',cls:'s5',k:'Error del servidor',d:'Deteriora el presupuesto de rastreo. Cascadas de 503 pueden provocar desindexación temporal.'}
+];
+$('#statusGrid').innerHTML=codes.map((x,i)=>
+  `<div class="scode ${x.cls}" data-i="${i}"><b>${x.c}</b><small>${x.k}</small></div>`).join('');
+$$('#statusGrid .scode').forEach(el=>el.onclick=()=>{
+  const x=codes[el.dataset.i];const box=$('#statusDetail');
+  box.style.display='block';
+  box.innerHTML=`<b style="font-family:monospace;font-size:1.1rem">${x.c} · ${x.k}</b><p style="margin:.4em 0 0">${x.d}</p>`;
+});
+
+/* ============ 2 · metadata live ============ */
+function syncMeta(){
+  const t=$('#m_title').value,d=$('#m_desc').value,img=$('#m_img').value,slug=$('#m_slug').value;
+  $('#ogTitle').textContent=t||'—';
+  $('#ogDesc').textContent=d||'—';
+  $('#ogImg').textContent=img||'sin imagen';
+  $('#headOut').innerHTML=
+`&lt;title&gt;${esc(t)}&lt;/title&gt;
+&lt;meta name="description" content="${esc(d)}"&gt;
+&lt;link rel="canonical" href="${esc(slug)}"&gt;
+&lt;meta property="og:title" content="${esc(t)}"&gt;
+&lt;meta property="og:image" content="${esc(img)}.png"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;`;
+}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+['m_title','m_desc','m_img','m_slug'].forEach(id=>$('#'+id).oninput=syncMeta);
+syncMeta();
+
+/* ============ 3 · hreflang explorer ============ */
+const localeData={
+  es:{slug:'/es/productos/trail-pro',name:'Zapatillas Trail Pro'},
+  en:{slug:'/en/products/trail-pro',name:'Trail Pro Shoes'},
+  fr:{slug:'/fr/produits/trail-pro',name:'Chaussures Trail Pro'}
+};
+function showHreflang(loc){
+  const base='https://tienda.com';
+  const self=localeData[loc];
+  const alts=Object.entries(localeData).map(([k,v])=>
+    `&lt;link rel="alternate" hreflang="${k}" href="${base}${v.slug}"&gt;`).join('\n');
+  $('#hreflangOut').innerHTML=
+`&lt;html lang="${loc}"&gt;
+&lt;title&gt;${self.name}&lt;/title&gt;
+&lt;link rel="canonical" href="${base}${self.slug}"&gt;
+${alts}
+&lt;link rel="alternate" hreflang="x-default" href="${base}/"&gt;`;
+  $('#localeUrl').innerHTML=`Cada versión <b>se firma a sí misma</b> con su propio canonical y declara <b>el mismo conjunto</b> de alternates (simetría).`;
+  $$('#localeTabs .lt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.loc===loc));
+}
+$$('#localeTabs .lt').forEach(b=>b.onclick=()=>showHreflang(b.dataset.loc));
+showHreflang('es');
+
+/* ============ 4 · CWV meters ============ */
+function meter(id,val,fmt,good,poor,barId,valId,vId,invert){
+  const v=+val;
+  let label,color;
+  if((!invert&&v<=good)||(invert&&v<=good)){label='✅ Bueno';color='#1f9d6b';}
+  else if(v<=poor){label='🟡 Necesita mejora';color='#d98a0b';}
+  else{label='🔴 Pobre';color='#d6453d';}
+  $(valId).textContent=fmt(v);
+  const pct=Math.min(100,(v/poor)*100);
+  const bar=$(barId);bar.style.width=pct+'%';bar.style.background=color;
+  $(vId).textContent=label;$(vId).style.color=color;
+}
+function upd(){
+  meter('lcp',$('#lcp').value,v=>(v/1000).toFixed(1)+'s',2500,4000,'#lcpBar','#lcpVal','#lcpV');
+  meter('inp',$('#inp').value,v=>v+'ms',200,500,'#inpBar','#inpVal','#inpV');
+  meter('cls',$('#cls').value,v=>(v/100).toFixed(2),10,25,'#clsBar','#clsVal','#clsV');
+}
+['lcp','inp','cls'].forEach(id=>$('#'+id).oninput=upd);
+upd();
+
+/* ============ 5 · env vars ============ */
+const envVars=[
+  {name:'NEXT_PUBLIC_SITE_URL',val:'https://tienda.com',pub:true,safe:true},
+  {name:'DATABASE_URL',val:'postgres://user:pass@db',pub:false,safe:false},
+  {name:'STRIPE_SECRET_KEY',val:'sk_live_••••',pub:false,safe:false},
+  {name:'NEXT_PUBLIC_ANALYTICS_ID',val:'UA-12345',pub:true,safe:true}
+];
+function renderEnv(){
+  $('#envBox').innerHTML=envVars.map((e,i)=>{
+    const isPub=e.pub;
+    const leaked=isPub&&!e.safe;
+    return `<div class="envrow">
+      <span class="name">${e.name}<br><span class="note">${e.val}</span></span>
+      <span class="badge ${isPub?'pub':'priv'}">${isPub?'→ va al navegador':'solo servidor'}</span>
+      <button class="btn ghost sm" data-i="${i}">prefijo: ${isPub?'NEXT_PUBLIC_':'(privado)'}</button>
+    </div>
+    <p class="leak ${leaked?'bad':'ok'}" style="margin:-4px 0 10px">${
+      leaked?'🚨 ¡FUGA! Un secreto con prefijo público acaba en el bundle del cliente.':
+      (isPub?'✓ Valor no sensible: correcto exponerlo.':'✓ Secreto protegido en el servidor.')}</p>`;
+  }).join('');
+  $$('#envBox button').forEach(b=>b.onclick=()=>{
+    envVars[b.dataset.i].pub=!envVars[b.dataset.i].pub;renderEnv();
+  });
+}
+renderEnv();
+
+/* ============ quiz ============ */
+const quiz=[
+ {q:'¿Por qué un Client Component "todo en cliente" perjudica el SEO?',
+  opts:['Porque consume más RAM en el servidor','Porque el contenido principal no está en el HTML inicial y bots sin JS no lo ven','Porque Next.js lo prohíbe'],a:1,
+  e:'El bot recibe un &lt;div&gt; vacío; debe ejecutar JS (con límites) para ver el contenido. SSR/SSG/ISR lo evitan.'},
+ {q:'En multidioma, ¿hacia dónde debe apuntar el canonical de la versión inglesa?',
+  opts:['Hacia la versión española (idioma principal)','Hacia sí misma','No debe tener canonical'],a:1,
+  e:'Cada versión se canonicaliza a sí misma; la relación entre idiomas se expresa con hreflang, no canibalizando.'},
+ {q:'Desde marzo de 2024, ¿qué métrica reemplaza a FID en Core Web Vitals?',
+  opts:['LCP','TTFB','INP'],a:2,
+  e:'INP mide la latencia de las interacciones a lo largo de toda la vida de la página, no solo la primera.'},
+ {q:'¿Qué garantiza el prefijo NEXT_PUBLIC_ en una variable de entorno?',
+  opts:['Que se cifra y nunca llega al cliente','Que se incluye en el bundle del navegador (no debe contener secretos)','Que solo funciona en Vercel'],a:1,
+  e:'Marca exposición pública: obliga a tratar la variable como no confidencial.'},
+ {q:'¿Para qué sirve un Preview Deployment en Vercel?',
+  opts:['Sustituir a next dev en local','Validar cambios por rama/PR en un entorno real antes de producción','Replicar producción cada minuto'],a:1,
+  e:'Permite revisar caching, ISR, cabeceras y SSR en una URL real sin tocar el dominio productivo.'}
+];
+$('#quizBox').innerHTML=quiz.map((q,i)=>
+ `<div class="quiz"><b>${i+1}. ${q.q}</b>
+   ${q.opts.map((o,j)=>`<button class="opt" data-q="${i}" data-o="${j}">${o}</button>`).join('')}
+   <div class="explain" id="ex${i}">💡 ${q.e}</div></div>`).join('');
+$$('#quizBox .opt').forEach(b=>b.onclick=()=>{
+  const qi=+b.dataset.q,oi=+b.dataset.o,correct=quiz[qi].a;
+  const box=b.closest('.quiz');
+  if(box.dataset.done)return;box.dataset.done=1;
+  $$('.opt',box).forEach((o,j)=>{
+    if(j===correct)o.classList.add('correct');
+    if(j===oi&&oi!==correct)o.classList.add('wrong');
+    o.style.cursor='default';
+  });
+  $('#ex'+qi).style.display='block';
+});
+</script>
+</body>
+</html>

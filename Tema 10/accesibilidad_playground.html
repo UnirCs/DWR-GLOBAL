@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground · Tema 10 · Accesibilidad II</title>
+<style>
+  :root{
+    --navy:#1b2a4a; --teal:#1f8a8f; --teal-d:#136b70;
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1f2733; --muted:#5b6776;
+    --line:#e2e7ef; --ok:#1f8f4e; --okbg:#e8f6ee; --bad:#c23b39; --badbg:#fbeceb;
+    --code-bg:#101826; --code-ink:#e8eefc; --warn:#b06a00; --warnbg:#fdf3e3;
+    --radius:14px; --shadow:0 6px 22px rgba(20,33,61,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55}
+  header.hero{background:linear-gradient(135deg,var(--navy),#24365c);color:#fff;
+    padding:38px 24px 30px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  .tag{display:inline-block;background:rgba(255,255,255,.16);color:#cfe3ff;
+    font-weight:600;font-size:13px;letter-spacing:.08em;padding:5px 12px;border-radius:999px}
+  header.hero h1{margin:14px 0 6px;font-size:30px}
+  header.hero p{margin:0;color:#cdd7ea;max-width:680px}
+  nav.toc{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(0,0,0,.03)}
+  nav.toc ul{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;
+    padding:10px 20px;max-width:1040px;margin:0 auto}
+  nav.toc a{display:inline-block;text-decoration:none;color:var(--muted);font-size:13.5px;
+    font-weight:600;padding:6px 12px;border-radius:999px}
+  nav.toc a:hover,nav.toc a:focus-visible{background:#eef2f8;color:var(--navy)}
+  main{padding:28px 0 60px}
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:26px;margin:22px 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .num{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--teal);
+    color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+  h2{font-size:21px;margin:0}
+  .lead{color:var(--muted);margin:8px 0 18px;font-size:15px}
+  .demo{border:1px solid var(--line);border-radius:10px;padding:18px;background:#fbfcfe;margin-bottom:14px}
+  .demo-label{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--teal-d);
+    text-transform:uppercase;margin-bottom:12px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.split{grid-template-columns:1fr}}
+  .bad-box{border:1px solid var(--badbg);background:var(--badbg);border-radius:10px;padding:14px}
+  .ok-box{border:1px solid var(--okbg);background:var(--okbg);border-radius:10px;padding:14px}
+  .box-h{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .bad-box .box-h{color:var(--bad)} .ok-box .box-h{color:var(--ok)}
+  label{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
+  input[type=text],input[type=email]{width:100%;padding:9px 11px;border:1px solid #c7d0dd;
+    border-radius:8px;font-size:14px;font-family:inherit}
+  input:focus-visible,button:focus-visible,a:focus-visible,[tabindex]:focus-visible{
+    outline:3px solid var(--teal);outline-offset:2px}
+  .field{margin-bottom:12px}
+  button{font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;border:none;
+    border-radius:8px;padding:9px 16px;background:var(--teal);color:#fff}
+  button:hover{background:var(--teal-d)}
+  button.ghost{background:#eef2f8;color:var(--navy)}
+  button.ghost:hover{background:#e0e7f1}
+  details.code{margin-top:12px;border:1px solid #1c2942;border-radius:10px;overflow:hidden}
+  details.code>summary{cursor:pointer;background:var(--code-bg);color:#9fb4d8;
+    padding:9px 14px;font-size:13px;font-weight:600;list-style:none;user-select:none}
+  details.code>summary::before{content:"▸ ";color:var(--teal)}
+  details.code[open]>summary::before{content:"▾ "}
+  pre{margin:0;background:var(--code-bg);color:var(--code-ink);padding:14px;
+    overflow:auto;font-size:13px;line-height:1.5;font-family:"SF Mono",Consolas,Menlo,monospace}
+  .tok-tag{color:#7ee0c6} .tok-attr{color:#f2b66d} .tok-str{color:#9fd0ff} .tok-com{color:#5f7088}
+  .note{font-size:13.5px;color:var(--muted);margin-top:10px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:6px}
+  .pill.r{background:var(--badbg);color:var(--bad)} .pill.g{background:var(--okbg);color:var(--ok)}
+  /* tabs demo */
+  [role=tablist]{display:flex;gap:6px;border-bottom:2px solid var(--line);margin-bottom:0}
+  [role=tab]{background:none;color:var(--muted);border:none;border-bottom:3px solid transparent;
+    border-radius:8px 8px 0 0;padding:10px 16px;font-weight:600;cursor:pointer}
+  [role=tab][aria-selected=true]{color:var(--navy);border-bottom-color:var(--teal)}
+  [role=tabpanel]{padding:16px;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;background:#fff}
+  kbd{background:#eef2f8;border:1px solid #c7d0dd;border-bottom-width:2px;border-radius:6px;
+    padding:1px 7px;font-size:12.5px;font-family:inherit;font-weight:600}
+  .live-region{margin-top:12px;min-height:42px;border:1px dashed #c7d0dd;border-radius:8px;
+    padding:10px 12px;font-size:14px;background:#fff;display:flex;align-items:center}
+  .live-region.show{background:var(--okbg);border-color:var(--ok);border-style:solid;color:var(--ok);font-weight:600}
+  .alt-demo{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+  .imgbox{width:130px;height:96px;border-radius:10px;display:grid;place-items:center;
+    font-size:38px;border:1px solid var(--line)}
+  .sr-readout{font-size:13px;background:#101826;color:#cfe1ff;border-radius:8px;padding:10px 12px;
+    flex:1;min-width:200px;font-family:"SF Mono",Consolas,monospace}
+  .sr-readout b{color:#7ee0c6}
+  /* audit */
+  .audit-row{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid var(--line);
+    border-radius:10px;margin-bottom:8px;background:#fff}
+  .audit-row .ico{flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+    font-size:13px;font-weight:700;color:#fff}
+  .audit-row.pass .ico{background:var(--ok)} .audit-row.fail .ico{background:var(--bad)}
+  .audit-row .t{font-weight:600;font-size:14px} .audit-row .d{font-size:13px;color:var(--muted)}
+  .score{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;
+    font-weight:800;font-size:20px;color:#fff}
+  .toolgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:600px){.toolgrid{grid-template-columns:1fr}}
+  .tool{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fbfcfe}
+  .tool h3{margin:0 0 6px;font-size:16px;color:var(--navy)}
+  .tool p{margin:0;font-size:13.5px;color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:30px 20px}
+  .skip{position:absolute;left:-999px;top:8px;background:var(--navy);color:#fff;padding:10px 16px;
+    border-radius:8px;z-index:50;text-decoration:none}
+  .skip:focus{left:12px}
+</style>
+</head>
+<body>
+<a href="#contenido" class="skip">Saltar al contenido</a>
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">TEMA 10 · DWR</span>
+    <h1>Accesibilidad II — Playground</h1>
+    <p>Ejemplos interactivos y vivos de cada concepto del tema. Compara la versión inaccesible con la accesible, prueba el teclado y los lectores de pantalla simulados, y mira el código real detrás de cada caso.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Índice del playground">
+  <ul>
+    <li><a href="#formularios">Formularios</a></li>
+    <li><a href="#imagenes">Imágenes</a></li>
+    <li><a href="#arialive">aria-live</a></li>
+    <li><a href="#teclado">Teclado / Tabs</a></li>
+    <li><a href="#evaluacion">Evaluación</a></li>
+    <li><a href="#auditoria">Auditoría simulada</a></li>
+  </ul>
+</nav>
+
+<main id="contenido">
+<div class="wrap">
+
+<!-- 1. FORMULARIOS -->
+<section class="card" id="formularios">
+  <div class="sec-head"><span class="num">1</span><h2>Formularios · <code>label</code> asociado con <code>for</code>/<code>id</code></h2></div>
+  <p class="lead">Activa el lector de pantalla simulado y haz clic en cada etiqueta. Verás qué anuncia el lector en cada caso y por qué asociar <code>label</code> con <code>for</code>/<code>id</code> importa.</p>
+
+  <div class="demo">
+    <div class="demo-label">Demo en vivo · haz clic en las etiquetas</div>
+    <button class="ghost" id="srToggle" aria-pressed="false">🔊 Activar lector de pantalla simulado</button>
+    <div class="split" style="margin-top:14px">
+      <div class="bad-box">
+        <div class="box-h"><span class="pill r">MAL</span> Sin asociación</div>
+        <div class="field">
+          <span style="font-weight:600;font-size:14px">Nombre</span>
+          <input type="text" id="bad-name" data-label-text="(sin etiqueta asociada)">
+        </div>
+        <p class="note">El texto "Nombre" es solo visual. Al hacer clic no enfoca el campo y el lector no lo asocia.</p>
+      </div>
+      <div class="ok-box">
+        <div class="box-h"><span class="pill g">BIEN</span> <code>label for</code> + <code>id</code></div>
+        <div class="field">
+          <label for="ok-name">Nombre</label>
+          <input type="text" id="ok-name" data-label-text="Nombre">
+        </div>
+        <p class="note">Al hacer clic en la etiqueta se enfoca el campo, y el lector anuncia "Nombre, edición de texto".</p>
+      </div>
+    </div>
+    <div class="sr-readout" id="srForm" aria-hidden="true">🔇 Lector apagado. Actívalo y enfoca un campo…</div>
+  </div>
+
+  <details class="code"><summary>Ver código</summary><pre><span class="tok-com">&lt;!-- ❌ Sin asociación: el lector no sabe qué describe el campo --&gt;</span>
+<span class="tok-tag">&lt;span&gt;</span>Nombre<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;input</span> <span class="tok-attr">type</span>=<span class="tok-str">"text"</span><span class="tok-tag">&gt;</span>
+
+<span class="tok-com">&lt;!-- ✅ for e id coincidentes: asociación accesible --&gt;</span>
+<span class="tok-tag">&lt;label</span> <span class="tok-attr">for</span>=<span class="tok-str">"nombre"</span><span class="tok-tag">&gt;</span>Nombre<span class="tok-tag">&lt;/label&gt;</span>
+<span class="tok-tag">&lt;input</span> <span class="tok-attr">type</span>=<span class="tok-str">"text"</span> <span class="tok-attr">id</span>=<span class="tok-str">"nombre"</span><span class="tok-tag">&gt;</span></pre></details>
+</section>
+
+<!-- 2. IMAGENES -->
+<section class="card" id="imagenes">
+  <div class="sec-head"><span class="num">2</span><h2>Imágenes · <code>alt</code> informativo vs. decorativo</h2></div>
+  <p class="lead">El lector de pantalla simulado recorre estas tres imágenes. Observa que la informativa describe, la decorativa se ignora con <code>aria-hidden</code>, y la que no tiene <code>alt</code> genera ruido leyendo el nombre del archivo.</p>
+
+  <div class="demo">
+    <div class="demo-label">Demo en vivo</div>
+    <div class="alt-demo">
+      <div>
+        <div class="imgbox" style="background:#e9f3ee">📊</div>
+        <p class="note" style="text-align:center;max-width:130px"><span class="pill g">Informativa</span><br>alt descriptivo</p>
+      </div>
+      <div>
+        <div class="imgbox" style="background:#fdf3e3">✨</div>
+        <p class="note" style="text-align:center;max-width:130px"><span class="pill g">Decorativa</span><br>alt="" + aria-hidden</p>
+      </div>
+      <div>
+        <div class="imgbox" style="background:#fbeceb">🖼️</div>
+        <p class="note" style="text-align:center;max-width:130px"><span class="pill r">Mal</span><br>sin alt</p>
+      </div>
+      <div class="sr-readout" id="srImg">Pulsa "Recorrer imágenes" para simular el lector…</div>
+    </div>
+    <div style="margin-top:12px"><button id="imgScan">▶ Recorrer imágenes con el lector</button></div>
+  </div>
+
+  <details class="code"><summary>Ver código</summary><pre><span class="tok-com">&lt;!-- ✅ Informativa: describe el contenido --&gt;</span>
+<span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"ventas.png"</span> <span class="tok-attr">alt</span>=<span class="tok-str">"Gráfico de ventas: subida del 20% en Q3"</span><span class="tok-tag">&gt;</span>
+
+<span class="tok-com">&lt;!-- ✅ Decorativa: alt vacío + aria-hidden la silencian --&gt;</span>
+<span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"sparkle.png"</span> <span class="tok-attr">alt</span>=<span class="tok-str">""</span> <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+
+<span class="tok-com">&lt;!-- ❌ Sin alt: el lector lee la URL del archivo → ruido --&gt;</span>
+<span class="tok-tag">&lt;img</span> <span class="tok-attr">src</span>=<span class="tok-str">"IMG_20240715_diagram_final.png"</span><span class="tok-tag">&gt;</span></pre></details>
+</section>
+
+<!-- 3. ARIA-LIVE -->
+<section class="card" id="arialive">
+  <div class="sec-head"><span class="num">3</span><h2>Modal / Alerta · <code>aria-live</code></h2></div>
+  <p class="lead">Una región <code>aria-live</code> anuncia automáticamente los mensajes nuevos sin que el usuario tenga que enfocarla. Envía el formulario y mira cómo cambia el contenido anunciado. Compara <code>polite</code> con <code>assertive</code>.</p>
+
+  <div class="demo">
+    <div class="demo-label">Demo en vivo</div>
+    <div class="field" style="max-width:340px">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" placeholder="tu@correo.com">
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button id="sendPolite">Enviar (politely)</button>
+      <button id="sendAssertive" class="ghost">Enviar (assertive)</button>
+    </div>
+    <div class="note">⬇ Región anunciada por el lector (<code>aria-live</code>):</div>
+    <div class="live-region" id="liveRegion" aria-live="polite" role="status"></div>
+  </div>
+
+  <details class="code"><summary>Ver código</summary><pre><span class="tok-com">&lt;!-- assertive: interrumpe y anuncia de inmediato (errores, urgente) --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">aria-live</span>=<span class="tok-str">"assertive"</span> <span class="tok-attr">role</span>=<span class="tok-str">"alert"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+
+<span class="tok-com">&lt;!-- polite: espera a que el lector termine (confirmaciones) --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">aria-live</span>=<span class="tok-str">"polite"</span> <span class="tok-attr">role</span>=<span class="tok-str">"status"</span><span class="tok-tag">&gt;&lt;/div&gt;</span>
+
+<span class="tok-com">// JS: basta con cambiar el contenido; el lector lo anuncia solo</span>
+liveRegion.textContent = <span class="tok-str">"Mensaje enviado correctamente"</span>;</pre></details>
+</section>
+
+<!-- 4. TECLADO / TABS -->
+<section class="card" id="teclado">
+  <div class="sec-head"><span class="num">4</span><h2>Navegación por teclado · pestañas con ARIA</h2></div>
+  <p class="lead">Componente de pestañas con <code>role="tablist"/"tab"/"tabpanel"</code>. Haz <kbd>Tab</kbd> hasta la pestaña activa y muévete con <kbd>←</kbd> <kbd>→</kbd>. Solo la pestaña seleccionada es tabulable (patrón <em>roving tabindex</em>).</p>
+
+  <div class="demo">
+    <div class="demo-label">Demo en vivo · usa las flechas del teclado</div>
+    <div role="tablist" aria-label="Secciones de ejemplo">
+      <button role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true" tabindex="0">Perfil</button>
+      <button role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">Ajustes</button>
+      <button role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">Ayuda</button>
+    </div>
+    <div role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">
+      <strong>Perfil</strong> — datos de la cuenta del usuario. Esta pestaña recibe el foco al cargar.</div>
+    <div role="tabpanel" id="panel-2" aria-labelledby="tab-2" tabindex="0" hidden>
+      <strong>Ajustes</strong> — preferencias de idioma, tema y notificaciones.</div>
+    <div role="tabpanel" id="panel-3" aria-labelledby="tab-3" tabindex="0" hidden>
+      <strong>Ayuda</strong> — preguntas frecuentes y contacto de soporte.</div>
+    <p class="note">Atributos clave: <code>aria-selected</code> marca la activa, <code>aria-controls</code>/<code>aria-labelledby</code> enlazan tab↔panel, y <code>hidden</code> oculta los paneles inactivos a todos los usuarios.</p>
+  </div>
+
+  <details class="code"><summary>Ver código</summary><pre><span class="tok-tag">&lt;div</span> <span class="tok-attr">role</span>=<span class="tok-str">"tablist"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">role</span>=<span class="tok-str">"tab"</span> <span class="tok-attr">id</span>=<span class="tok-str">"tab-1"</span> <span class="tok-attr">aria-controls</span>=<span class="tok-str">"panel-1"</span>
+          <span class="tok-attr">aria-selected</span>=<span class="tok-str">"true"</span>  <span class="tok-attr">tabindex</span>=<span class="tok-str">"0"</span><span class="tok-tag">&gt;</span>Perfil<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">role</span>=<span class="tok-str">"tab"</span> <span class="tok-attr">id</span>=<span class="tok-str">"tab-2"</span> <span class="tok-attr">aria-controls</span>=<span class="tok-str">"panel-2"</span>
+          <span class="tok-attr">aria-selected</span>=<span class="tok-str">"false"</span> <span class="tok-attr">tabindex</span>=<span class="tok-str">"-1"</span><span class="tok-tag">&gt;</span>Ajustes<span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">role</span>=<span class="tok-str">"tabpanel"</span> <span class="tok-attr">id</span>=<span class="tok-str">"panel-1"</span> <span class="tok-attr">aria-labelledby</span>=<span class="tok-str">"tab-1"</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">role</span>=<span class="tok-str">"tabpanel"</span> <span class="tok-attr">id</span>=<span class="tok-str">"panel-2"</span> <span class="tok-attr">aria-labelledby</span>=<span class="tok-str">"tab-2"</span> <span class="tok-attr">hidden</span><span class="tok-tag">&gt;</span>…<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-com">// Flechas ← → mueven el foco y cambian la pestaña (roving tabindex)</span>
+tab.addEventListener(<span class="tok-str">"keydown"</span>, e =&gt; {
+  <span class="tok-tag">if</span> (e.key === <span class="tok-str">"ArrowRight"</span>) selecciona(siguiente);
+  <span class="tok-tag">if</span> (e.key === <span class="tok-str">"ArrowLeft"</span>)  selecciona(anterior);
+});</pre></details>
+</section>
+
+<!-- 5. EVALUACION -->
+<section class="card" id="evaluacion">
+  <div class="sec-head"><span class="num">5</span><h2>Herramientas de evaluación</h2></div>
+  <p class="lead">Las dos herramientas que vimos, con lo que cada una aporta en la práctica.</p>
+  <div class="toolgrid">
+    <div class="tool">
+      <h3>🔦 Lighthouse</h3>
+      <p>Integrado en Chrome DevTools (pestaña <em>Lighthouse</em>). Auditoría automática de rendimiento, accesibilidad, buenas prácticas, SEO y PWA. Da una puntuación global rápida (0–100).</p>
+    </div>
+    <div class="tool">
+      <h3>🪓 axe DevTools</h3>
+      <p>Extensión basada en <code>axe-core</code> de Deque. Análisis detallado de accesibilidad según WCAG: lista cada incidencia, su gravedad y cómo corregirla.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. AUDITORIA SIMULADA -->
+<section class="card" id="auditoria">
+  <div class="sec-head"><span class="num">6</span><h2>Auditoría simulada · ¿qué detectan?</h2></div>
+  <p class="lead">Una página de ejemplo con problemas reales de accesibilidad. Pulsa "Auditar" para simular lo que reportarían Lighthouse/axe sobre estos casos.</p>
+
+  <div class="demo">
+    <div class="demo-label">Página de ejemplo (con fallos a propósito)</div>
+    <div style="border:1px dashed #c7d0dd;border-radius:8px;padding:14px;background:#fff">
+      <button style="background:var(--teal)" aria-label="Buscar">🔍</button>
+      <button style="background:#eef2f8;color:var(--navy)">Enviar</button>
+      <span style="display:inline-block;width:34px;height:24px;background:#fdf3e3;border-radius:6px;text-align:center;line-height:24px">🖼️</span>
+      <input type="text" placeholder="Email">
+    </div>
+    <div style="margin:14px 0"><button id="runAudit">▶ Auditar página</button></div>
+    <div id="auditResults" aria-live="polite"></div>
+  </div>
+
+  <details class="code"><summary>Ver criterios evaluados</summary><pre><span class="tok-com">Aspectos que miden Lighthouse / axe:</span>
+• Uso de <span class="tok-attr">alt</span> en imágenes
+• Jerarquía de encabezados (h1 → h2 → h3, sin saltos)
+• Nombres accesibles para botones y enlaces (texto o <span class="tok-attr">aria-label</span>)
+• Roles y landmarks semánticos correctos
+• Contraste de color suficiente (WCAG AA)
+• Campos de formulario con <span class="tok-attr">label</span> asociado</pre></details>
+</section>
+
+</div>
+</main>
+
+<footer>MDIUW · DWR · Tema 10 — Accesibilidad II · Playground interactivo de ejemplos</footer>
+
+<script>
+// ---------- 1. Formularios + lector simulado ----------
+const srToggle = document.getElementById('srToggle');
+const srForm = document.getElementById('srForm');
+let srOn = false;
+srToggle.addEventListener('click', () => {
+  srOn = !srOn;
+  srToggle.setAttribute('aria-pressed', String(srOn));
+  srToggle.textContent = srOn ? '🔊 Lector activo (clic para apagar)' : '🔊 Activar lector de pantalla simulado';
+  srForm.textContent = srOn ? '🔊 Lector activo. Enfoca un campo…' : '🔇 Lector apagado. Actívalo y enfoca un campo…';
+});
+document.querySelectorAll('#formularios input').forEach(inp => {
+  inp.addEventListener('focus', () => {
+    if(!srOn) return;
+    const lbl = inp.dataset.labelText;
+    srForm.innerHTML = lbl === '(sin etiqueta asociada)'
+      ? '🔊 Anuncia: «<b style="color:#ff9b8a">edición de texto</b>» — sin nombre, el usuario no sabe qué escribir.'
+      : '🔊 Anuncia: «<b style="color:#7ee0c6">' + lbl + ', edición de texto</b>» — campo identificado correctamente.';
+  });
+});
+
+// ---------- 2. Imágenes ----------
+const imgScan = document.getElementById('imgScan');
+const srImg = document.getElementById('srImg');
+const imgSteps = [
+  '🔊 Imagen 1: «<b>Gráfico de ventas: subida del 20% en Q3</b>» — descripción útil.',
+  '🔊 Imagen 2: <span style="color:#8aa">(silencio)</span> — decorativa, ignorada por aria-hidden. ✅',
+  '🔊 Imagen 3: «<b style="color:#ff9b8a">imagen, IMG_20240715_diagram_final.png</b>» — lee el archivo. Ruido. ❌'
+];
+imgScan.addEventListener('click', () => {
+  imgScan.disabled = true; let i = 0;
+  const tick = () => {
+    srImg.innerHTML = imgSteps[i]; i++;
+    if(i < imgSteps.length) setTimeout(tick, 1300);
+    else { imgScan.disabled = false; }
+  };
+  tick();
+});
+
+// ---------- 3. aria-live ----------
+const live = document.getElementById('liveRegion');
+function announce(type){
+  const email = document.getElementById('email').value.trim();
+  live.setAttribute('aria-live', type);
+  live.classList.add('show');
+  const mode = type === 'assertive' ? 'assertive (interrumpe al instante)' : 'polite (espera turno)';
+  live.textContent = (email ? 'Mensaje enviado a ' + email : 'Mensaje enviado correctamente') + ' · anunciado como ' + mode;
+}
+document.getElementById('sendPolite').addEventListener('click', () => announce('polite'));
+document.getElementById('sendAssertive').addEventListener('click', () => announce('assertive'));
+
+// ---------- 4. Tabs con teclado ----------
+const tabs = Array.from(document.querySelectorAll('#teclado [role=tab]'));
+const panels = Array.from(document.querySelectorAll('#teclado [role=tabpanel]'));
+function selectTab(idx){
+  tabs.forEach((t,i)=>{
+    const sel = i===idx;
+    t.setAttribute('aria-selected', sel);
+    t.tabIndex = sel ? 0 : -1;
+    panels[i].hidden = !sel;
+  });
+  tabs[idx].focus();
+}
+tabs.forEach((tab,i)=>{
+  tab.addEventListener('click', ()=>selectTab(i));
+  tab.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight'){ e.preventDefault(); selectTab((i+1)%tabs.length); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); selectTab((i-1+tabs.length)%tabs.length); }
+    if(e.key==='Home'){ e.preventDefault(); selectTab(0); }
+    if(e.key==='End'){ e.preventDefault(); selectTab(tabs.length-1); }
+  });
+});
+
+// ---------- 6. Auditoría simulada ----------
+const auditData = [
+  {pass:false,t:'Botón sin nombre accesible',d:'El botón "Enviar" está bien, pero hay un botón icónico 🔍 — solo se salva por tener aria-label="Buscar".'},
+  {pass:false,t:'Campo de formulario sin label',d:'El input de email usa placeholder pero no tiene <label> asociado. Falla WCAG.'},
+  {pass:false,t:'Imagen sin texto alternativo',d:'El elemento 🖼️ no aporta alt ni aria-hidden; un lector no sabe interpretarlo.'},
+  {pass:true,t:'Contraste de botón principal',d:'El botón teal sobre blanco cumple el ratio mínimo AA (4.5:1).'},
+  {pass:true,t:'aria-label en botón de búsqueda',d:'El botón 🔍 expone un nombre accesible mediante aria-label="Buscar".'}
+];
+document.getElementById('runAudit').addEventListener('click', () => {
+  const box = document.getElementById('auditResults');
+  const fails = auditData.filter(a=>!a.pass).length;
+  const score = Math.round((auditData.length - fails)/auditData.length*100);
+  const col = score>=90?'#1f8f4e':score>=50?'#b06a00':'#c23b39';
+  box.innerHTML = '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">'+
+    '<span class="score" style="background:'+col+'">'+score+'</span>'+
+    '<div><strong>Accesibilidad: '+score+'/100</strong><br>'+
+    '<span style="color:var(--muted);font-size:13px">'+fails+' problemas detectados · '+(auditData.length-fails)+' comprobaciones superadas</span></div></div>';
+  auditData.sort((a,b)=>a.pass-b.pass).forEach(a=>{
+    box.innerHTML += '<div class="audit-row '+(a.pass?'pass':'fail')+'">'+
+      '<span class="ico">'+(a.pass?'✓':'✕')+'</span>'+
+      '<div><div class="t">'+a.t+'</div><div class="d">'+a.d+'</div></div></div>';
+  });
+});
+</script>
+</body>
+</html>
